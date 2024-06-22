@@ -4,7 +4,8 @@
 
 *,
 *:before,
-*:after {
+*:after,
+*:hover {
   @apply cursor-default;
 }
 
