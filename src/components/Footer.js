@@ -285,9 +285,9 @@ function Footer() {
       {/* Background */}
       <div className="relative -z-50">
         <div className="absolute top-0 w-full h-auto z-10 drop-shadow-[0_15px_10px_rgba(0,0,0,0.4)]">
-          <FooterOutline />
+          <FooterOutline fill="#47d4ff" />
         </div>
-        <FooterShape className="relative w-full h-auto" />
+        <FooterShape className="relative w-full h-auto" fill="#d5d5d5" />
       </div>
       <div className="h-full bg-custom-grey-light"></div>
     </>
