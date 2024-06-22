@@ -11,7 +11,7 @@ function Menu() {
       </div>
 
       {/* Footer */}
-      <div className="absolute bottom-0 h-1/4 w-full -z-30">
+      <div className="absolute bottom-0 h-[28%] w-full -z-30">
         <Footer />
       </div>
 

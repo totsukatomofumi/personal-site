@@ -68,7 +68,7 @@ function Button({ iconComponent }) {
   useGSAP(
     () => {
       gsap.to(selfRef.current, {
-        scale: isHovered ? 1.1 : 1,
+        scale: isHovered ? 1.05 : 1,
         duration: 0.1,
       });
     },
@@ -87,7 +87,7 @@ function Button({ iconComponent }) {
           ease: "none",
         })
           .to(selfRef.current, {
-            scale: 1.1,
+            scale: 1.05,
             duration: 0.05,
             ease: "none",
           })
@@ -160,7 +160,7 @@ function FileIconButton() {
   useGSAP(
     () => {
       gsap.to(selfRef.current, {
-        scale: isHovered ? 1.1 : 1,
+        scale: isHovered ? 1.05 : 1,
         duration: 0.1,
       });
     },
@@ -179,7 +179,7 @@ function FileIconButton() {
           ease: "none",
         })
           .to(selfRef.current, {
-            scale: 1.1,
+            scale: 1.05,
             duration: 0.05,
             ease: "none",
           })
@@ -255,7 +255,7 @@ function Footer() {
       <div className="absolute h-full w-full top-0 left-0 z-10 flex items-center">
         {/* Left container of Button */}
         <div
-          className="absolute left-0 w-1/6 h-[75%] bg-custom-grey-light border-4 border-custom-grey rounded-r-full flex justify-end shadow-xl
+          className="absolute left-0 w-1/6 h-[70%] bg-custom-grey-light border-4 border-custom-grey rounded-r-full flex justify-end shadow-xl
         after:content-[' '] after:block after:absolute after:-left-1 after:bottom-2 after:w-full after:h-full after:border-4 after:border-custom-white after:rounded-r-full after:opacity-70 after:blur-[3px]"
         >
           <Button
@@ -265,13 +265,13 @@ function Footer() {
           />
         </div>
 
-        <div className="absolute left-[17.5%] bottom-[25%] h-1/3 w-1/12 flex justify-center drop-shadow-[10px_10px_5px_rgba(0,0,0,0.1)]">
+        <div className="absolute left-[17.5%] bottom-[25%] h-[30%] w-1/12 flex justify-center drop-shadow-[10px_10px_5px_rgba(0,0,0,0.1)]">
           <FileIconButton />
         </div>
 
         {/* Right container of Button */}
         <div
-          className="absolute right-0 w-1/6 h-[75%] bg-custom-grey-light border-4 border-custom-grey rounded-l-full flex justify-start shadow-xl
+          className="absolute right-0 w-1/6 h-[70%] bg-custom-grey-light border-4 border-custom-grey rounded-l-full flex justify-start shadow-xl
         after:content-[' '] after:block after:absolute after:-right-1 after:bottom-2 after:w-full after:h-full after:border-4 after:border-custom-white after:rounded-l-full after:opacity-70 after:blur-[3px]"
         >
           <Button
