@@ -68,7 +68,7 @@ function Button({ iconComponent }) {
   useGSAP(
     () => {
       gsap.to(selfRef.current, {
-        scale: isHovered ? 1.05 : 1,
+        scale: isHovered ? 1.1 : 1,
         duration: 0.1,
       });
     },
@@ -87,7 +87,7 @@ function Button({ iconComponent }) {
           ease: "none",
         })
           .to(selfRef.current, {
-            scale: 1.05,
+            scale: 1.1,
             duration: 0.05,
             ease: "none",
           })
@@ -160,7 +160,7 @@ function FileIconButton() {
   useGSAP(
     () => {
       gsap.to(selfRef.current, {
-        scale: isHovered ? 1.05 : 1,
+        scale: isHovered ? 1.1 : 1,
         duration: 0.1,
       });
     },
@@ -179,7 +179,7 @@ function FileIconButton() {
           ease: "none",
         })
           .to(selfRef.current, {
-            scale: 1.05,
+            scale: 1.1,
             duration: 0.05,
             ease: "none",
           })
