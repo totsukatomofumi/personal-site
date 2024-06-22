@@ -1,6 +1,24 @@
+import { useGSAP } from "@gsap/react";
 import { ReactComponent as WarningIcon } from "../assets/images/triangle-exclamation-solid.svg";
+import gsap from "gsap";
+import { useRef } from "react";
 
 function StartupScreen() {
+  const continueRef = useRef();
+
+  useGSAP(() => {
+    const tl = gsap.timeline();
+
+    tl.from(continueRef.current, {
+      opacity: 0,
+      duration: 0.5,
+      delay: 2,
+      repeat: -1,
+      yoyo: true,
+      ease: "none",
+    });
+  });
+
   return (
     <div className="fixed top-0 left-0 w-screen h-screen bg-black flex justify-center items-center">
       <div className="w-3/4 h-1/2 text-custom-white text-center flex flex-col justify-around items-center">
@@ -19,9 +37,9 @@ function StartupScreen() {
           PROFESSIONALISM.
         </div>
 
-        <div className="text-2xl">
-          <div>Always online at</div>
-          <div className="mt-2">
+        <div className="text-2xl leading-relaxed">
+          <div>
+            Always online at <br></br>
             <a
               className="text-custom-blue-700"
               href={"https://www.nintendo.com/healthsafety/"}
@@ -31,7 +49,7 @@ function StartupScreen() {
           </div>
         </div>
 
-        <div className="text-3xl">
+        <div className="text-3xl" ref={continueRef}>
           {/*  BLINK CLICK HERE then FADE TO BLACK then FADE
             TO MENU */}
           Click anywhere to continue.
