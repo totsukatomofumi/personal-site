@@ -14,12 +14,14 @@ module.exports = {
         "custom-blue": {
           light: "#b5deef",
           DEFAULT: "#47d4ff",
+          700: "#84afe4",
         },
         "custom-white": "#f5f5f5",
         "custom-black": {
           light: "#4e4e4e",
           DEFAULT: "#282828",
         },
+        "custom-yellow": "#ffe100",
       },
       cursor: {
         default:

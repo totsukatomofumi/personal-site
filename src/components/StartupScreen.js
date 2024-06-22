@@ -1,5 +1,44 @@
+import { ReactComponent as WarningIcon } from "../assets/images/triangle-exclamation-solid.svg";
+
 function StartupScreen() {
-  return <div className="fixed top-0 left-0 w-screen h-screen bg-black"></div>;
+  return (
+    <div className="fixed top-0 left-0 w-screen h-screen bg-black flex justify-center items-center">
+      <div className="w-3/4 h-1/2 text-custom-white text-center flex flex-col justify-around items-center">
+        <div className="flex justify-center items-center">
+          <div className="aspect-square w-14">
+            <WarningIcon className="fill-custom-yellow" />
+          </div>
+          <div className="ml-1 font-bold text-5xl">
+            WARNING-SEVERE EPICNESS AND AWESOMENESS
+          </div>
+        </div>
+
+        <div className="ml-32 mr-32 text-3xl leading-relaxed">
+          BEFORE ENTERING, PREPARE YOURSELF FOR A JOURNEY OF ADDICTING FUN,
+          EPICNESS, AND ASTOUNDING CREATIVITY, ALL WHILE RETAINING EXCELLENT
+          PROFESSIONALISM.
+        </div>
+
+        <div className="text-2xl">
+          <div>Always online at</div>
+          <div className="mt-2">
+            <a
+              className="text-custom-blue-700"
+              href={"https://www.nintendo.com/healthsafety/"}
+            >
+              https://www.nintendo.com/healthsafety/
+            </a>
+          </div>
+        </div>
+
+        <div className="text-3xl">
+          {/*  BLINK CLICK HERE then FADE TO BLACK then FADE
+            TO MENU */}
+          Click anywhere to continue.
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default StartupScreen;
