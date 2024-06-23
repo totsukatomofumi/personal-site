@@ -35,7 +35,7 @@ function Box() {
 
   return (
     <div
-      className="relative h-48 w-[22rem] rounded-2xl bg-custom-white"
+      className="relative h-48 w-[22rem] rounded-2xl bg-custom-white shadow-lg"
       ref={selfRef}
       onMouseEnter={() => {
         setIsHovered(true);
@@ -60,8 +60,8 @@ function Box() {
 
 function Grid() {
   return (
-    <div className="h-auto w-auto grid grid-rows-3 grid-flow-col auto-cols-min gap-4">
-      {Array(12).fill(<Box />)}
+    <div className="w-[calc(21/3*23rem-1rem)] mx-[calc((100vw-(4*23rem-1rem))/2)] my-10 grid grid-rows-3 grid-flow-col auto-cols-min gap-4">
+      {Array(21).fill(<Box />)}
     </div>
   );
 }
