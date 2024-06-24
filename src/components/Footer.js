@@ -248,7 +248,7 @@ function FileIconButton() {
 function Footer() {
   return (
     <>
-      <div className="absolute w-full h-auto left-0 top-0 z-10">
+      <div className="absolute w-full h-fit left-0 top-0 z-10">
         <Clock />
       </div>
 
@@ -284,10 +284,10 @@ function Footer() {
 
       {/* Background */}
       <div className="relative -z-50">
-        <div className="absolute top-0 w-full h-auto z-10 drop-shadow-[0_15px_10px_rgba(0,0,0,0.4)]">
+        <div className="absolute top-0 w-full h-fit z-10 drop-shadow-[0_15px_10px_rgba(0,0,0,0.4)]">
           <FooterOutline fill="#47d4ff" />
         </div>
-        <FooterShape className="relative w-full h-auto" fill="#d5d5d5" />
+        <FooterShape className="relative w-full h-fit" fill="#d5d5d5" />
       </div>
       <div className="h-full bg-custom-grey-light"></div>
     </>
