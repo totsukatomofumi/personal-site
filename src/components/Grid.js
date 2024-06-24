@@ -60,7 +60,7 @@ function Box() {
 
 function Grid() {
   return (
-    <div className="w-[calc(21/3*23rem-1rem)] mx-[calc((100vw-(4*23rem-1rem))/2)] my-10 grid grid-rows-3 grid-flow-col auto-cols-min gap-4">
+    <div className="scroll-trigger grid grid-rows-3 grid-flow-col auto-cols-min gap-4">
       {Array(21).fill(<Box />)}
     </div>
   );
