@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 
-import { ReactComponent as FooterShape } from "../assets/images/footer-shape.svg";
-import { ReactComponent as FooterOutline } from "../assets/images/footer-outline.svg";
-import { ReactComponent as GithubIcon } from "../assets/images/github-icon.svg";
-import { ReactComponent as LinkedinIcon } from "../assets/images/linkedin-icon.svg";
+import { ReactComponent as FooterShape } from "../../assets/images/footer-shape.svg";
+import { ReactComponent as FooterOutline } from "../../assets/images/footer-outline.svg";
+import { ReactComponent as GithubIcon } from "../../assets/images/github-icon.svg";
+import { ReactComponent as LinkedinIcon } from "../../assets/images/linkedin-icon.svg";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 

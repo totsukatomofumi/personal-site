@@ -1,8 +1,8 @@
 import Grid from "./Grid";
 import Footer from "./Footer";
-import overallBackground from "../assets/images/background.png";
-import { ReactComponent as CaretLeft } from "../assets/images/caret-left-solid.svg";
-import { ReactComponent as CaretRight } from "../assets/images/caret-right-solid.svg";
+import overallBackground from "../../assets/images/background.png";
+import { ReactComponent as CaretLeft } from "../../assets/images/caret-left-solid.svg";
+import { ReactComponent as CaretRight } from "../../assets/images/caret-right-solid.svg";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

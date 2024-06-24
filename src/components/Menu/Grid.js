@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import placeholder from "../assets/images/tex1_128x96_1cb50192dde67d02_2.png";
+import placeholder from "../../assets/images/tex1_128x96_1cb50192dde67d02_2.png";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
