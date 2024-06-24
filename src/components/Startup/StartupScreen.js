@@ -1,5 +1,5 @@
 import { useGSAP } from "@gsap/react";
-import { ReactComponent as WarningIcon } from "../assets/images/triangle-exclamation-solid.svg";
+import { ReactComponent as WarningIcon } from "../../assets/images/triangle-exclamation-solid.svg";
 import gsap from "gsap";
 import { useRef } from "react";
 
