@@ -111,7 +111,7 @@ function Menu() {
       {/* Background */}
       <>
         <div
-          className="absolute top-0 left-0 w-full h-full bg-repeat-y -z-40 blur-[1px] opacity-50"
+          className="absolute top-0 left-0 w-full h-full bg-repeat-y -z-40 opacity-50"
           style={{ backgroundImage: `url(${overallBackground})` }}
         ></div>
         <div className="absolute top-0 left-0 w-full h-full bg-white -z-50"></div>
