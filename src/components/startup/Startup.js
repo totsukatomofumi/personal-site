@@ -3,7 +3,7 @@ import { ReactComponent as WarningIcon } from "../../assets/images/triangle-excl
 import gsap from "gsap";
 import { useRef } from "react";
 
-function StartupScreen() {
+function Startup() {
   const continueRef = useRef();
 
   useGSAP(() => {
@@ -20,7 +20,7 @@ function StartupScreen() {
   });
 
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen bg-black flex justify-center items-center">
+    <div className="fixed top-0 left-0 w-screen h-screen bg-black flex justify-center items-center leading-relaxed">
       <div className="w-3/4 h-1/2 text-custom-white text-center flex flex-col justify-around items-center">
         <div className="flex justify-center items-center">
           <div className="aspect-square w-14">
@@ -31,13 +31,13 @@ function StartupScreen() {
           </div>
         </div>
 
-        <div className="ml-32 mr-32 text-3xl leading-relaxed">
+        <div className="ml-32 mr-32 text-3xl">
           BEFORE ENTERING, PREPARE YOURSELF FOR A JOURNEY OF ADDICTING FUN,
           EPICNESS, AND ASTOUNDING CREATIVITY, ALL WHILE RETAINING EXCELLENT
           PROFESSIONALISM.
         </div>
 
-        <div className="text-2xl leading-relaxed">
+        <div className="text-2xl">
           <div>
             Always online at <br></br>
             <a
@@ -59,4 +59,4 @@ function StartupScreen() {
   );
 }
 
-export default StartupScreen;
+export default Startup;

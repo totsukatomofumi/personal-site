@@ -1,14 +1,12 @@
 import "./App.css";
-import Menu from "./components/Menu/Menu";
-import StartupScreen from "./components/Startup/StartupScreen";
-import Channel from "./components/Channel/Channel";
+import Channel from "./components/channel/Channel";
+import Menu from "./components/menu/Menu";
+import Startup from "./components/startup/Startup";
 
 function App() {
   return (
     <>
       <Channel />
-      {/* <Menu /> */}
-      {/* <StartupScreen /> */}
     </>
   );
 }
