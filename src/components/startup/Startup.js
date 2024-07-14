@@ -3,8 +3,12 @@ import { ReactComponent as WarningIcon } from "../../assets/images/triangle-excl
 import gsap from "gsap";
 import { useRef } from "react";
 
-function Startup() {
+function Startup({ setIsStartupClicked }) {
   const continueRef = useRef();
+
+  function handleClick() {
+    setIsStartupClicked(true);
+  }
 
   useGSAP(() => {
     const tl = gsap.timeline();
@@ -20,7 +24,10 @@ function Startup() {
   });
 
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen bg-black flex justify-center items-center leading-relaxed">
+    <div
+      className="fixed top-0 left-0 w-screen h-screen bg-black flex justify-center items-center leading-relaxed"
+      onClick={handleClick}
+    >
       <div className="w-3/4 h-1/2 text-custom-white text-center flex flex-col justify-around items-center">
         <div className="flex justify-center items-center">
           <div className="aspect-square w-14">
