@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import Grid from "./Grid";
-import Box from "./Box";
-import Arrows from "./Arrows";
+import { useState } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Grid from "./Grid";
+import Box from "./Box";
+import Arrows from "./Arrows";
 
 function Body() {
   const [boxWidth, setBoxWidth] = useState(0);

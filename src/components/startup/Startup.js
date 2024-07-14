@@ -1,7 +1,7 @@
-import { useGSAP } from "@gsap/react";
-import { ReactComponent as WarningIcon } from "../../assets/images/triangle-exclamation-solid.svg";
-import gsap from "gsap";
 import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ReactComponent as WarningIcon } from "../../assets/images/triangle-exclamation-solid.svg";
 
 function Startup({ setIsStartupClicked }) {
   const continueRef = useRef();

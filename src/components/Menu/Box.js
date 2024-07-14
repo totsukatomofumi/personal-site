@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useWindowSize } from "@uidotdev/usehooks";
-import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 function Box({ setBoxWidth }) {
   const isResize = useWindowSize(); // use to listen resize
