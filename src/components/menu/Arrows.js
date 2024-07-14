@@ -51,7 +51,7 @@ function Arrows() {
             [leftArrowContainerRef.current, rightArrowContainerRef.current],
             {
               x: 0,
-              duration: 0.1,
+              duration: 0.2,
             }
           );
         } else {
@@ -61,7 +61,7 @@ function Arrows() {
               : rightArrowContainerRef.current,
             {
               x: `${self.direction * 7}rem`, //left/right-12 + w-16 = 28*0.25rem = 7rem
-              duration: 0.1,
+              duration: 0.2,
             }
           );
         }
