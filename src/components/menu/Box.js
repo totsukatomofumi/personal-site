@@ -89,7 +89,7 @@ function Box({ setBoxWidth }) {
       ></div>
       <div className="absolute top-0 left-0 z-40 h-full w-full rounded-3xl border-4 border-custom-grey"></div>
       <div
-        className="absolute top-0 left-0 -z-50 h-[300%] w-[300%] opacity-35"
+        className="absolute top-0 left-0 -z-50 h-[300%] w-[300%] opacity-80"
         ref={backgroundRef}
         style={{
           backgroundImage: `url(${staticBackground})`,
