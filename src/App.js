@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import Map from "./models/Map";
@@ -27,10 +28,92 @@ function Scene() {
   });
   return (
     <>
+      <Player />
       <Map position={[0, 0, 0]} rotation={[0, -Math.PI / 2, 0]} />
       <ambientLight intensity={2} />
       <fog attach="fog" args={["white", 0, 180]} />
     </>
+  );
+}
+
+function Player() {
+  const [position, setPosition] = useState([0, 1, 0]);
+  const [activeKeys, setActiveKeys] = useState([false, false, false, false]); // w, a, s, d
+
+  // Move player
+  useEffect(() => {
+    function handleKeyDown(e) {
+      if (!e.repeat) {
+        switch (e.key) {
+          case "w":
+            setActiveKeys((prev) => [true, prev[1], prev[2], prev[3]]);
+            break;
+          case "a":
+            setActiveKeys((prev) => [prev[0], true, prev[2], prev[3]]);
+            break;
+          case "s":
+            setActiveKeys((prev) => [prev[0], prev[1], true, prev[3]]);
+            break;
+          case "d":
+            setActiveKeys((prev) => [prev[0], prev[1], prev[2], true]);
+            break;
+          default:
+        }
+      }
+    }
+
+    function handleKeyUp(e) {
+      switch (e.key) {
+        case "w":
+          setActiveKeys((prev) => [false, prev[1], prev[2], prev[3]]);
+          break;
+        case "a":
+          setActiveKeys((prev) => [prev[0], false, prev[2], prev[3]]);
+          break;
+        case "s":
+          setActiveKeys((prev) => [prev[0], prev[1], false, prev[3]]);
+          break;
+        case "d":
+          setActiveKeys((prev) => [prev[0], prev[1], prev[2], false]);
+          break;
+        default:
+      }
+    }
+
+    function movePlayer() {
+      const vStep = 0.3;
+      const hStep = 0.08;
+
+      if (activeKeys[0]) {
+        setPosition((prev) => [prev[0], prev[1], prev[2] - vStep]);
+      }
+      if (activeKeys[1]) {
+        setPosition((prev) => [prev[0] - hStep, prev[1], prev[2]]);
+      }
+      if (activeKeys[2]) {
+        setPosition((prev) => [prev[0], prev[1], prev[2] + vStep]);
+      }
+      if (activeKeys[3]) {
+        setPosition((prev) => [prev[0] + hStep, prev[1], prev[2]]);
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+    const interval = setInterval(movePlayer, 1000 / 60);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+      clearInterval(interval);
+    };
+  }, [activeKeys]);
+
+  return (
+    <mesh position={position}>
+      <planeGeometry args={[1, 2]} />
+      <meshStandardMaterial color="red" />
+    </mesh>
   );
 }
 
