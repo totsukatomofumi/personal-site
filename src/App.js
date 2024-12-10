@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Canvas, useThree } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import Map from "./models/Map";
 
@@ -30,6 +30,7 @@ function Scene() {
     <>
       <Player />
       <Map position={[0, 0, 0]} rotation={[0, -Math.PI / 2, 0]} />
+      {/* <NavMesh position={[0, 1, 0]} rotation={[0, -Math.PI / 2, 0]} /> */}
       <ambientLight intensity={2} />
       <fog attach="fog" args={["white", 0, 180]} />
     </>
@@ -80,6 +81,16 @@ function Player() {
       }
     }
 
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
+
+  useFrame(({ camera }) => {
     function movePlayer() {
       const vStep = 0.3;
       const hStep = 0.08;
@@ -98,16 +109,8 @@ function Player() {
       }
     }
 
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
-    const interval = setInterval(movePlayer, 1000 / 60);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
-      clearInterval(interval);
-    };
-  }, [activeKeys]);
+    movePlayer();
+  });
 
   return (
     <mesh position={position}>
