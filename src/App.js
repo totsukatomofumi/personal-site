@@ -41,18 +41,9 @@ function Scene() {
 function Player() {
   const playerWidth = 1;
   const playerHeight = 2;
-  const [position, setPosition] = useState([0, 1, 0]);
+  const playerInitPos = [0, 1, 0];
+  const playerRef = useRef();
   const [activeKeys, setActiveKeys] = useState([false, false, false, false]); // w, a, s, d
-  const raycasterTopLeftRef = useRef();
-  const raycasterBottomLeftRef = useRef();
-  const raycasterTopRightRef = useRef();
-  const raycasterBottomRightRef = useRef();
-  const navMeshRef = useRef();
-  const raycasterDir = new THREE.Vector3(0, -1, 0);
-  const [isCollisionTopLeft, setIsCollisionTopLeft] = useState(false);
-  const [isCollisionBottomLeft, setIsCollisionBottomLeft] = useState(false);
-  const [isCollisionTopRight, setIsCollisionTopRight] = useState(false);
-  const [isCollisionBottomRight, setIsCollisionBottomRight] = useState(false);
 
   // Move player
   useEffect(() => {
@@ -61,7 +52,6 @@ function Player() {
         switch (e.key) {
           case "w":
             setActiveKeys((prev) => [true, prev[1], prev[2], prev[3]]);
-            console.log("w");
             break;
           case "a":
             setActiveKeys((prev) => [prev[0], true, prev[2], prev[3]]);
@@ -95,121 +85,44 @@ function Player() {
       }
     }
 
-    function movePlayer() {
-      const vStep = 0.3;
-      const hStep = 0.1;
-
-      if (activeKeys[0] && !isCollisionTopLeft && !isCollisionTopRight) {
-        setPosition((prev) => [prev[0], prev[1], prev[2] - vStep]);
-      }
-      if (activeKeys[1] && !isCollisionTopLeft && !isCollisionBottomLeft) {
-        setPosition((prev) => [prev[0] - hStep, prev[1], prev[2]]);
-      }
-      if (activeKeys[2] && !isCollisionBottomLeft && !isCollisionBottomRight) {
-        setPosition((prev) => [prev[0], prev[1], prev[2] + vStep]);
-      }
-      if (activeKeys[3] && !isCollisionTopRight && !isCollisionBottomRight) {
-        setPosition((prev) => [prev[0] + hStep, prev[1], prev[2]]);
-      }
-    }
-
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keyup", handleKeyUp);
-    const movePlayerInterval = setInterval(movePlayer, 1000 / 60);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
-      clearInterval(movePlayerInterval);
     };
-  }, [
-    activeKeys,
-    isCollisionTopLeft,
-    isCollisionBottomLeft,
-    isCollisionTopRight,
-    isCollisionBottomRight,
-  ]);
+  }, []);
 
-  // Raycast collision check
-  useEffect(() => {
-    const raycasterTopLeftOrigin = new THREE.Vector3(
-      position[0] - playerWidth / 2,
-      0,
-      position[2] - 1
-    );
-    const raycasterBottomLeftOrigin = new THREE.Vector3(
-      position[0] - playerWidth / 2,
-      0,
-      position[2] + 1
-    );
-    const raycasterTopRightOrigin = new THREE.Vector3(
-      position[0] + playerWidth / 2,
-      0,
-      position[2] - 1
-    );
-    const raycasterBottomRightOrigin = new THREE.Vector3(
-      position[0] + playerWidth / 2,
-      0,
-      position[2] + 1
-    );
+  // per frame
+  function movePlayer(delta) {
+    const hSpeed = 4;
+    const vSpeed = 10;
+    const [w, a, s, d] = activeKeys;
+    if (w) {
+      playerRef.current.position.z -= vSpeed * delta;
+    }
+    if (a) {
+      playerRef.current.position.x -= hSpeed * delta;
+    }
+    if (s) {
+      playerRef.current.position.z += vSpeed * delta;
+    }
+    if (d) {
+      playerRef.current.position.x += hSpeed * delta;
+    }
+  }
 
-    raycasterTopLeftRef.current.set(raycasterTopLeftOrigin, raycasterDir);
-    raycasterBottomLeftRef.current.set(raycasterBottomLeftOrigin, raycasterDir);
-    raycasterTopRightRef.current.set(raycasterTopRightOrigin, raycasterDir);
-    raycasterBottomRightRef.current.set(
-      raycasterBottomRightOrigin,
-      raycasterDir
-    );
-
-    if (
-      raycasterTopLeftRef.current.intersectObject(navMeshRef.current, false)
-        .length > 0
-    ) {
-      setIsCollisionTopLeft(false);
-    } else {
-      setIsCollisionTopLeft(true);
-    }
-    if (
-      raycasterBottomLeftRef.current.intersectObject(navMeshRef.current, false)
-        .length > 0
-    ) {
-      setIsCollisionBottomLeft(false);
-    } else {
-      setIsCollisionBottomLeft(true);
-    }
-    if (
-      raycasterTopRightRef.current.intersectObject(navMeshRef.current, false)
-        .length > 0
-    ) {
-      setIsCollisionTopRight(false);
-    } else {
-      setIsCollisionTopRight(true);
-    }
-    if (
-      raycasterBottomRightRef.current.intersectObject(navMeshRef.current, false)
-        .length > 0
-    ) {
-      setIsCollisionBottomRight(false);
-    } else {
-      setIsCollisionBottomRight(true);
-    }
-  }, [position]);
+  useFrame((state, delta, xrFrame) => {
+    movePlayer(delta);
+  });
 
   return (
     <>
-      <mesh position={position}>
+      <mesh ref={playerRef} position={playerInitPos}>
         <planeGeometry args={[playerWidth, playerHeight]} />
         <meshStandardMaterial color="red" />
       </mesh>
-      <raycaster ref={raycasterTopLeftRef} />
-      <raycaster ref={raycasterBottomLeftRef} />
-      <raycaster ref={raycasterTopRightRef} />
-      <raycaster ref={raycasterBottomRightRef} />
-      <NavMesh
-        ref={navMeshRef}
-        position={[0, -1, 0]}
-        rotation={[0, -Math.PI / 2, 0]}
-      />
     </>
   );
 }
