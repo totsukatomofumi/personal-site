@@ -12,12 +12,15 @@ function App() {
         <Scene />
       </Canvas>
 
-      {/* <div className="absolute top-0 left-0 w-full h-full z-50 flex justify-center items-center">
+      <div className="absolute top-0 left-0 w-full h-full z-50 flex justify-center items-center">
         <div className="bg-black w-[1px] h-full"></div>
       </div>
       <div className="absolute top-0 left-0 w-full h-full z-50 flex justify-center items-center">
         <div className="bg-black w-full h-[1px]"></div>
-      </div> */}
+      </div>
+      <div className="absolute top-0 left-0 w-full h-full z-50 flex flex-col justify-end items-center">
+        <div className="bg-black w-full h-[80px]"></div>
+      </div>
     </div>
   );
 }
@@ -28,7 +31,7 @@ const MAP_ROT = [0, -Math.PI / 2, 0];
 function Scene() {
   useThree(({ gl, camera }) => {
     camera.setFocalLength(50);
-    camera.position.set(0, 8, 21);
+    camera.position.set(0, 8, 23);
     camera.rotation.set(THREE.MathUtils.degToRad(-10), 0, 0);
   });
   return (
@@ -52,7 +55,7 @@ function Player() {
   const hSpeed = 4;
   const vSpeed = 11;
   const activeKeys = useRef([false, false, false, false]); // w, a, s, d
-  const playerDir = useRef([false, false, true, false]); // up, left, down, right
+  const playerDir = useRef([true, false, false, false]); // up, left, down, right
   const isPlayerMoving = useRef(false);
 
   useEffect(() => {
