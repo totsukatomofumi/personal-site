@@ -22,6 +22,9 @@ function App() {
   );
 }
 
+const MAP_POS = [0, 0, 0];
+const MAP_ROT = [0, -Math.PI / 2, 0];
+
 function Scene() {
   useThree(({ camera }) => {
     camera.setFocalLength(50);
@@ -31,11 +34,7 @@ function Scene() {
   return (
     <>
       <Player />
-      <Map
-        position={[0, 0, 0]}
-        rotation={[0, -Math.PI / 2, 0]}
-        renderOrder={1}
-      />
+      <Map position={MAP_POS} rotation={MAP_ROT} renderOrder={1} />
 
       <ambientLight intensity={2} />
       <fog attach="fog" args={["white", 0, 180]} />
@@ -109,16 +108,56 @@ function Player() {
     const [w, a, s, d] = activeKeys.current;
 
     if (w) {
-      playerRef.current.position.z -= vSpeed * delta;
+      const distance = vSpeed * delta;
+
+      // do prediction
+      const predictionOrigin = new THREE.Vector3();
+      predictionOrigin.copy(playerRef.current.position);
+      predictionOrigin.z -= distance;
+      raycasterRef.current.ray.origin.copy(predictionOrigin);
+
+      if (raycasterRef.current.intersectObject(navMeshRef.current).length > 0) {
+        playerRef.current.position.z -= distance;
+      }
     }
     if (a) {
-      playerRef.current.position.x -= hSpeed * delta;
+      const distance = hSpeed * delta;
+
+      // do prediction
+      const predictionOrigin = new THREE.Vector3();
+      predictionOrigin.copy(playerRef.current.position);
+      predictionOrigin.x -= distance;
+      raycasterRef.current.ray.origin.copy(predictionOrigin);
+
+      if (raycasterRef.current.intersectObject(navMeshRef.current).length > 0) {
+        playerRef.current.position.x -= distance;
+      }
     }
     if (s) {
-      playerRef.current.position.z += vSpeed * delta;
+      const distance = vSpeed * delta;
+
+      // do prediction
+      const predictionOrigin = new THREE.Vector3();
+      predictionOrigin.copy(playerRef.current.position);
+      predictionOrigin.z += distance;
+      raycasterRef.current.ray.origin.copy(predictionOrigin);
+
+      if (raycasterRef.current.intersectObject(navMeshRef.current).length > 0) {
+        playerRef.current.position.z += distance;
+      }
     }
     if (d) {
-      playerRef.current.position.x += hSpeed * delta;
+      const distance = hSpeed * delta;
+
+      // do prediction
+      const predictionOrigin = new THREE.Vector3();
+      predictionOrigin.copy(playerRef.current.position);
+      predictionOrigin.x += distance;
+      raycasterRef.current.ray.origin.copy(predictionOrigin);
+
+      if (raycasterRef.current.intersectObject(navMeshRef.current).length > 0) {
+        playerRef.current.position.x += distance;
+      }
     }
 
     if (w || a || s || d) {
@@ -259,6 +298,12 @@ function Player() {
     animatePlayerSprite(delta);
   });
 
+  // Navmesh collision
+  const raycasterDir = new THREE.Vector3(0, -1, 0);
+  const navMeshPos = [MAP_POS[0], MAP_POS[1] - 1, MAP_POS[2]];
+  const raycasterRef = useRef();
+  const navMeshRef = useRef();
+
   return (
     <>
       <sprite
@@ -268,6 +313,8 @@ function Player() {
       >
         <spriteMaterial map={playerSpriteMap} />
       </sprite>
+      <raycaster ref={raycasterRef} ray-direction={raycasterDir} />
+      <NavMesh ref={navMeshRef} position={navMeshPos} rotation={MAP_ROT} />
     </>
   );
 }

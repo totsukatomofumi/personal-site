@@ -15,10 +15,10 @@ const NavMesh = forwardRef(function NavMesh(props, ref) {
     <group {...props} dispose={null}>
       <mesh
         ref={ref}
-        geometry={nodes.Plane002.geometry}
-        material={nodes.Plane002.material}
-        position={[1.8, 0, -0.7]}
-        rotation={[0, 0.697, 0]}
+        geometry={nodes.Plane004.geometry}
+        material={nodes.Plane004.material}
+        position={[-19.8, 0, -0.76]}
+        scale={[1.623, 0.856, 1.314]}
       />
     </group>
   );
