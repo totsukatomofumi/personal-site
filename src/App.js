@@ -7,19 +7,18 @@ import playerSprite from "./sprites/player.png";
 
 function App() {
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen">
-      <Canvas>
-        <Scene />
-      </Canvas>
+    <div className="fixed top-0 left-0 w-screen h-screen pb-[80px]">
+      <div className="w-full h-full">
+        <Canvas>
+          <Scene />
+        </Canvas>
 
-      <div className="absolute top-0 left-0 w-full h-full z-50 flex justify-center items-center">
-        <div className="bg-black w-[1px] h-full"></div>
-      </div>
-      <div className="absolute top-0 left-0 w-full h-full z-50 flex justify-center items-center">
-        <div className="bg-black w-full h-[1px]"></div>
-      </div>
-      <div className="absolute top-0 left-0 w-full h-full z-50 flex flex-col justify-end items-center">
-        <div className="bg-black w-full h-[80px]"></div>
+        <div className="absolute top-0 left-0 w-full h-full z-50 flex justify-center items-center">
+          <div className="bg-black w-[1px] h-full"></div>
+        </div>
+        <div className="absolute top-0 left-0 w-full h-full z-50 flex justify-center items-center">
+          <div className="bg-black w-full h-[1px]"></div>
+        </div>
       </div>
     </div>
   );
@@ -30,10 +29,34 @@ const MAP_ROT = [0, -Math.PI / 2, 0];
 
 function Scene() {
   useThree(({ gl, camera }) => {
-    camera.setFocalLength(50);
-    camera.position.set(0, 8, 23);
-    camera.rotation.set(THREE.MathUtils.degToRad(-10), 0, 0);
+    camera.setFocalLength(60);
+    camera.position.set(0, 6, 25); // min 0, 7, 33
+    camera.rotation.set(THREE.MathUtils.degToRad(-5), 0, 0); // angle at -5
   });
+
+  // const debugElapsedTime = useRef(0);
+  // const isOppDir = useRef(false);
+  // useFrame((state, delta, xrFrame) => {
+  //   debugElapsedTime.current += delta;
+
+  //   if (debugElapsedTime.current < 0.1) return;
+
+  //   debugElapsedTime.current = 0;
+
+  //   if (isOppDir.current) {
+  //     if (state.camera.position.z >= 33) {
+  //       isOppDir.current = false;
+  //     }
+
+  //     state.camera.position.z += 1;
+  //   } else {
+  //     if (state.camera.position.z <= 20) {
+  //       isOppDir.current = true;
+  //     }
+
+  //     state.camera.position.z -= 1;
+  //   }
+  // });
   return (
     <>
       <Player />
