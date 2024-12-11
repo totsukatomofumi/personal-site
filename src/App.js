@@ -26,9 +26,9 @@ const MAP_POS = [0, 0, 0];
 const MAP_ROT = [0, -Math.PI / 2, 0];
 
 function Scene() {
-  useThree(({ camera }) => {
+  useThree(({ gl, camera }) => {
     camera.setFocalLength(50);
-    camera.position.set(0, 10, 40);
+    camera.position.set(0, 8, 21);
     camera.rotation.set(THREE.MathUtils.degToRad(-10), 0, 0);
   });
   return (
