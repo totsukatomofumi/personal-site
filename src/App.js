@@ -4,10 +4,13 @@ import * as THREE from "three";
 import Map from "./models/Map";
 import NavMesh from "./models/Navmesh";
 import playerSprite from "./sprites/player.png";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 function App() {
+  // pb-[80px]
+
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen pb-[80px]">
+    <div className="fixed top-0 left-0 w-screen h-screen ">
       <div className="w-full h-full">
         <Canvas>
           <Scene />
@@ -30,33 +33,10 @@ const MAP_ROT = [0, -Math.PI / 2, 0];
 function Scene() {
   useThree(({ gl, camera }) => {
     camera.setFocalLength(60);
-    camera.position.set(0, 6, 25); // min 0, 7, 33
+    camera.position.set(0, 6, 22); // horiz x [-1, 1] vert y [6] depth z [16, 22]
     camera.rotation.set(THREE.MathUtils.degToRad(-5), 0, 0); // angle at -5
   });
 
-  // const debugElapsedTime = useRef(0);
-  // const isOppDir = useRef(false);
-  // useFrame((state, delta, xrFrame) => {
-  //   debugElapsedTime.current += delta;
-
-  //   if (debugElapsedTime.current < 0.1) return;
-
-  //   debugElapsedTime.current = 0;
-
-  //   if (isOppDir.current) {
-  //     if (state.camera.position.z >= 33) {
-  //       isOppDir.current = false;
-  //     }
-
-  //     state.camera.position.z += 1;
-  //   } else {
-  //     if (state.camera.position.z <= 20) {
-  //       isOppDir.current = true;
-  //     }
-
-  //     state.camera.position.z -= 1;
-  //   }
-  // });
   return (
     <>
       <Player />

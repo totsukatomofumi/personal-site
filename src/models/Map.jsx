@@ -13,6 +13,12 @@ function Map(props) {
   return (
     <group {...props} dispose={null}>
       <mesh
+        geometry={nodes.Plane006.geometry}
+        material={materials["brick1.001"]}
+        position={[-34.14, 0, 0]}
+        scale={[59.797, 21.777, 21.777]}
+      />
+      <mesh
         geometry={nodes.banner_0001.geometry}
         material={materials.wood_banner}
         position={[-53.543, 5.486, 2.049]}
@@ -27,13 +33,13 @@ function Map(props) {
       <mesh
         geometry={nodes.plant_01_0001.geometry}
         material={materials.plant}
-        position={[6.469, -0.034, 4.033]}
+        position={[-3.731, -0.034, 3.133]}
         rotation={[-Math.PI / 2, 0, 0]}
       />
       <mesh
         geometry={nodes.Object_10002.geometry}
         material={materials["Material.004"]}
-        position={[11.015, 3.297, 3.579]}
+        position={[-41.185, 3.597, 2.679]}
         rotation={[0.698, 0, 0]}
         scale={[0.045, 0.054, 0.504]}
       />
@@ -42,12 +48,6 @@ function Map(props) {
         material={materials.Torch2_lambert1_AlbedoTransparency}
         position={[-22.326, 2.46, 1.89]}
         scale={139.333}
-      />
-      <mesh
-        geometry={nodes.Plane.geometry}
-        material={materials.brick1}
-        position={[-34.14, 0, 0]}
-        scale={[59.797, 21.777, 21.777]}
       />
       <mesh
         geometry={nodes.obj_house_1_material_planks_0001.geometry}
@@ -94,7 +94,7 @@ function Map(props) {
       <mesh
         geometry={nodes.Cube__0.geometry}
         material={materials["Scene_-_Root"]}
-        position={[-23.188, 1.319, -3.529]}
+        position={[-23.188, 1.319, -3.029]}
         rotation={[-Math.PI / 2, 0, 0.059]}
       />
       <mesh
@@ -149,15 +149,15 @@ function Map(props) {
       <mesh
         geometry={nodes.barrel_low_Material_0.geometry}
         material={materials.Material}
-        position={[4.985, 0, -3.06]}
-        rotation={[-Math.PI / 2, 0, 1.512]}
+        position={[-2.797, 0, -2.579]}
+        rotation={[-Math.PI / 2, 0, 1.247]}
         scale={0.323}
       />
       <mesh
         geometry={nodes.pCube104_lambert2_0.geometry}
         material={materials.lambert2}
-        position={[8.281, 0.791, -3.486]}
-        scale={[0.128, 0.049, 0.089]}
+        position={[-4.998, 0.682, -2.833]}
+        scale={[0.11, 0.042, 0.077]}
       />
       <mesh
         geometry={nodes.Object_5.geometry}
