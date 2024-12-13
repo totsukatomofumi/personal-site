@@ -6,10 +6,21 @@ import NavMesh from "./models/Navmesh";
 import playerSprite from "./sprites/player.png";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { isMobile } from "react-device-detect";
 
 function App() {
   const isJoyStickActive = useRef(false);
   const joystickPos = useRef([0, 0]); // x, y max 50
+
+  if (!isMobile) {
+    return (
+      <div className="fixed top-0 left-0 w-screen h-screen pb-[80px] touch-none ">
+        <div className="flex justify-center items-center w-full h-full">
+          <div className="text-2xl font-bold">Please use a mobile device</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="fixed top-0 left-0 w-screen h-screen pb-[80px] touch-none ">
