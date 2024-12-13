@@ -7,6 +7,8 @@ import playerSprite from "./sprites/player.png";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { isMobile, useMobileOrientation } from "react-device-detect";
+import uiStatus from "./sprites/ui-status.png";
+import uiButton from "./sprites/ui-button.png";
 
 function App() {
   const { isLandscape } = useMobileOrientation();
@@ -46,8 +48,23 @@ function App() {
           isJoyStickActive={isJoyStickActive}
           joystickPos={joystickPos}
         />
+        <Ui />
       </div>
     </div>
+  );
+}
+
+function Ui() {
+  return (
+    <>
+      <div className="absolute top-5 left-5 w-fit h-[80px]">
+        <img src={uiStatus} alt="ui-status" className="h-full" />
+      </div>
+
+      <div className="absolute bottom-5 right-5 w-fit h-[80px]">
+        <img src={uiButton} alt="ui-button" className="h-full" />
+      </div>
+    </>
   );
 }
 
