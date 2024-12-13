@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import Map from "./models/Map";
@@ -159,17 +159,29 @@ function Joystick({ isJoyStickActive, joystickPos }) {
 
 const MAP_POS = [0, 0, 0];
 const MAP_ROT = [0, -Math.PI / 2, 0];
+const CAM_VERT = 6;
+const MAX_CAM_DEPTH = 22;
+const MIN_CAM_DEPTH = 10;
+const MAX_CAM_HORIZ = 1;
+const MIN_CAM_HORIZ = -1;
 
 function Scene({ isJoyStickActive, joystickPos }) {
+  const playerRef = useRef();
+
   useThree(({ gl, camera }) => {
     camera.setFocalLength(60);
-    camera.position.set(0, 6, 22); // horiz x [-1, 1] vert y [6] depth z [16, 22]
+    camera.position.set(0, 6, 10); // horiz x [-1, 1] vert y [6] depth z [10, 22]
     camera.rotation.set(THREE.MathUtils.degToRad(-5), 0, 0); // angle at -5
   });
 
   return (
     <>
-      <Player isJoyStickActive={isJoyStickActive} joystickPos={joystickPos} />
+      <Camera playerRef={playerRef} />
+      <Player
+        ref={playerRef}
+        isJoyStickActive={isJoyStickActive}
+        joystickPos={joystickPos}
+      />
       <Map position={MAP_POS} rotation={MAP_ROT} renderOrder={1} />
 
       <ambientLight intensity={2} />
@@ -178,11 +190,44 @@ function Scene({ isJoyStickActive, joystickPos }) {
   );
 }
 
-function Player({ isJoyStickActive, joystickPos }) {
+function Camera({ playerRef }) {
+  const maxHoriz = 4;
+  const minDepth = -12;
+  const maxDepth = 0;
+  useFrame(({ camera }, delta) => {
+    // [-4, 4]
+    const playerHoriz =
+      Math.abs(playerRef.current.position.x) > maxHoriz
+        ? Math.sign(playerRef.current.position.x) * maxHoriz
+        : playerRef.current.position.x;
+
+    // [-10, 0]
+    const playerDepth =
+      playerRef.current.position.z < maxDepth
+        ? playerRef.current.position.z > minDepth
+          ? playerRef.current.position.z
+          : minDepth
+        : maxDepth;
+
+    const camHoriz = (playerHoriz / maxHoriz) * MAX_CAM_HORIZ;
+    const camDepth =
+      MAX_CAM_DEPTH +
+      (playerDepth / (maxDepth - minDepth)) * (MAX_CAM_DEPTH - MIN_CAM_DEPTH);
+
+    camera.position.x = camHoriz;
+    camera.position.z = camDepth;
+  });
+
+  return null;
+}
+
+const Player = forwardRef(function Player(
+  { joystickPos, isJoyStickActive },
+  playerRef
+) {
   const playerWidth = 2;
   const playerHeight = 2;
   const playerInitPos = [0, 1, 0];
-  const playerRef = useRef();
 
   // Move player
   const hSpeed = 4;
@@ -497,6 +542,6 @@ function Player({ isJoyStickActive, joystickPos }) {
       <NavMesh ref={navMeshRef} position={navMeshPos} rotation={MAP_ROT} />
     </>
   );
-}
+});
 
 export default App;
