@@ -8,12 +8,8 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
 function App() {
-  const [isJoyStickActive, setIsJoyStickActive] = useState(false);
-  const [joystickPos, setJoystickPos] = useState([0, 0]); // x, y max 50
-
-  useEffect(() => {
-    console.log(joystickPos);
-  }, [joystickPos]);
+  const isJoyStickActive = useRef(false);
+  const joystickPos = useRef([0, 0]); // x, y max 50
 
   return (
     <div className="fixed top-0 left-0 w-screen h-screen pb-[80px] touch-none ">
@@ -25,8 +21,8 @@ function App() {
           />
         </Canvas>
         <Joystick
-          setIsJoyStickActive={setIsJoyStickActive}
-          setJoystickPos={setJoystickPos}
+          isJoyStickActive={isJoyStickActive}
+          joystickPos={joystickPos}
         />
       </div>
     </div>
@@ -35,7 +31,7 @@ function App() {
 
 const MAX_JOYSTICK_POS = 50;
 
-function Joystick({ setIsJoyStickActive, setJoystickPos }) {
+function Joystick({ isJoyStickActive, joystickPos }) {
   const [isActive, setIsActive] = useState(false);
   const [initTouchPos, setInitTouchPos] = useState([0, 0]);
   const [currTouchPos, setCurrTouchPos] = useState([0, 0]);
@@ -45,7 +41,7 @@ function Joystick({ setIsJoyStickActive, setJoystickPos }) {
 
   // pass joystick position to parent
   useEffect(() => {
-    setIsJoyStickActive(isActive);
+    isJoyStickActive.current = isActive;
 
     let x = currTouchPos[0] - initTouchPos[0];
     let y = currTouchPos[1] - initTouchPos[1];
@@ -55,17 +51,10 @@ function Joystick({ setIsJoyStickActive, setJoystickPos }) {
     if (y > MAX_JOYSTICK_POS) y = MAX_JOYSTICK_POS;
     if (y < -MAX_JOYSTICK_POS) y = -MAX_JOYSTICK_POS;
 
-    setJoystickPos([x, y]);
-  }, [
-    isActive,
-    initTouchPos,
-    currTouchPos,
-    setIsJoyStickActive,
-    setJoystickPos,
-  ]);
+    joystickPos.current = [x, y];
+  }, [isActive, initTouchPos, currTouchPos, isJoyStickActive, joystickPos]);
 
   function handleOnTouchStart(e) {
-    e.preventDefault();
     const touch = e.changedTouches[0];
 
     setTouchId(touch.identifier);
@@ -76,7 +65,6 @@ function Joystick({ setIsJoyStickActive, setJoystickPos }) {
   }
 
   function handleOnTouchMove(e) {
-    e.preventDefault();
     let touch = null;
 
     for (let i = 0; i < e.changedTouches.length; i++) {
@@ -91,7 +79,6 @@ function Joystick({ setIsJoyStickActive, setJoystickPos }) {
   }
 
   function handleOnTouchEnd(e) {
-    e.preventDefault();
     setCurrTouchPos(initTouchPos);
     setIsActive(false);
   }
@@ -105,7 +92,7 @@ function Joystick({ setIsJoyStickActive, setJoystickPos }) {
 
       const tl = gsap.timeline();
 
-      tl.to(baseRef.current, { opacity: opacity, duration: 0.1 });
+      tl.to(baseRef.current, { opacity: opacity, duration: 0.2 });
     },
     { dependencies: [isActive] }
   );
@@ -309,29 +296,42 @@ function Player({ isJoyStickActive, joystickPos }) {
   }
 
   function movePlayerJoystick(delta) {
-    if (!isJoyStickActive) {
+    if (!isJoyStickActive.current) {
       isPlayerMoving.current = false;
       return;
     }
 
-    const [x, y] = joystickPos;
+    const [x, y] = joystickPos.current;
     const vDist = (y / MAX_JOYSTICK_POS) * vSpeed * delta;
     const hDist = (x / MAX_JOYSTICK_POS) * hSpeed * delta;
 
     const predictionOrigin = new THREE.Vector3();
     predictionOrigin.copy(playerRef.current.position);
     predictionOrigin.x += hDist;
-    predictionOrigin.z += vDist;
     raycasterRef.current.ray.origin.copy(predictionOrigin);
 
     if (raycasterRef.current.intersectObject(navMeshRef.current).length > 0) {
       playerRef.current.position.x += hDist;
+    }
+
+    predictionOrigin.copy(playerRef.current.position);
+    predictionOrigin.z += vDist;
+    raycasterRef.current.ray.origin.copy(predictionOrigin);
+
+    if (raycasterRef.current.intersectObject(navMeshRef.current).length > 0) {
       playerRef.current.position.z += vDist;
     }
 
+    const diagThreshold = 20;
+
     if (x !== 0 || y !== 0) {
       isPlayerMoving.current = true;
-      playerDir.current = [y > 0, x < 0, y < 0, x > 0];
+      playerDir.current = [
+        y < 0,
+        Math.abs(y) < 10 ? x < 0 : x < -diagThreshold,
+        y > 0,
+        Math.abs(y) < 10 ? x > 0 : x > diagThreshold,
+      ];
     } else {
       isPlayerMoving.current = false;
     }
