@@ -75,11 +75,11 @@ function Loading() {
 function Ui() {
   return (
     <>
-      <div className="absolute top-5 left-5 w-fit h-[80px]">
+      <div className="absolute top-5 left-5 z-40 w-fit h-[80px]">
         <img src={uiStatus} alt="ui-status" className="h-full" />
       </div>
 
-      <div className="absolute bottom-5 right-5 w-fit h-[80px]">
+      <div className="absolute bottom-5 z-40 right-5 w-fit h-[80px]">
         <img src={uiButton} alt="ui-button" className="h-full" />
       </div>
     </>
@@ -184,7 +184,7 @@ function Joystick({ isJoyStickActive, joystickPos }) {
 
   return (
     <div
-      className="absolute top-0 left-0 w-full h-full z-40"
+      className="absolute top-0 left-0 w-full h-full z-30"
       onTouchStart={handleOnTouchStart}
       onTouchEnd={handleOnTouchEnd}
       onTouchMove={handleOnTouchMove}
