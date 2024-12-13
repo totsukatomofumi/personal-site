@@ -65,6 +65,7 @@ function Joystick({ setIsJoyStickActive, setJoystickPos }) {
   ]);
 
   function handleOnTouchStart(e) {
+    e.preventDefault();
     const touch = e.changedTouches[0];
 
     setTouchId(touch.identifier);
@@ -75,6 +76,7 @@ function Joystick({ setIsJoyStickActive, setJoystickPos }) {
   }
 
   function handleOnTouchMove(e) {
+    e.preventDefault();
     let touch = null;
 
     for (let i = 0; i < e.changedTouches.length; i++) {
@@ -89,6 +91,7 @@ function Joystick({ setIsJoyStickActive, setJoystickPos }) {
   }
 
   function handleOnTouchEnd(e) {
+    e.preventDefault();
     setCurrTouchPos(initTouchPos);
     setIsActive(false);
   }
