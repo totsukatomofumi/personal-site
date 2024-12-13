@@ -160,6 +160,7 @@ function Joystick({ isJoyStickActive, joystickPos }) {
 const MAP_POS = [0, 0, 0];
 const MAP_ROT = [0, -Math.PI / 2, 0];
 const CAM_VERT = 6;
+const CAM_ROT = -5;
 const MAX_CAM_DEPTH = 22;
 const MIN_CAM_DEPTH = 10;
 const MAX_CAM_HORIZ = 1;
@@ -170,8 +171,8 @@ function Scene({ isJoyStickActive, joystickPos }) {
 
   useThree(({ gl, camera }) => {
     camera.setFocalLength(60);
-    camera.position.set(0, 6, MAX_CAM_DEPTH); // horiz x [-1, 1] vert y [6] depth z [10, 22]
-    camera.rotation.set(THREE.MathUtils.degToRad(-5), 0, 0); // angle at -5
+    camera.position.set(0, CAM_VERT, MAX_CAM_DEPTH); // horiz x [-1, 1] vert y [6] depth z [10, 22]
+    camera.rotation.set(THREE.MathUtils.degToRad(CAM_ROT), 0, 0); // angle at -5
   });
 
   return (
