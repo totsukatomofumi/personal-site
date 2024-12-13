@@ -11,9 +11,14 @@ import uiStatus from "./sprites/ui-status.png";
 import uiButton from "./sprites/ui-button.png";
 
 function App() {
+  const [isLoaded, setIsLoaded] = useState(false);
   const { isLandscape } = useMobileOrientation();
   const isJoyStickActive = useRef(false);
   const joystickPos = useRef([0, 0]); // x, y max 50
+
+  useEffect(() => {
+    console.log(isLoaded);
+  }, [isLoaded]);
 
   if (!isMobile) {
     return (
@@ -36,9 +41,14 @@ function App() {
   }
 
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen pb-[80px] touch-none ">
+    <div className="fixed top-0 left-0 w-screen h-screen pb-[80px] touch-none bg-black">
       <div className="relative w-full h-full">
-        <Canvas>
+        {isLoaded ? null : <Loading />}
+        <Canvas
+          onCreated={() => {
+            setIsLoaded(true);
+          }}
+        >
           <Scene
             isJoyStickActive={isJoyStickActive}
             joystickPos={joystickPos}
@@ -50,6 +60,14 @@ function App() {
         />
         <Ui />
       </div>
+    </div>
+  );
+}
+
+function Loading() {
+  return (
+    <div className="absolute top-0 left-0 z-50 w-full h-full flex justify-center items-center bg-black">
+      <div className="text-white text-2xl font-bold">Loading...</div>
     </div>
   );
 }
@@ -198,6 +216,7 @@ function Scene({ isJoyStickActive, joystickPos }) {
   const playerRef = useRef();
 
   useThree(({ gl, camera }) => {
+    gl.setClearColor("white");
     camera.setFocalLength(60);
     camera.position.set(0, CAM_VERT, MAX_CAM_DEPTH); // horiz x [-1, 1] vert y [6] depth z [10, 22]
     camera.rotation.set(THREE.MathUtils.degToRad(CAM_ROT), 0, 0); // angle at -5
