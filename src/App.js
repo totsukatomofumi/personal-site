@@ -194,29 +194,50 @@ function Camera({ playerRef }) {
   const maxHoriz = 4;
   const minDepth = -12;
   const maxDepth = 0;
-  useFrame(({ camera }, delta) => {
-    // [-4, 4]
-    const playerHoriz =
-      Math.abs(playerRef.current.position.x) > maxHoriz
-        ? Math.sign(playerRef.current.position.x) * maxHoriz
-        : playerRef.current.position.x;
+  const [toggleAnim, setToggleAnim] = useState(false);
+  const cameraRef = useRef();
 
-    // [-10, 0]
-    const playerDepth =
-      playerRef.current.position.z < maxDepth
-        ? playerRef.current.position.z > minDepth
-          ? playerRef.current.position.z
-          : minDepth
-        : maxDepth;
-
-    const camHoriz = (playerHoriz / maxHoriz) * MAX_CAM_HORIZ;
-    const camDepth =
-      MAX_CAM_DEPTH +
-      (playerDepth / (maxDepth - minDepth)) * (MAX_CAM_DEPTH - MIN_CAM_DEPTH);
-
-    camera.position.x = camHoriz;
-    camera.position.z = camDepth;
+  useThree(({ camera }) => {
+    cameraRef.current = camera;
   });
+
+  useFrame(() => {
+    setToggleAnim((prev) => !prev);
+  });
+
+  useGSAP(
+    () => {
+      if (playerRef.current === null || playerRef.current === undefined) return;
+
+      const tl = gsap.timeline();
+
+      // [-4, 4]
+      const playerHoriz =
+        Math.abs(playerRef.current.position.x) > maxHoriz
+          ? Math.sign(playerRef.current.position.x) * maxHoriz
+          : playerRef.current.position.x;
+
+      // [-10, 0]
+      const playerDepth =
+        playerRef.current.position.z < maxDepth
+          ? playerRef.current.position.z > minDepth
+            ? playerRef.current.position.z
+            : minDepth
+          : maxDepth;
+
+      const camHoriz = (playerHoriz / maxHoriz) * MAX_CAM_HORIZ;
+      const camDepth =
+        MAX_CAM_DEPTH +
+        (playerDepth / (maxDepth - minDepth)) * (MAX_CAM_DEPTH - MIN_CAM_DEPTH);
+
+      tl.to(cameraRef.current.position, {
+        x: camHoriz,
+        z: camDepth,
+        duration: 1,
+      });
+    },
+    { dependencies: [cameraRef, toggleAnim] }
+  );
 
   return null;
 }
