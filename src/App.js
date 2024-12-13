@@ -308,7 +308,6 @@ function Player({ isJoyStickActive, joystickPos }) {
 
   function movePlayerJoystick(delta) {
     if (!isJoyStickActive.current) {
-      isPlayerMoving.current = false;
       return;
     }
 
