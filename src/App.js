@@ -8,25 +8,61 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
 function App() {
+  const [isJoyStickActive, setIsJoyStickActive] = useState(false);
+  const [joystickPos, setJoystickPos] = useState([0, 0]); // x, y max 50
+
+  useEffect(() => {
+    console.log(joystickPos);
+  }, [joystickPos]);
+
   return (
     <div className="fixed top-0 left-0 w-screen h-screen pb-[80px] ">
       <div className="relative w-full h-full">
         <Canvas>
-          <Scene />
+          <Scene
+            isJoyStickActive={isJoyStickActive}
+            joystickPos={joystickPos}
+          />
         </Canvas>
-        <Joystick />
+        <Joystick
+          setIsJoyStickActive={setIsJoyStickActive}
+          setJoystickPos={setJoystickPos}
+        />
       </div>
     </div>
   );
 }
 
-function Joystick() {
+const MAX_JOYSTICK_POS = 50;
+
+function Joystick({ setIsJoyStickActive, setJoystickPos }) {
   const [isActive, setIsActive] = useState(false);
   const [initTouchPos, setInitTouchPos] = useState([0, 0]);
   const [currTouchPos, setCurrTouchPos] = useState([0, 0]);
   const [touchId, setTouchId] = useState(null);
   const baseRef = useRef();
   const stickRef = useRef();
+
+  // pass joystick position to parent
+  useEffect(() => {
+    setIsJoyStickActive(isActive);
+
+    let x = currTouchPos[0] - initTouchPos[0];
+    let y = currTouchPos[1] - initTouchPos[1];
+
+    if (x > MAX_JOYSTICK_POS) x = MAX_JOYSTICK_POS;
+    if (x < -MAX_JOYSTICK_POS) x = -MAX_JOYSTICK_POS;
+    if (y > MAX_JOYSTICK_POS) y = MAX_JOYSTICK_POS;
+    if (y < -MAX_JOYSTICK_POS) y = -MAX_JOYSTICK_POS;
+
+    setJoystickPos([x, y]);
+  }, [
+    isActive,
+    initTouchPos,
+    currTouchPos,
+    setIsJoyStickActive,
+    setJoystickPos,
+  ]);
 
   function handleOnTouchStart(e) {
     const touch = e.changedTouches[0];
@@ -123,7 +159,7 @@ function Joystick() {
 const MAP_POS = [0, 0, 0];
 const MAP_ROT = [0, -Math.PI / 2, 0];
 
-function Scene() {
+function Scene({ isJoyStickActive, joystickPos }) {
   useThree(({ gl, camera }) => {
     camera.setFocalLength(60);
     camera.position.set(0, 6, 22); // horiz x [-1, 1] vert y [6] depth z [16, 22]
@@ -132,7 +168,7 @@ function Scene() {
 
   return (
     <>
-      <Player />
+      <Player isJoyStickActive={isJoyStickActive} joystickPos={joystickPos} />
       <Map position={MAP_POS} rotation={MAP_ROT} renderOrder={1} />
 
       <ambientLight intensity={2} />
@@ -141,7 +177,7 @@ function Scene() {
   );
 }
 
-function Player() {
+function Player({ isJoyStickActive, joystickPos }) {
   const playerWidth = 2;
   const playerHeight = 2;
   const playerInitPos = [0, 1, 0];
@@ -153,6 +189,8 @@ function Player() {
   const activeKeys = useRef([false, false, false, false]); // w, a, s, d
   const playerDir = useRef([true, false, false, false]); // up, left, down, right
   const isPlayerMoving = useRef(false);
+
+  // joystick
 
   useEffect(() => {
     function handleKeyDown(e) {
@@ -203,7 +241,7 @@ function Player() {
   }, []);
 
   // per frame
-  function movePlayer(delta) {
+  function movePlayerKeyboard(delta) {
     const [w, a, s, d] = activeKeys.current;
 
     if (w) {
@@ -267,8 +305,38 @@ function Player() {
     }
   }
 
+  function movePlayerJoystick(delta) {
+    if (!isJoyStickActive) {
+      isPlayerMoving.current = false;
+      return;
+    }
+
+    const [x, y] = joystickPos;
+    const vDist = (y / MAX_JOYSTICK_POS) * vSpeed * delta;
+    const hDist = (x / MAX_JOYSTICK_POS) * hSpeed * delta;
+
+    const predictionOrigin = new THREE.Vector3();
+    predictionOrigin.copy(playerRef.current.position);
+    predictionOrigin.x += hDist;
+    predictionOrigin.z += vDist;
+    raycasterRef.current.ray.origin.copy(predictionOrigin);
+
+    if (raycasterRef.current.intersectObject(navMeshRef.current).length > 0) {
+      playerRef.current.position.x += hDist;
+      playerRef.current.position.z += vDist;
+    }
+
+    if (x !== 0 || y !== 0) {
+      isPlayerMoving.current = true;
+      playerDir.current = [y > 0, x < 0, y < 0, x > 0];
+    } else {
+      isPlayerMoving.current = false;
+    }
+  }
+
   useFrame((state, delta, xrFrame) => {
-    movePlayer(delta);
+    movePlayerKeyboard(delta);
+    movePlayerJoystick(delta);
   });
 
   // Sprite animations
