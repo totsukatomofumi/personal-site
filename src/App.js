@@ -16,7 +16,7 @@ function App() {
   }, [joystickPos]);
 
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen pb-[80px] ">
+    <div className="fixed top-0 left-0 w-screen h-screen pb-[80px] touch-none ">
       <div className="relative w-full h-full">
         <Canvas>
           <Scene
