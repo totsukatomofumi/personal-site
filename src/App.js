@@ -170,7 +170,7 @@ function Scene({ isJoyStickActive, joystickPos }) {
 
   useThree(({ gl, camera }) => {
     camera.setFocalLength(60);
-    camera.position.set(0, 6, 10); // horiz x [-1, 1] vert y [6] depth z [10, 22]
+    camera.position.set(0, 6, MAX_CAM_DEPTH); // horiz x [-1, 1] vert y [6] depth z [10, 22]
     camera.rotation.set(THREE.MathUtils.degToRad(-5), 0, 0); // angle at -5
   });
 
