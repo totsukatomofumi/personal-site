@@ -9,7 +9,7 @@ import gsap from "gsap";
 import { isMobile, useMobileOrientation } from "react-device-detect";
 
 function App() {
-  const { isPotrait } = useMobileOrientation();
+  const { isLandscape } = useMobileOrientation();
   const isJoyStickActive = useRef(false);
   const joystickPos = useRef([0, 0]); // x, y max 50
 
@@ -23,7 +23,7 @@ function App() {
     );
   }
 
-  if (!isPotrait) {
+  if (isLandscape) {
     return (
       <div className="fixed top-0 left-0 w-screen h-screen pb-[80px] touch-none ">
         <div className="flex justify-center items-center w-full h-full">
