@@ -9,16 +9,18 @@ import gsap from "gsap";
 import { isMobile, useMobileOrientation } from "react-device-detect";
 import uiStatus from "./sprites/ui-status.png";
 import uiButton from "./sprites/ui-button.png";
+import uiEquipment from "./sprites/ui-equipment.png";
+import uiCloseButtom from "./sprites/ui-close-button.png";
+import uiInventory from "./sprites/ui-inventory.png";
+import uiCredits from "./sprites/ui-credits.png";
+import uiNavLeftButton from "./sprites/ui-nav-left-button.png";
+import uiNavRightButton from "./sprites/ui-nav-right-button.png";
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const { isLandscape } = useMobileOrientation();
   const isJoyStickActive = useRef(false);
   const joystickPos = useRef([0, 0]); // x, y max 50
-
-  useEffect(() => {
-    console.log(isLoaded);
-  }, [isLoaded]);
 
   if (!isMobile) {
     return (
@@ -73,16 +75,101 @@ function Loading() {
 }
 
 function Ui() {
+  const [isMenu, setIsMenu] = useState(false);
+
+  function handleOnClick() {
+    setIsMenu(true);
+  }
+
   return (
     <>
       <div className="absolute top-5 left-5 z-40 w-fit h-[80px]">
         <img src={uiStatus} alt="ui-status" className="h-full" />
       </div>
 
-      <div className="absolute bottom-5 z-40 right-5 w-fit h-[80px]">
+      <div
+        className="absolute bottom-5 z-40 right-5 w-fit h-[80px]"
+        onClick={handleOnClick}
+      >
         <img src={uiButton} alt="ui-button" className="h-full" />
       </div>
+
+      {isMenu ? <Menu setIsMenu={setIsMenu} /> : null}
     </>
+  );
+}
+
+function Menu({ setIsMenu }) {
+  const [pageNum, setPageNum] = useState(1);
+
+  const equipmentPage = (
+    <>
+      <img src={uiEquipment} alt="ui-equipment" className="h-full" />
+    </>
+  );
+
+  const inventoryPage = (
+    <>
+      <img src={uiInventory} alt="ui-inventory" className="h-full" />
+    </>
+  );
+
+  const creditsPage = (
+    <>
+      <img src={uiCredits} alt="ui-credits" className="h-full" />
+    </>
+  );
+
+  const pages = [equipmentPage, inventoryPage, creditsPage];
+
+  function handleOnClickLeftNavButton() {
+    setPageNum((prev) => prev - 1);
+  }
+
+  function handleOnClickRightNavButton() {
+    setPageNum((prev) => prev + 1);
+  }
+
+  return (
+    <div className="absolute top-0 left-0 z-50 w-full h-full flex justify-center items-center">
+      <div className="relative w-fit h-[450px]">
+        {pages[pageNum - 1]}
+
+        <div
+          className="absolute -top-[10px] -right-[10px] w-fit h-[40px]"
+          onClick={() => setIsMenu(false)}
+        >
+          <img src={uiCloseButtom} alt="ui-close-button" className="h-full" />
+        </div>
+
+        <div className="absolute bottom-[25px] w-full h-[30px] flex flex-row justify-center items-center">
+          <div
+            className="w-fit h-full"
+            onClick={pageNum === 1 ? null : handleOnClickLeftNavButton}
+          >
+            <img
+              src={uiNavLeftButton}
+              alt="ui-nav-left-button"
+              className="h-full"
+            />
+          </div>
+
+          <div className="w-[50px] text-center text-white">{pageNum} / 3</div>
+
+          <div
+            className="w-fit h-full"
+            onClick={pageNum === 3 ? null : handleOnClickRightNavButton}
+          >
+            <img
+              src={uiNavRightButton}
+              alt="ui-nav-right-button"
+              className="h-full"
+            />
+          </div>
+        </div>
+      </div>
+      <div className="absolute top-0 left-0 w-full h-full -z-50 bg-black opacity-50"></div>
+    </div>
   );
 }
 
