@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { forwardRef, Suspense, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import Map from "./models/Map";
@@ -122,6 +122,10 @@ function Menu({ setIsMenu }) {
 
   const pages = [equipmentPage, inventoryPage, creditsPage];
 
+  function handleOnClickCloseMenu() {
+    setIsMenu(false);
+  }
+
   function handleOnClickLeftNavButton() {
     setPageNum((prev) => prev - 1);
   }
@@ -133,42 +137,48 @@ function Menu({ setIsMenu }) {
   return (
     <div className="absolute top-0 left-0 z-50 w-full h-full flex justify-center items-center">
       <div className="relative w-fit h-[450px]">
-        {pages[pageNum - 1]}
-
-        <div
-          className="absolute -top-[10px] -right-[10px] w-fit h-[40px]"
-          onClick={() => setIsMenu(false)}
-        >
-          <img src={uiCloseButtom} alt="ui-close-button" className="h-full" />
-        </div>
-
-        <div className="absolute bottom-[25px] w-full h-[30px] flex flex-row justify-center items-center">
-          <div
-            className="w-fit h-full"
-            onClick={pageNum === 1 ? null : handleOnClickLeftNavButton}
-          >
-            <img
-              src={uiNavLeftButton}
-              alt="ui-nav-left-button"
-              className="h-full"
-            />
-          </div>
-
-          <div className="w-[50px] text-center text-white">{pageNum} / 3</div>
+        {/* Suspense to fix page number text loading before menu */}
+        <Suspense fallback={null}>
+          {pages[pageNum - 1]}
 
           <div
-            className="w-fit h-full"
-            onClick={pageNum === 3 ? null : handleOnClickRightNavButton}
+            className="absolute -top-[10px] -right-[10px] w-fit h-[40px]"
+            onClick={handleOnClickCloseMenu}
           >
-            <img
-              src={uiNavRightButton}
-              alt="ui-nav-right-button"
-              className="h-full"
-            />
+            <img src={uiCloseButtom} alt="ui-close-button" className="h-full" />
           </div>
-        </div>
+
+          <div className="absolute bottom-[25px] w-full h-[30px] flex flex-row justify-center items-center">
+            <div
+              className="w-fit h-full"
+              onClick={pageNum === 1 ? null : handleOnClickLeftNavButton}
+            >
+              <img
+                src={uiNavLeftButton}
+                alt="ui-nav-left-button"
+                className="h-full"
+              />
+            </div>
+
+            <div className="w-[50px] text-center text-white">{pageNum} / 3</div>
+
+            <div
+              className="w-fit h-full"
+              onClick={pageNum === 3 ? null : handleOnClickRightNavButton}
+            >
+              <img
+                src={uiNavRightButton}
+                alt="ui-nav-right-button"
+                className="h-full"
+              />
+            </div>
+          </div>
+        </Suspense>
       </div>
-      <div className="absolute top-0 left-0 w-full h-full -z-50 bg-black opacity-50"></div>
+      <div
+        className="absolute top-0 left-0 w-full h-full -z-50 bg-black opacity-50"
+        onClick={handleOnClickCloseMenu}
+      ></div>
     </div>
   );
 }
