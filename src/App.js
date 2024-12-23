@@ -7,6 +7,7 @@ import playerSprite from "./sprites/player.png";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { isMobile, useMobileOrientation } from "react-device-detect";
+import moment from "moment";
 import uiStatus from "./sprites/ui-status.png";
 import uiButton from "./sprites/ui-button.png";
 import uiEquipment from "./sprites/ui-equipment.png";
@@ -15,6 +16,7 @@ import uiInventory from "./sprites/ui-inventory.png";
 import uiCredits from "./sprites/ui-credits.png";
 import uiNavLeftButton from "./sprites/ui-nav-left-button.png";
 import uiNavRightButton from "./sprites/ui-nav-right-button.png";
+import uiMenuTitle from "./sprites/ui-menu-title.png";
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -102,8 +104,24 @@ function Ui() {
 function Menu({ setIsMenu }) {
   const [pageNum, setPageNum] = useState(1);
 
+  // level age calculation
+  const age = moment().diff("2000-12-15", "years");
+  const occupation = "Undergraduate";
+
   const equipmentPage = (
     <>
+      <div className="absolute top-[35px] left-0 z-50 w-full h-fit flex flex-col justify-center items-center font-vt323 text-center drop-shadow-sm">
+        <div className="relative text-custom-off-white whitespace-pre-line leading-tight">
+          <span className="text-custom-white font-semibold text-lg leading-none ">
+            Totsuka Tomofumi
+          </span>
+          {`\n`}
+          {occupation}
+          {`\nLevel `}
+          {age}
+        </div>
+      </div>
+
       <img src={uiEquipment} alt="ui-equipment" className="h-full" />
     </>
   );
@@ -121,6 +139,7 @@ function Menu({ setIsMenu }) {
   );
 
   const pages = [equipmentPage, inventoryPage, creditsPage];
+  const titles = ["Equipment", "Inventory", "Credits"];
 
   function handleOnClickCloseMenu() {
     setIsMenu(false);
@@ -137,43 +156,51 @@ function Menu({ setIsMenu }) {
   return (
     <div className="absolute top-0 left-0 z-50 w-full h-full flex justify-center items-center">
       <div className="relative w-fit h-[450px]">
-        {/* Suspense to fix page number text loading before menu */}
-        <Suspense fallback={null}>
-          {pages[pageNum - 1]}
+        {pages[pageNum - 1]}
+
+        <div className="absolute -top-[6px] left-0 z-40 w-full h-fit flex justify-center items-center">
+          <div className="relative w-fit h-[30px]">
+            <div className="absolute top-0 left-0 w-full h-full text-center text-custom-gold font-vt323 font-semibold text-xl">
+              {titles[pageNum - 1]}
+            </div>
+            <img src={uiMenuTitle} alt="ui-menu-title" className="h-full" />
+          </div>
+        </div>
+
+        <div
+          className="absolute -top-[10px] -right-[10px] z-50 w-fit h-[40px]"
+          onClick={handleOnClickCloseMenu}
+        >
+          <img src={uiCloseButtom} alt="ui-close-button" className="h-full" />
+        </div>
+
+        <div className="absolute bottom-[25px] w-full h-[30px] flex flex-row justify-center items-center">
+          <div
+            className="w-fit h-full"
+            onClick={pageNum === 1 ? null : handleOnClickLeftNavButton}
+          >
+            <img
+              src={uiNavLeftButton}
+              alt="ui-nav-left-button"
+              className="h-full"
+            />
+          </div>
+
+          <div className="w-[50px] text-center text-custom-gold font-vt323">
+            {pageNum} / 3
+          </div>
 
           <div
-            className="absolute -top-[10px] -right-[10px] w-fit h-[40px]"
-            onClick={handleOnClickCloseMenu}
+            className="w-fit h-full"
+            onClick={pageNum === 3 ? null : handleOnClickRightNavButton}
           >
-            <img src={uiCloseButtom} alt="ui-close-button" className="h-full" />
+            <img
+              src={uiNavRightButton}
+              alt="ui-nav-right-button"
+              className="h-full"
+            />
           </div>
-
-          <div className="absolute bottom-[25px] w-full h-[30px] flex flex-row justify-center items-center">
-            <div
-              className="w-fit h-full"
-              onClick={pageNum === 1 ? null : handleOnClickLeftNavButton}
-            >
-              <img
-                src={uiNavLeftButton}
-                alt="ui-nav-left-button"
-                className="h-full"
-              />
-            </div>
-
-            <div className="w-[50px] text-center text-white">{pageNum} / 3</div>
-
-            <div
-              className="w-fit h-full"
-              onClick={pageNum === 3 ? null : handleOnClickRightNavButton}
-            >
-              <img
-                src={uiNavRightButton}
-                alt="ui-nav-right-button"
-                className="h-full"
-              />
-            </div>
-          </div>
-        </Suspense>
+        </div>
       </div>
       <div
         className="absolute top-0 left-0 w-full h-full -z-50 bg-black opacity-50"

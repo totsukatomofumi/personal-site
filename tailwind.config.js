@@ -2,7 +2,16 @@
 module.exports = {
   content: ["./src/**/*.{html,js}"],
   theme: {
-    extend: {},
+    fontFamily: {
+      vt323: ["VT323", "serif"],
+    },
+    extend: {
+      colors: {
+        "custom-gold": "#d2c9a5",
+        "custom-off-white": "#fff9e0",
+        "custom-white": "#f7f7f7",
+      },
+    },
   },
   plugins: [],
 };
