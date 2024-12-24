@@ -10,15 +10,15 @@ import { isMobile, useMobileOrientation } from "react-device-detect";
 import moment from "moment";
 import uiStatus from "./sprites/ui-status.png";
 import uiButton from "./sprites/ui-button.png";
-import uiEquipment from "./sprites/ui-equipment.png";
+import uiMenuBase from "./sprites/ui-menu-base.png";
+import uiMenuTitle from "./sprites/ui-menu-title.png";
 import uiCloseButtom from "./sprites/ui-close-button.png";
-import uiInventory from "./sprites/ui-inventory.png";
-import uiCredits from "./sprites/ui-credits.png";
 import uiNavLeftButton from "./sprites/ui-nav-left-button.png";
 import uiNavRightButton from "./sprites/ui-nav-right-button.png";
-import uiMenuTitle from "./sprites/ui-menu-title.png";
-import nusHelm from "./sprites/nus-helm.png";
-import rsChest from "./sprites/rs-chest.png";
+import uiEquipmentChar from "./sprites/ui-equipment-char.png";
+import uiEquipmentSlots from "./sprites/ui-equipment-slots.png";
+import uiEquipmentSlotsLink from "./sprites/ui-equipment-slots-link.png";
+import uiInventory from "./sprites/ui-inventory.png";
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -112,27 +112,36 @@ function Menu({ setIsMenu }) {
 
   const equipmentPage = (
     <>
-      <div className="absolute top-[40px] left-0 z-50 w-full h-fit flex flex-col justify-center items-center font-vt323 text-center drop-shadow-sm">
-        <div className="relative text-custom-off-white whitespace-pre-line leading-tight">
-          <span className="text-custom-white font-semibold text-lg leading-none ">
+      <div className="absolute top-[50px] left-[32.5px] z-50 flex flex-col justify-center items-center font-vt323 text-left text-custom-off-white whitespace-pre-line leading-tight drop-shadow-sm">
+        <p>
+          <span className="text-custom-white text-xl leading-none">
             Totsuka Tomofumi
           </span>
           {`\n`}
           {occupation}
-          {`\nLevel `}
+          <span className="text-custom-gold">{`\nLevel: `}</span>
           {age}
-        </div>
-      </div>
-      <div className="absolute top-[117.5px] right-[37.5px] z-50 w-fit h-fit flex flex-col gap-[55px]">
-        <div className="w-full h-[50px] flex justify-center items-center">
-          <img src={nusHelm} alt="nus-helm" className="h-full" />
-        </div>
-        <div className="w-full h-[50px] flex justify-center items-center">
-          <img src={rsChest} alt="rs-chest" className="h-full" />
-        </div>
+        </p>
       </div>
 
-      <img src={uiEquipment} alt="ui-equipment" className="h-full" />
+      <div className="relative z-0 w-fit h-full">
+        <img src={uiMenuBase} alt="ui-equipment" className="h-full" />
+        <img
+          src={uiEquipmentChar}
+          alt="ui-equipment-char"
+          className="absolute top-0 left-0 z-40 h-full"
+        />
+        <img
+          src={uiEquipmentSlots}
+          alt="ui-equipment-slots"
+          className="absolute top-0 left-0 z- 50 h-full"
+        />
+        <img
+          src={uiEquipmentSlotsLink}
+          alt="ui-equipment-slots-link"
+          className="absolute top-0 left-0 z-50 h-full"
+        />
+      </div>
     </>
   );
 
@@ -144,7 +153,7 @@ function Menu({ setIsMenu }) {
 
   const creditsPage = (
     <>
-      <img src={uiCredits} alt="ui-credits" className="h-full" />
+      <img src={uiMenuBase} alt="ui-menu-base" className="h-full" />
     </>
   );
 

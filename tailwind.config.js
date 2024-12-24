@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     fontFamily: {
       vt323: ["VT323", "serif"],
+      cinzel: ["Cinzel", "serif"],
     },
     extend: {
       colors: {
