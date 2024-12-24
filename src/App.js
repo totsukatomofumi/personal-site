@@ -132,12 +132,38 @@ function Loading({ isLoaded, setIsLoadingScreen }) {
   );
 }
 
+function animateButton(buttonRef, isButtonDown) {
+  if (buttonRef.current === null || buttonRef.current === undefined) return;
+
+  const tl = gsap.timeline();
+
+  if (isButtonDown) {
+    tl.to(buttonRef.current, { scale: 0, duration: 0.1 });
+  } else {
+    tl.to(buttonRef.current, { scale: 1, duration: 0.1 });
+  }
+}
+
 function Ui() {
   const [isMenu, setIsMenu] = useState(false);
+  const [isButtonDown, setIsButtonDown] = useState(false);
+  const uiButtonRef = useRef();
 
-  function handleOnClick() {
-    setIsMenu(true);
+  function handleOnMouseDown(e) {
+    setIsButtonDown(true);
   }
+
+  function handleOnMouseUp(e) {
+    setIsButtonDown(false);
+    setTimeout(() => {
+      setIsMenu(true);
+    }, 100);
+  }
+
+  // button animation
+  useGSAP(() => animateButton(uiButtonRef, isButtonDown), {
+    dependencies: [isButtonDown, uiButtonRef],
+  });
 
   return (
     <>
@@ -145,11 +171,15 @@ function Ui() {
         <img src={uiStatus} alt="ui-status" className="h-full" />
       </div>
 
-      <div
-        className="absolute bottom-5 z-40 right-5 w-fit h-[80px]"
-        onClick={handleOnClick}
-      >
-        <img src={uiButton} alt="ui-button" className="h-full" />
+      <div className="absolute bottom-5 z-40 right-5 w-fit h-[80px]">
+        <img
+          ref={uiButtonRef}
+          src={uiButton}
+          alt="ui-button"
+          className="h-full"
+          onMouseDown={handleOnMouseDown}
+          onMouseUp={handleOnMouseUp}
+        />
       </div>
 
       {isMenu ? <Menu setIsMenu={setIsMenu} /> : null}
@@ -214,17 +244,58 @@ function Menu({ setIsMenu }) {
   const pages = [equipmentPage, inventoryPage, creditsPage];
   const titles = ["Equipment", "Inventory", "Credits"];
 
-  function handleOnClickCloseMenu() {
-    setIsMenu(false);
+  function handleOnMouseDownUiCloseButton() {
+    setIsUiCloseButtonDown(true);
   }
 
-  function handleOnClickLeftNavButton() {
-    setPageNum((prev) => prev - 1);
+  function handleOnMouseUpUiCloseButton() {
+    setIsUiCloseButtonDown(false);
+    setTimeout(() => {
+      setIsMenu(false);
+    }, 100);
   }
 
-  function handleOnClickRightNavButton() {
-    setPageNum((prev) => prev + 1);
+  function handleOnMouseDownUiNavLeftButton() {
+    setIsUiNavLeftButtonDown(true);
   }
+
+  function handleOnMouseUpUiNavLeftButton() {
+    setIsUiNavLeftButtonDown(false);
+    setTimeout(() => {
+      setPageNum((prev) => prev - 1);
+    }, 100);
+  }
+
+  function handleOnMouseDownUiNavRightButton() {
+    setIsUiNavRightButtonDown(true);
+  }
+
+  function handleOnMouseUpUiNavRightButton() {
+    setIsUiNavRightButtonDown(false);
+    setTimeout(() => {
+      setPageNum((prev) => prev + 1);
+    }, 100);
+  }
+
+  // button animations
+  const uiNavLeftButtonRef = useRef();
+  const uiNavRightButtonRef = useRef();
+  const uiCloseButtonRef = useRef();
+  const [isUiNavLeftButtonDown, setIsUiNavLeftButtonDown] = useState(false);
+  const [isUiNavRightButtonDown, setIsUiNavRightButtonDown] = useState(false);
+  const [isUiCloseButtonDown, setIsUiCloseButtonDown] = useState(false);
+
+  useGSAP(() => animateButton(uiNavLeftButtonRef, isUiNavLeftButtonDown), {
+    dependencies: [uiNavLeftButtonRef, isUiNavLeftButtonDown],
+  });
+
+  useGSAP(() => animateButton(uiNavRightButtonRef, isUiNavRightButtonDown), {
+    dependencies: [uiNavRightButtonRef, isUiNavRightButtonDown],
+  });
+
+  useGSAP(() => animateButton(uiCloseButtonRef, isUiCloseButtonDown), {
+    dependencies: [uiCloseButtonRef, isUiCloseButtonDown],
+  });
 
   return (
     <div className="absolute top-0 left-0 z-50 w-full h-full flex justify-center items-center">
@@ -240,22 +311,28 @@ function Menu({ setIsMenu }) {
           </div>
         </div>
 
-        <div
-          className="absolute -top-[10px] -right-[10px] z-50 w-fit h-[40px]"
-          onClick={handleOnClickCloseMenu}
-        >
-          <img src={uiCloseButtom} alt="ui-close-button" className="h-full" />
+        <div className="absolute -top-[10px] -right-[10px] z-50 w-fit h-[40px]">
+          <img
+            ref={uiCloseButtonRef}
+            src={uiCloseButtom}
+            alt="ui-close-button"
+            className="h-full"
+            onMouseDown={handleOnMouseDownUiCloseButton}
+            onMouseUp={handleOnMouseUpUiCloseButton}
+          />
         </div>
 
         <div className="absolute bottom-[30px] w-full h-[30px] flex flex-row justify-center items-center">
-          <div
-            className="w-fit h-full"
-            onClick={pageNum === 1 ? null : handleOnClickLeftNavButton}
-          >
+          <div className="w-fit h-full">
             <img
+              ref={uiNavLeftButtonRef}
               src={uiNavLeftButton}
               alt="ui-nav-left-button"
               className="h-full"
+              onMouseDown={
+                pageNum === 1 ? null : handleOnMouseDownUiNavLeftButton
+              }
+              onMouseUp={pageNum === 1 ? null : handleOnMouseUpUiNavLeftButton}
             />
           </div>
 
@@ -263,21 +340,23 @@ function Menu({ setIsMenu }) {
             {pageNum} / 3
           </div>
 
-          <div
-            className="w-fit h-full"
-            onClick={pageNum === 3 ? null : handleOnClickRightNavButton}
-          >
+          <div className="w-fit h-full">
             <img
+              ref={uiNavRightButtonRef}
               src={uiNavRightButton}
               alt="ui-nav-right-button"
               className="h-full"
+              onMouseDown={
+                pageNum === 3 ? null : handleOnMouseDownUiNavRightButton
+              }
+              onMouseUp={pageNum === 3 ? null : handleOnMouseUpUiNavRightButton}
             />
           </div>
         </div>
       </div>
       <div
         className="absolute top-0 left-0 w-full h-full -z-50 bg-black opacity-50"
-        onClick={handleOnClickCloseMenu}
+        onClick={handleOnMouseUpUiCloseButton}
       ></div>
     </div>
   );
