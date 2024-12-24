@@ -1,4 +1,4 @@
-import { forwardRef, Suspense, useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import Map from "./models/Map";
@@ -22,6 +22,7 @@ import uiInventory from "./sprites/ui-inventory.png";
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoadingScreen, setIsLoadingScreen] = useState(true);
   const { isLandscape } = useMobileOrientation();
   const isJoyStickActive = useRef(false);
   const joystickPos = useRef([0, 0]); // x, y max 50
@@ -49,7 +50,12 @@ function App() {
   return (
     <div className="fixed top-0 left-0 w-screen h-screen pb-[80px] touch-none bg-black">
       <div className="relative w-full h-full">
-        {isLoaded ? null : <Loading />}
+        {isLoadingScreen ? (
+          <Loading
+            isLoaded={isLoaded}
+            setIsLoadingScreen={setIsLoadingScreen}
+          />
+        ) : null}
         <Canvas
           onCreated={() => {
             setIsLoaded(true);
@@ -70,10 +76,58 @@ function App() {
   );
 }
 
-function Loading() {
+function Loading({ isLoaded, setIsLoadingScreen }) {
+  const self = useRef();
+  const loadingRef = useRef();
+  const firstDotRef = useRef();
+  const secondDotRef = useRef();
+  const thirdDotRef = useRef();
+
+  // loading animation
+  useGSAP(() => {
+    const tl = gsap.timeline({ repeat: -1 });
+
+    tl.set([firstDotRef.current, secondDotRef.current, thirdDotRef.current], {
+      opacity: 0,
+    });
+    tl.set(firstDotRef.current, { opacity: 1 }, "+=0.1");
+    tl.set(secondDotRef.current, { opacity: 1 }, "+=0.1");
+    tl.set(thirdDotRef.current, { opacity: 1 }, "+=0.1");
+    tl.set({}, {}, "+=0.1");
+  }, {});
+
+  // fade out loading screen
+  useGSAP(
+    () => {
+      if (isLoaded) {
+        const tl = gsap.timeline();
+
+        tl.set(loadingRef.current, { display: "none" });
+        tl.to(
+          self.current,
+          { opacity: 0, duration: 1.5, ease: "none" },
+          "+=0.5"
+        );
+        tl.call(() => {
+          setIsLoadingScreen(false);
+        });
+      }
+    },
+    { dependencies: [isLoaded, setIsLoadingScreen] }
+  );
+
   return (
-    <div className="absolute top-0 left-0 z-50 w-full h-full flex justify-center items-center bg-black">
-      <div className="text-white text-2xl font-bold">Loading...</div>
+    <div
+      ref={self}
+      className="absolute top-0 left-0 z-50 w-full h-full flex justify-center items-center bg-black"
+    >
+      <div ref={loadingRef} className="text-white text-2xl font-vt323">
+        <p>
+          Loading<span ref={firstDotRef}>.</span>
+          <span ref={secondDotRef}>.</span>
+          <span ref={thirdDotRef}>.</span>
+        </p>
+      </div>
     </div>
   );
 }
