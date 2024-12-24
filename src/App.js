@@ -110,7 +110,7 @@ function Menu({ setIsMenu }) {
 
   const equipmentPage = (
     <>
-      <div className="absolute top-[35px] left-0 z-50 w-full h-fit flex flex-col justify-center items-center font-vt323 text-center drop-shadow-sm">
+      <div className="absolute top-[40px] left-0 z-50 w-full h-fit flex flex-col justify-center items-center font-vt323 text-center drop-shadow-sm">
         <div className="relative text-custom-off-white whitespace-pre-line leading-tight">
           <span className="text-custom-white font-semibold text-lg leading-none ">
             Totsuka Tomofumi
@@ -174,7 +174,7 @@ function Menu({ setIsMenu }) {
           <img src={uiCloseButtom} alt="ui-close-button" className="h-full" />
         </div>
 
-        <div className="absolute bottom-[25px] w-full h-[30px] flex flex-row justify-center items-center">
+        <div className="absolute bottom-[30px] w-full h-[30px] flex flex-row justify-center items-center">
           <div
             className="w-fit h-full"
             onClick={pageNum === 1 ? null : handleOnClickLeftNavButton}
