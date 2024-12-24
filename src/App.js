@@ -17,6 +17,8 @@ import uiCredits from "./sprites/ui-credits.png";
 import uiNavLeftButton from "./sprites/ui-nav-left-button.png";
 import uiNavRightButton from "./sprites/ui-nav-right-button.png";
 import uiMenuTitle from "./sprites/ui-menu-title.png";
+import nusHelm from "./sprites/nus-helm.png";
+import rsChest from "./sprites/rs-chest.png";
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -119,6 +121,14 @@ function Menu({ setIsMenu }) {
           {occupation}
           {`\nLevel `}
           {age}
+        </div>
+      </div>
+      <div className="absolute top-[117.5px] right-[37.5px] z-50 w-fit h-fit flex flex-col gap-[55px]">
+        <div className="w-full h-[50px] flex justify-center items-center">
+          <img src={nusHelm} alt="nus-helm" className="h-full" />
+        </div>
+        <div className="w-full h-[50px] flex justify-center items-center">
+          <img src={rsChest} alt="rs-chest" className="h-full" />
         </div>
       </div>
 
