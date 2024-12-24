@@ -155,7 +155,7 @@ function Menu({ setIsMenu }) {
 
   return (
     <div className="absolute top-0 left-0 z-50 w-full h-full flex justify-center items-center">
-      <div className="relative w-fit h-[450px]">
+      <div className="relative w-fit h-[500px]">
         {pages[pageNum - 1]}
 
         <div className="absolute -top-[6px] left-0 z-40 w-full h-fit flex justify-center items-center">
