@@ -132,37 +132,36 @@ function Loading({ isLoaded, setIsLoadingScreen }) {
   );
 }
 
-function animateButton(buttonRef, isButtonDown) {
+function animateButton(buttonRef, toggle, scale = 0.9) {
   if (buttonRef.current === null || buttonRef.current === undefined) return;
+
+  // toggles should be initialised as null if dont want animation to run on mounting
+  if (toggle === null) return;
 
   const tl = gsap.timeline();
 
-  if (isButtonDown) {
-    tl.to(buttonRef.current, { scale: 0, duration: 0.1 });
-  } else {
-    tl.to(buttonRef.current, { scale: 1, duration: 0.1 });
-  }
+  tl.fromTo(
+    buttonRef.current,
+    { scale: 1 },
+    { scale: scale, duration: 0.05 }
+  ).to(buttonRef.current, { scale: 1, duration: 0.05 });
 }
 
 function Ui() {
   const [isMenu, setIsMenu] = useState(false);
-  const [isButtonDown, setIsButtonDown] = useState(false);
+  const [toggleButtonAnim, setToggleButtonAnim] = useState(null);
   const uiButtonRef = useRef();
 
-  function handleOnMouseDown(e) {
-    setIsButtonDown(true);
-  }
-
-  function handleOnMouseUp(e) {
-    setIsButtonDown(false);
+  function handleOnClick() {
+    setToggleButtonAnim((prev) => (prev === null ? false : !prev));
     setTimeout(() => {
       setIsMenu(true);
     }, 100);
   }
 
   // button animation
-  useGSAP(() => animateButton(uiButtonRef, isButtonDown), {
-    dependencies: [isButtonDown, uiButtonRef],
+  useGSAP(() => animateButton(uiButtonRef, toggleButtonAnim), {
+    dependencies: [toggleButtonAnim],
   });
 
   return (
@@ -177,8 +176,7 @@ function Ui() {
           src={uiButton}
           alt="ui-button"
           className="h-full"
-          onMouseDown={handleOnMouseDown}
-          onMouseUp={handleOnMouseUp}
+          onClick={handleOnClick}
         />
       </div>
 
@@ -244,36 +242,28 @@ function Menu({ setIsMenu }) {
   const pages = [equipmentPage, inventoryPage, creditsPage];
   const titles = ["Equipment", "Inventory", "Credits"];
 
-  function handleOnMouseDownUiCloseButton() {
-    setIsUiCloseButtonDown(true);
+  function handleOnClickUiNavLeftButton() {
+    setToggleUiNavLeftButtonAnim((prev) => (prev === null ? false : !prev));
+    setTimeout(() => {
+      setPageNum((prev) => (prev === 1 ? 1 : prev - 1));
+    }, 100);
   }
 
-  function handleOnMouseUpUiCloseButton() {
-    setIsUiCloseButtonDown(false);
+  function handleOnClickUiNavRightButton() {
+    setToggleUiNavRightButtonAnim((prev) => (prev === null ? false : !prev));
+    setTimeout(() => {
+      setPageNum((prev) => (prev === 3 ? 3 : prev + 1));
+    }, 100);
+  }
+
+  function handleOnClick() {
+    setIsMenu(false);
+  }
+
+  function handleOnClickUiCloseButton() {
+    setToggleUiCloseButtonAnim((prev) => (prev === null ? false : !prev));
     setTimeout(() => {
       setIsMenu(false);
-    }, 100);
-  }
-
-  function handleOnMouseDownUiNavLeftButton() {
-    setIsUiNavLeftButtonDown(true);
-  }
-
-  function handleOnMouseUpUiNavLeftButton() {
-    setIsUiNavLeftButtonDown(false);
-    setTimeout(() => {
-      setPageNum((prev) => prev - 1);
-    }, 100);
-  }
-
-  function handleOnMouseDownUiNavRightButton() {
-    setIsUiNavRightButtonDown(true);
-  }
-
-  function handleOnMouseUpUiNavRightButton() {
-    setIsUiNavRightButtonDown(false);
-    setTimeout(() => {
-      setPageNum((prev) => prev + 1);
     }, 100);
   }
 
@@ -281,20 +271,28 @@ function Menu({ setIsMenu }) {
   const uiNavLeftButtonRef = useRef();
   const uiNavRightButtonRef = useRef();
   const uiCloseButtonRef = useRef();
-  const [isUiNavLeftButtonDown, setIsUiNavLeftButtonDown] = useState(false);
-  const [isUiNavRightButtonDown, setIsUiNavRightButtonDown] = useState(false);
-  const [isUiCloseButtonDown, setIsUiCloseButtonDown] = useState(false);
+  const [toggleUiNavLeftButtonAnim, setToggleUiNavLeftButtonAnim] =
+    useState(null);
+  const [toggleUiNavRightButtonAnim, setToggleUiNavRightButtonAnim] =
+    useState(null);
+  const [toggleUiCloseButtonAnim, setToggleUiCloseButtonAnim] = useState(null);
 
-  useGSAP(() => animateButton(uiNavLeftButtonRef, isUiNavLeftButtonDown), {
-    dependencies: [uiNavLeftButtonRef, isUiNavLeftButtonDown],
-  });
+  useGSAP(
+    () => animateButton(uiNavLeftButtonRef, toggleUiNavLeftButtonAnim, 0.8),
+    {
+      dependencies: [toggleUiNavLeftButtonAnim],
+    }
+  );
 
-  useGSAP(() => animateButton(uiNavRightButtonRef, isUiNavRightButtonDown), {
-    dependencies: [uiNavRightButtonRef, isUiNavRightButtonDown],
-  });
+  useGSAP(
+    () => animateButton(uiNavRightButtonRef, toggleUiNavRightButtonAnim, 0.8),
+    {
+      dependencies: [toggleUiNavRightButtonAnim],
+    }
+  );
 
-  useGSAP(() => animateButton(uiCloseButtonRef, isUiCloseButtonDown), {
-    dependencies: [uiCloseButtonRef, isUiCloseButtonDown],
+  useGSAP(() => animateButton(uiCloseButtonRef, toggleUiCloseButtonAnim, 0.8), {
+    dependencies: [toggleUiCloseButtonAnim],
   });
 
   return (
@@ -317,8 +315,7 @@ function Menu({ setIsMenu }) {
             src={uiCloseButtom}
             alt="ui-close-button"
             className="h-full"
-            onMouseDown={handleOnMouseDownUiCloseButton}
-            onMouseUp={handleOnMouseUpUiCloseButton}
+            onClick={handleOnClickUiCloseButton}
           />
         </div>
 
@@ -329,10 +326,7 @@ function Menu({ setIsMenu }) {
               src={uiNavLeftButton}
               alt="ui-nav-left-button"
               className="h-full"
-              onMouseDown={
-                pageNum === 1 ? null : handleOnMouseDownUiNavLeftButton
-              }
-              onMouseUp={pageNum === 1 ? null : handleOnMouseUpUiNavLeftButton}
+              onClick={pageNum === 1 ? null : handleOnClickUiNavLeftButton}
             />
           </div>
 
@@ -346,17 +340,14 @@ function Menu({ setIsMenu }) {
               src={uiNavRightButton}
               alt="ui-nav-right-button"
               className="h-full"
-              onMouseDown={
-                pageNum === 3 ? null : handleOnMouseDownUiNavRightButton
-              }
-              onMouseUp={pageNum === 3 ? null : handleOnMouseUpUiNavRightButton}
+              onClick={pageNum === 3 ? null : handleOnClickUiNavRightButton}
             />
           </div>
         </div>
       </div>
       <div
         className="absolute top-0 left-0 w-full h-full -z-50 bg-black opacity-50"
-        onClick={handleOnMouseUpUiCloseButton}
+        onClick={handleOnClick}
       ></div>
     </div>
   );
