@@ -132,7 +132,7 @@ function Loading({ isLoaded, setIsLoadingScreen }) {
   );
 }
 
-function animateButton(buttonRef, toggle, scale = 0.9) {
+function animateUiButton(buttonRef, toggle, scale = 0.9) {
   if (buttonRef.current === null || buttonRef.current === undefined) return;
 
   // toggles should be initialised as null if dont want animation to run on mounting
@@ -160,7 +160,7 @@ function Ui() {
   }
 
   // button animation
-  useGSAP(() => animateButton(uiButtonRef, toggleButtonAnim), {
+  useGSAP(() => animateUiButton(uiButtonRef, toggleButtonAnim), {
     dependencies: [toggleButtonAnim],
   });
 
@@ -278,22 +278,25 @@ function Menu({ setIsMenu }) {
   const [toggleUiCloseButtonAnim, setToggleUiCloseButtonAnim] = useState(null);
 
   useGSAP(
-    () => animateButton(uiNavLeftButtonRef, toggleUiNavLeftButtonAnim, 0.8),
+    () => animateUiButton(uiNavLeftButtonRef, toggleUiNavLeftButtonAnim, 0.8),
     {
       dependencies: [toggleUiNavLeftButtonAnim],
     }
   );
 
   useGSAP(
-    () => animateButton(uiNavRightButtonRef, toggleUiNavRightButtonAnim, 0.8),
+    () => animateUiButton(uiNavRightButtonRef, toggleUiNavRightButtonAnim, 0.8),
     {
       dependencies: [toggleUiNavRightButtonAnim],
     }
   );
 
-  useGSAP(() => animateButton(uiCloseButtonRef, toggleUiCloseButtonAnim, 0.8), {
-    dependencies: [toggleUiCloseButtonAnim],
-  });
+  useGSAP(
+    () => animateUiButton(uiCloseButtonRef, toggleUiCloseButtonAnim, 0.8),
+    {
+      dependencies: [toggleUiCloseButtonAnim],
+    }
+  );
 
   return (
     <div className="absolute top-0 left-0 z-50 w-full h-full flex justify-center items-center">
@@ -327,6 +330,7 @@ function Menu({ setIsMenu }) {
               alt="ui-nav-left-button"
               className="h-full"
               onClick={pageNum === 1 ? null : handleOnClickUiNavLeftButton}
+              style={{ opacity: pageNum === 1 ? 0.5 : 1 }}
             />
           </div>
 
@@ -341,6 +345,7 @@ function Menu({ setIsMenu }) {
               alt="ui-nav-right-button"
               className="h-full"
               onClick={pageNum === 3 ? null : handleOnClickUiNavRightButton}
+              style={{ opacity: pageNum === 3 ? 0.5 : 1 }}
             />
           </div>
         </div>
