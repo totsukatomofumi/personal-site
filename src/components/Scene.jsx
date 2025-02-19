@@ -113,6 +113,9 @@ const Player = forwardRef(function Player(
 
   // per frame
   function movePlayerKeyboard(delta) {
+    if (isJoyStickActive.current) {
+      return;
+    }
     const [w, a, s, d] = activeKeys.current;
 
     if (w) {
@@ -202,15 +205,15 @@ const Player = forwardRef(function Player(
       playerRef.current.position.z += vDist;
     }
 
-    const diagThreshold = 20;
+    const diagThreshold = 0.4;
 
     if (x !== 0 || y !== 0) {
       isPlayerMoving.current = true;
       playerDir.current = [
         y < 0,
-        Math.abs(y) < 10 ? x < 0 : x < -diagThreshold,
+        Math.abs(y) < 0.2 ? x < 0 : x < -diagThreshold,
         y > 0,
-        Math.abs(y) < 10 ? x > 0 : x > diagThreshold,
+        Math.abs(y) < 0.2 ? x > 0 : x > diagThreshold,
       ];
     } else {
       isPlayerMoving.current = false;
