@@ -13,6 +13,7 @@ function App() {
   const { isLandscape } = useMobileOrientation();
   const isJoyStickActive = useRef(false);
   const joystickPos = useRef([0, 0]); // x, y, [0, 1]
+  const activeKeys = useRef([false, false, false, false]); // w, a, s, d
 
   if (!isMobile) {
     return (
@@ -51,11 +52,13 @@ function App() {
           <Scene
             isJoyStickActive={isJoyStickActive}
             joystickPos={joystickPos}
+            activeKeys={activeKeys}
           />
         </Canvas>
         <Joystick
           isJoyStickActive={isJoyStickActive}
           joystickPos={joystickPos}
+          activeKeys={activeKeys}
         />
         <Ui />
       </div>

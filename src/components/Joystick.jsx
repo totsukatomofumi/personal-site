@@ -4,7 +4,7 @@ import { useGSAP } from "@gsap/react";
 
 const MAX_JOYSTICK_POS = 50;
 
-function Joystick({ isJoyStickActive, joystickPos }) {
+function Joystick({ isJoyStickActive, joystickPos, activeKeys }) {
   const [isActive, setIsActive] = useState(false);
   const [initTouchPos, setInitTouchPos] = useState([0, 0]);
   const [currTouchPos, setCurrTouchPos] = useState([0, 0]);
@@ -97,6 +97,55 @@ function Joystick({ isJoyStickActive, joystickPos }) {
     },
     { dependencies: [stickRef, currTouchPos, initTouchPos] }
   );
+
+  // keyboard
+  useEffect(() => {
+    function handleKeyDown(e) {
+      if (!e.repeat) {
+        switch (e.key) {
+          case "w":
+            activeKeys.current[0] = true;
+            break;
+          case "a":
+            activeKeys.current[1] = true;
+            break;
+          case "s":
+            activeKeys.current[2] = true;
+            break;
+          case "d":
+            activeKeys.current[3] = true;
+            break;
+          default:
+        }
+      }
+    }
+
+    function handleKeyUp(e) {
+      switch (e.key) {
+        case "w":
+          activeKeys.current[0] = false;
+          break;
+        case "a":
+          activeKeys.current[1] = false;
+          break;
+        case "s":
+          activeKeys.current[2] = false;
+          break;
+        case "d":
+          activeKeys.current[3] = false;
+          break;
+        default:
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
 
   return (
     <div

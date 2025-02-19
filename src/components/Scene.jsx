@@ -16,7 +16,7 @@ const MIN_CAM_DEPTH = 10;
 const MAX_CAM_HORIZ = 1;
 const MIN_CAM_HORIZ = -1;
 
-function Scene({ isJoyStickActive, joystickPos }) {
+function Scene({ isJoyStickActive, joystickPos, activeKeys }) {
   const playerRef = useRef();
 
   useThree(({ gl, camera }) => {
@@ -33,6 +33,7 @@ function Scene({ isJoyStickActive, joystickPos }) {
         ref={playerRef}
         isJoyStickActive={isJoyStickActive}
         joystickPos={joystickPos}
+        activeKeys={activeKeys}
       />
       <Map position={MAP_POS} rotation={MAP_ROT} renderOrder={1} />
 
@@ -95,7 +96,7 @@ function Camera({ playerRef }) {
 }
 
 const Player = forwardRef(function Player(
-  { joystickPos, isJoyStickActive },
+  { joystickPos, isJoyStickActive, activeKeys },
   playerRef
 ) {
   const playerWidth = 2;
@@ -105,59 +106,10 @@ const Player = forwardRef(function Player(
   // Move player
   const hSpeed = 4;
   const vSpeed = 11;
-  const activeKeys = useRef([false, false, false, false]); // w, a, s, d
   const playerDir = useRef([true, false, false, false]); // up, left, down, right
   const isPlayerMoving = useRef(false);
 
   // joystick
-
-  useEffect(() => {
-    function handleKeyDown(e) {
-      if (!e.repeat) {
-        switch (e.key) {
-          case "w":
-            activeKeys.current[0] = true;
-            break;
-          case "a":
-            activeKeys.current[1] = true;
-            break;
-          case "s":
-            activeKeys.current[2] = true;
-            break;
-          case "d":
-            activeKeys.current[3] = true;
-            break;
-          default:
-        }
-      }
-    }
-
-    function handleKeyUp(e) {
-      switch (e.key) {
-        case "w":
-          activeKeys.current[0] = false;
-          break;
-        case "a":
-          activeKeys.current[1] = false;
-          break;
-        case "s":
-          activeKeys.current[2] = false;
-          break;
-        case "d":
-          activeKeys.current[3] = false;
-          break;
-        default:
-      }
-    }
-
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
-    };
-  }, []);
 
   // per frame
   function movePlayerKeyboard(delta) {
