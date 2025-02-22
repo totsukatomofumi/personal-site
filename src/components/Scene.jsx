@@ -10,7 +10,10 @@ import NpcCat from "./NpcCat";
 
 function Scene({ movementVector }) {
   const playerRef = useRef();
+  const npcKnightRef = useRef();
+  const npcCatRef = useRef();
   const navMeshRef = useRef();
+  const npcRefs = useRef([npcKnightRef, npcCatRef]);
 
   useThree(({ gl, camera }) => {
     gl.setClearColor("white");
@@ -22,10 +25,11 @@ function Scene({ movementVector }) {
       <Player
         ref={playerRef}
         navMeshRef={navMeshRef}
+        npcRefs={npcRefs}
         movementVector={movementVector}
       />
-      <NpcKnight />
-      <NpcCat />
+      <NpcKnight ref={npcKnightRef} />
+      <NpcCat ref={npcCatRef} />
       <Map position={MAP_POS} rotation={MAP_ROT} renderOrder={1} />
       <NavMesh ref={navMeshRef} position={NAVMESH_POS} rotation={MAP_ROT} />
       <ambientLight intensity={2} />

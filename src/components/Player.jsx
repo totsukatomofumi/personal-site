@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useRef } from "react";
 import * as THREE from "three";
-import { useFrame, useLoader } from "@react-three/fiber";
+import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import playerSprite from "../sprites/player.png";
 import {
   PLAYER_INIT_POS,
@@ -18,7 +18,7 @@ import {
 } from "../constants";
 
 const Player = forwardRef(function Player(
-  { navMeshRef, movementVector },
+  { navMeshRef, npcRefs, movementVector },
   playerRef
 ) {
   const playerDir = useRef(PLAYER_INIT_DIR);
@@ -29,6 +29,7 @@ const Player = forwardRef(function Player(
   const sequenceIndex = useRef(0);
   const tileIndex = useRef(0);
   const elapsedTime = useRef(0);
+  const { camera } = useThree();
 
   playerSpriteMap.magFilter = THREE.NearestFilter;
   playerSpriteMap.repeat.set(
@@ -62,7 +63,12 @@ const Player = forwardRef(function Player(
     predictionOrigin.copy(playerRef.current.position);
     predictionOrigin.x += horizDist;
     raycasterRef.current.ray.origin.copy(predictionOrigin);
-    if (raycasterRef.current.intersectObject(navMeshRef.current).length > 0) {
+    if (
+      raycasterRef.current.intersectObject(navMeshRef.current).length > 0 &&
+      raycasterRef.current.intersectObjects(
+        npcRefs.current ? npcRefs.current.map((npcRef) => npcRef.current) : []
+      ).length === 0
+    ) {
       playerRef.current.position.x += horizDist;
     }
 
@@ -70,7 +76,12 @@ const Player = forwardRef(function Player(
     predictionOrigin.copy(playerRef.current.position);
     predictionOrigin.z += vertDist;
     raycasterRef.current.ray.origin.copy(predictionOrigin);
-    if (raycasterRef.current.intersectObject(navMeshRef.current).length > 0) {
+    if (
+      raycasterRef.current.intersectObject(navMeshRef.current).length > 0 &&
+      raycasterRef.current.intersectObjects(
+        npcRefs.current ? npcRefs.current.map((npcRef) => npcRef.current) : []
+      ).length === 0
+    ) {
       playerRef.current.position.z += vertDist;
     }
   }
@@ -175,6 +186,7 @@ const Player = forwardRef(function Player(
       <raycaster
         ref={raycasterRef}
         ray-direction={new THREE.Vector3(0, -1, 0)}
+        camera={camera}
       />
     </>
   );

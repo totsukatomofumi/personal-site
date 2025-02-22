@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { forwardRef, useEffect, useRef } from "react";
 import npcCatSprite from "../sprites/npc-cat.png";
 import NpcBase from "./NpcBase";
 import {
@@ -10,8 +10,7 @@ import {
   MAX_NPC_CAT_BLINK_TIME_ADVANCE,
 } from "../constants";
 
-function NpcCat() {
-  const npcRef = useRef();
+const NpcCat = forwardRef(function NpcCat(_, npcRef) {
   const npcDir = useRef(NPC_CAT_INIT_DIR);
   const isNpcIdle = useRef(true);
   // to differ animation interval from other NPCs
@@ -37,6 +36,6 @@ function NpcCat() {
       </group>
     </>
   );
-}
+});
 
 export default NpcCat;

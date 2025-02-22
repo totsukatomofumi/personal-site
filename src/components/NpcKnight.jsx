@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { forwardRef, useEffect, useRef } from "react";
 import npcKnightSprite from "../sprites/npc-knight.png";
 import NpcBase from "./NpcBase";
 import {
@@ -10,8 +10,7 @@ import {
   MAX_NPC_KNIGHT_BLINK_TIME_ADVANCE,
 } from "../constants";
 
-function NpcKnight() {
-  const npcRef = useRef();
+const NpcKnight = forwardRef(function NpcKnight(_, npcRef) {
   const npcDir = useRef(NPC_KNIGHT_INIT_DIR);
   const isNpcIdle = useRef(true);
 
@@ -36,6 +35,6 @@ function NpcKnight() {
       </group>
     </>
   );
-}
+});
 
 export default NpcKnight;

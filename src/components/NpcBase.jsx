@@ -1,4 +1,4 @@
-import { forwardRef, useRef } from "react";
+import { useRef } from "react";
 import * as THREE from "three";
 import { useFrame, useLoader } from "@react-three/fiber";
 import {
@@ -124,6 +124,11 @@ function NpcBase({
       <sprite ref={spriteRef} scale={[SPRITE_HEIGHT, SPRITE_WIDTH]}>
         <spriteMaterial map={npcSpriteMap} />
       </sprite>
+      {/* No Nav Mesh */}
+      <mesh position={[0, -2, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[2, 2]} />
+        <meshBasicMaterial color="white" />
+      </mesh>
     </>
   );
 }
