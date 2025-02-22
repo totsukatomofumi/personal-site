@@ -48,4 +48,4 @@ export const NPC_CAT_INIT_DIR = [false, false, false, true]; // up, left, down, 
 export const NPC_CAT_TIME_PER_IDLE_FRAME = 3;
 export const NPC_CAT_TIME_PER_WALK_FRAME = 0.1;
 export const NPC_CAT_TIME_PER_BLINK_FRAME = 1;
-export const MAX_NPC_CAT_BLINK_TIME_ADVANCE = 2;
+export const MAX_NPC_CAT_BLINK_TIME_ADVANCE = 0;
