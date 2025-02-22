@@ -30,6 +30,12 @@ const Player = forwardRef(function Player(
   const tileIndex = useRef(0);
   const elapsedTime = useRef(0);
 
+  playerSpriteMap.magFilter = THREE.NearestFilter;
+  playerSpriteMap.repeat.set(
+    1 / SPRITE_HORIZ_TILES_NUM,
+    1 / SPRITE_VERT_TILES_NUM
+  );
+
   function movePlayer(delta) {
     const [x, z] = movementVector.current;
 
@@ -151,14 +157,6 @@ const Player = forwardRef(function Player(
 
     playerRef.current.material.map.offset.set(offsetX, offsetY);
   }
-
-  useEffect(() => {
-    playerSpriteMap.magFilter = THREE.NearestFilter;
-    playerSpriteMap.repeat.set(
-      1 / SPRITE_HORIZ_TILES_NUM,
-      1 / SPRITE_VERT_TILES_NUM
-    );
-  }, [playerSpriteMap]);
 
   useFrame((state, delta, xrFrame) => {
     movePlayer(delta);
