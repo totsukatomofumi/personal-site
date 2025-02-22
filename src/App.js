@@ -1,19 +1,18 @@
 import { useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
 import { isMobile, useMobileOrientation } from "react-device-detect";
-import Scene from "./components/Scene";
-import Joystick from "./components/Joystick";
+import LoadingScreen from "./components/LoadingScreen";
 import Ui from "./components/Ui";
+import JoystickControls from "./components/JoystickControls";
+import KeyboardControls from "./components/KeyboardControls";
+import Scene from "./components/Scene";
 
 function App() {
+  const { isLandscape } = useMobileOrientation();
   const [isLoaded, setIsLoaded] = useState(false);
   const [isLoadingScreen, setIsLoadingScreen] = useState(true);
-  const { isLandscape } = useMobileOrientation();
-  const isJoyStickActive = useRef(false);
-  const joystickPos = useRef([0, 0]); // x, y, [0, 1]
-  const activeKeys = useRef([false, false, false, false]); // w, a, s, d
+  const [isJoystickActive, setIsJoystickActive] = useState(false);
+  const movementVector = useRef([0, 0]); // x, z, [-1, 1]
 
   if (!isMobile) {
     return (
@@ -39,84 +38,27 @@ function App() {
     <div className="fixed top-0 left-0 w-screen h-screen pb-[80px] touch-none bg-black">
       <div className="relative w-full h-full">
         {isLoadingScreen ? (
-          <Loading
+          <LoadingScreen
             isLoaded={isLoaded}
             setIsLoadingScreen={setIsLoadingScreen}
           />
         ) : null}
+        <Ui />
+        <JoystickControls
+          isJoystickActive={isJoystickActive}
+          setIsJoystickActive={setIsJoystickActive}
+          movementVector={movementVector}
+        />
+        {!isJoystickActive && (
+          <KeyboardControls movementVector={movementVector} />
+        )}
         <Canvas
           onCreated={() => {
             setIsLoaded(true);
           }}
         >
-          <Scene
-            isJoyStickActive={isJoyStickActive}
-            joystickPos={joystickPos}
-            activeKeys={activeKeys}
-          />
+          <Scene movementVector={movementVector} />
         </Canvas>
-        <Joystick
-          isJoyStickActive={isJoyStickActive}
-          joystickPos={joystickPos}
-          activeKeys={activeKeys}
-        />
-        <Ui />
-      </div>
-    </div>
-  );
-}
-
-function Loading({ isLoaded, setIsLoadingScreen }) {
-  const self = useRef();
-  const loadingRef = useRef();
-  const firstDotRef = useRef();
-  const secondDotRef = useRef();
-  const thirdDotRef = useRef();
-
-  // loading animation
-  useGSAP(() => {
-    const tl = gsap.timeline({ repeat: -1 });
-
-    tl.set([firstDotRef.current, secondDotRef.current, thirdDotRef.current], {
-      opacity: 0,
-    });
-    tl.set(firstDotRef.current, { opacity: 1 }, "+=0.1");
-    tl.set(secondDotRef.current, { opacity: 1 }, "+=0.1");
-    tl.set(thirdDotRef.current, { opacity: 1 }, "+=0.1");
-    tl.set({}, {}, "+=0.1");
-  }, {});
-
-  // fade out loading screen
-  useGSAP(
-    () => {
-      if (isLoaded) {
-        const tl = gsap.timeline();
-
-        tl.set(loadingRef.current, { display: "none" });
-        tl.to(
-          self.current,
-          { opacity: 0, duration: 1.5, ease: "none" },
-          "+=0.5"
-        );
-        tl.call(() => {
-          setIsLoadingScreen(false);
-        });
-      }
-    },
-    { dependencies: [isLoaded, setIsLoadingScreen] }
-  );
-
-  return (
-    <div
-      ref={self}
-      className="absolute top-0 left-0 z-50 w-full h-full flex justify-center items-center bg-black"
-    >
-      <div ref={loadingRef} className="text-white text-2xl font-vt323">
-        <p>
-          Loading<span ref={firstDotRef}>.</span>
-          <span ref={secondDotRef}>.</span>
-          <span ref={thirdDotRef}>.</span>
-        </p>
       </div>
     </div>
   );
