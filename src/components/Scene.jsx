@@ -5,6 +5,8 @@ import Player from "./Player";
 import { MAP_POS, MAP_ROT, NAVMESH_POS } from "../constants";
 import Map from "../models/Map";
 import NavMesh from "../models/Navmesh";
+import NpcKnight from "./NpcKnight";
+import NpcCat from "./NpcCat";
 
 function Scene({ movementVector }) {
   const playerRef = useRef();
@@ -22,6 +24,8 @@ function Scene({ movementVector }) {
         navMeshRef={navMeshRef}
         movementVector={movementVector}
       />
+      <NpcKnight />
+      <NpcCat />
       <Map position={MAP_POS} rotation={MAP_ROT} renderOrder={1} />
       <NavMesh ref={navMeshRef} position={NAVMESH_POS} rotation={MAP_ROT} />
       <ambientLight intensity={2} />

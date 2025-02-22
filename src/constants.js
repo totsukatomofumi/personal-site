@@ -20,7 +20,7 @@ export const PLAYER_INIT_POS = [0, 1, 0];
 export const PLAYER_H_SPEED = 4;
 export const PLAYER_V_SPEED = 9;
 export const PLAYER_INIT_DIR = [true, false, false, false]; // up, left, down, right
-export const PLAYER_TIME_PER_IDlE_FRAME = 10;
+export const PLAYER_TIME_PER_IDLE_FRAME = 10;
 export const PLAYER_TIME_PER_WALK_FRAME = 0.1;
 export const SPRITE_WIDTH = 2;
 export const SPRITE_HEIGHT = 2;
@@ -37,3 +37,15 @@ export const SPRITE_SEQUENCES = {
   walkDown: [28, 29, 30, 31],
 };
 export const SPRITE_DIAGONAL_THRESHOLD_SCALE = 0.6;
+export const NPC_KNIGHT_INIT_POS = [0, 1, -5];
+export const NPC_KNIGHT_INIT_DIR = [false, false, true, false]; // up, left, down, right
+export const NPC_KNIGHT_TIME_PER_IDLE_FRAME = 8;
+export const NPC_KNIGHT_TIME_PER_WALK_FRAME = 0.1;
+export const NPC_KNIGHT_TIME_PER_BLINK_FRAME = 0.1;
+export const MAX_NPC_KNIGHT_BLINK_TIME_ADVANCE = 3;
+export const NPC_CAT_INIT_POS = [-2, 1, -17];
+export const NPC_CAT_INIT_DIR = [false, false, false, true]; // up, left, down, right
+export const NPC_CAT_TIME_PER_IDLE_FRAME = 3;
+export const NPC_CAT_TIME_PER_WALK_FRAME = 0.1;
+export const NPC_CAT_TIME_PER_BLINK_FRAME = 1;
+export const MAX_NPC_CAT_BLINK_TIME_ADVANCE = 2;

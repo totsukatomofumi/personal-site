@@ -11,7 +11,7 @@ import {
   SPRITE_VERT_TILES_NUM,
   SPRITE_SEQUENCES,
   SPRITE_DIAGONAL_THRESHOLD_SCALE,
-  PLAYER_TIME_PER_IDlE_FRAME,
+  PLAYER_TIME_PER_IDLE_FRAME,
   PLAYER_TIME_PER_WALK_FRAME,
   SPRITE_WIDTH,
   SPRITE_HEIGHT,
@@ -136,7 +136,7 @@ const Player = forwardRef(function Player(
     if (
       elapsedTime.current <
       (isPlayerIdle.current
-        ? PLAYER_TIME_PER_IDlE_FRAME
+        ? PLAYER_TIME_PER_IDLE_FRAME
         : PLAYER_TIME_PER_WALK_FRAME)
     )
       return;
