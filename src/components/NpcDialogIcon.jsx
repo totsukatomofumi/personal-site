@@ -5,7 +5,8 @@ import npcDialogIconSprite from "../sprites/npc-dialog-icon.png";
 
 const SPRITE_HORIZ_TILES_NUM = 4;
 const SPRITE_VERT_TILES_NUM = 1;
-const TIME_PER_FRAME = 0.5;
+const TIME_PER_FRAME = 0.4;
+const TIME_PER_LAST_FRAME = 0.8;
 
 function NpcDialogIcon({ position, scale }) {
   const npcDialogIconSpriteMap = useLoader(
@@ -34,7 +35,7 @@ function NpcDialogIcon({ position, scale }) {
 
     if (tileIndex.current === SPRITE_HORIZ_TILES_NUM - 1) {
       // add delay for last frame before reset
-      elapsedTime.current = -1.5;
+      elapsedTime.current = TIME_PER_FRAME - TIME_PER_LAST_FRAME;
     }
 
     const offsetX =
