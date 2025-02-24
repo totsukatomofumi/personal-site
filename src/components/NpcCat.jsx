@@ -33,7 +33,7 @@ const NpcCat = forwardRef(function NpcCat(_, npcRef) {
           npcTimePerWalkFrame={NPC_CAT_TIME_PER_WALK_FRAME}
           maxNpcBlinkTimeAdvance={MAX_NPC_CAT_BLINK_TIME_ADVANCE}
         />
-        <NpcDialog position={[0, 0.35, 0]} />
+        <NpcDialog position={[0, 0.3, 0]} />
       </group>
     </>
   );
