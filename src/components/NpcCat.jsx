@@ -9,11 +9,11 @@ import {
   NPC_CAT_TIME_PER_WALK_FRAME,
   MAX_NPC_CAT_BLINK_TIME_ADVANCE,
 } from "../constants";
+import NpcDialog from "./NpcDialog";
 
 const NpcCat = forwardRef(function NpcCat(_, npcRef) {
   const npcDir = useRef(NPC_CAT_INIT_DIR);
   const isNpcIdle = useRef(true);
-  // to differ animation interval from other NPCs
 
   useEffect(() => {
     if (!npcRef.current) return;
@@ -33,6 +33,7 @@ const NpcCat = forwardRef(function NpcCat(_, npcRef) {
           npcTimePerWalkFrame={NPC_CAT_TIME_PER_WALK_FRAME}
           maxNpcBlinkTimeAdvance={MAX_NPC_CAT_BLINK_TIME_ADVANCE}
         />
+        <NpcDialog position={[0, 0.35, 0]} />
       </group>
     </>
   );

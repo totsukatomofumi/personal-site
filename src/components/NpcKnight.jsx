@@ -9,6 +9,7 @@ import {
   NPC_KNIGHT_TIME_PER_WALK_FRAME,
   MAX_NPC_KNIGHT_BLINK_TIME_ADVANCE,
 } from "../constants";
+import NpcDialog from "./NpcDialog";
 
 const NpcKnight = forwardRef(function NpcKnight(_, npcRef) {
   const npcDir = useRef(NPC_KNIGHT_INIT_DIR);
@@ -21,19 +22,18 @@ const NpcKnight = forwardRef(function NpcKnight(_, npcRef) {
   }, [npcRef]);
 
   return (
-    <>
-      <group ref={npcRef}>
-        <NpcBase
-          npcDir={npcDir}
-          isNpcIdle={isNpcIdle}
-          npcSprite={npcKnightSprite}
-          npcTimePerIdleFrame={NPC_KNIGHT_TIME_PER_IDLE_FRAME}
-          npcTimePerBlinkFrame={NPC_KNIGHT_TIME_PER_BLINK_FRAME}
-          npcTimePerWalkFrame={NPC_KNIGHT_TIME_PER_WALK_FRAME}
-          maxNpcBlinkTimeAdvance={MAX_NPC_KNIGHT_BLINK_TIME_ADVANCE}
-        />
-      </group>
-    </>
+    <group ref={npcRef}>
+      <NpcBase
+        npcDir={npcDir}
+        isNpcIdle={isNpcIdle}
+        npcSprite={npcKnightSprite}
+        npcTimePerIdleFrame={NPC_KNIGHT_TIME_PER_IDLE_FRAME}
+        npcTimePerBlinkFrame={NPC_KNIGHT_TIME_PER_BLINK_FRAME}
+        npcTimePerWalkFrame={NPC_KNIGHT_TIME_PER_WALK_FRAME}
+        maxNpcBlinkTimeAdvance={MAX_NPC_KNIGHT_BLINK_TIME_ADVANCE}
+      />
+      <NpcDialog position={[0, 1.25, 0]} />
+    </group>
   );
 });
 
