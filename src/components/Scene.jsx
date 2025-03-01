@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import * as THREE from "three";
 import { useThree } from "@react-three/fiber";
 import Camera from "./Camera";
 import Player from "./Player";
@@ -7,6 +8,7 @@ import Map from "../models/Map";
 import NavMesh from "../models/Navmesh";
 import NpcKnight from "./NpcKnight";
 import NpcCat from "./NpcCat";
+import Lighting from "./Lighting";
 
 function Scene({
   movementVector,
@@ -23,7 +25,7 @@ function Scene({
   const npcNoNavMeshRefs = useRef([npcKnightNoNavMeshRef, npcCatNoNavMeshRef]);
 
   useThree(({ gl }) => {
-    gl.setClearColor("white");
+    gl.setClearColor(new THREE.Color(0x0a0a33));
   });
 
   return (
@@ -52,8 +54,7 @@ function Scene({
       />
       <Map position={MAP_POS} rotation={MAP_ROT} renderOrder={1} />
       <NavMesh ref={navMeshRef} position={NAVMESH_POS} rotation={MAP_ROT} />
-      <ambientLight intensity={2} />
-      <fog attach="fog" args={["white", 0, 180]} />
+      <Lighting playerRef={playerRef} />
     </>
   );
 }

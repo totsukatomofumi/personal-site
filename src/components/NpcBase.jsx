@@ -8,6 +8,7 @@ import {
   SPRITE_WIDTH,
   SPRITE_HEIGHT,
 } from "../constants";
+import SpriteShadow from "./SpriteShadow";
 
 const NpcBase = forwardRef(function NpcBase(
   {
@@ -125,7 +126,7 @@ const NpcBase = forwardRef(function NpcBase(
 
   return (
     <>
-      <sprite ref={spriteRef} scale={[SPRITE_HEIGHT, SPRITE_WIDTH]}>
+      <sprite ref={spriteRef} scale={[SPRITE_HEIGHT, SPRITE_WIDTH]} castShadow>
         <spriteMaterial map={npcSpriteMap} />
       </sprite>
       {/* No nav mesh */}
@@ -137,6 +138,7 @@ const NpcBase = forwardRef(function NpcBase(
         <planeGeometry args={noNavMeshScale} />
         <meshBasicMaterial color="black" />
       </mesh>
+      <SpriteShadow />
     </>
   );
 });

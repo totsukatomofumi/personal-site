@@ -17,6 +17,7 @@ function Map(props) {
         material={materials["brick1.001"]}
         position={[-34.14, 0, 0]}
         scale={[59.797, 21.777, 21.777]}
+        receiveShadow
       />
       <mesh
         geometry={nodes.banner_0001.geometry}
@@ -31,12 +32,6 @@ function Map(props) {
         rotation={[-Math.PI / 2, 0, Math.PI / 2]}
       />
       <mesh
-        geometry={nodes.plant_01_0001.geometry}
-        material={materials.plant}
-        position={[-3.731, -0.034, 3.133]}
-        rotation={[-Math.PI / 2, 0, 0]}
-      />
-      <mesh
         geometry={nodes.Object_10002.geometry}
         material={materials["Material.004"]}
         position={[-41.185, 3.597, 2.679]}
@@ -48,6 +43,7 @@ function Map(props) {
         material={materials.Torch2_lambert1_AlbedoTransparency}
         position={[-22.326, 2.46, 1.89]}
         scale={139.333}
+        castShadow
       />
       <mesh
         geometry={nodes.obj_house_1_material_planks_0001.geometry}
@@ -55,6 +51,7 @@ function Map(props) {
         position={[-6.144, 4.593, 6.442]}
         rotation={[-1.52, 0, Math.PI / 2]}
         scale={[0.091, 0.065, 0.999]}
+        castShadow
       />
       <mesh
         geometry={nodes.obj_house_1_material_rocks_0001.geometry}
@@ -62,6 +59,7 @@ function Map(props) {
         position={[-5.448, 0.522, 6.269]}
         rotation={[-1.52, 0, Math.PI / 2]}
         scale={[0.091, 0.065, 0.999]}
+        castShadow
       />
       <mesh
         geometry={nodes.obj_house_1_material_roof_0001.geometry}
@@ -69,6 +67,7 @@ function Map(props) {
         position={[-6.366, 6.386, 6.437]}
         rotation={[-1.52, 0, Math.PI / 2]}
         scale={[0.091, 0.065, 0.999]}
+        castShadow
       />
       <mesh
         geometry={nodes.obj_house_1_material_window_and_steel_0001.geometry}
@@ -76,6 +75,7 @@ function Map(props) {
         position={[-7.827, 7.892, 5.825]}
         rotation={[-1.52, 0, Math.PI / 2]}
         scale={[0.091, 0.065, 0.999]}
+        castShadow
       />
       <mesh
         geometry={nodes.obj_house_1_material_wood_0001.geometry}
@@ -83,6 +83,7 @@ function Map(props) {
         position={[-6.017, 3.819, 6.362]}
         rotation={[-1.52, 0, Math.PI / 2]}
         scale={[0.091, 0.065, 0.999]}
+        castShadow
       />
       <mesh
         geometry={nodes.porte_main_0.geometry}
@@ -90,12 +91,14 @@ function Map(props) {
         position={[-55.866, 0, -0.003]}
         rotation={[0, Math.PI / 2, 0]}
         scale={0.01}
+        castShadow
       />
       <mesh
         geometry={nodes.Cube__0.geometry}
         material={materials["Scene_-_Root"]}
         position={[-23.188, 1.319, -3.029]}
         rotation={[-Math.PI / 2, 0, 0.059]}
+        castShadow
       />
       <mesh
         geometry={nodes.Object_4.geometry}
@@ -138,6 +141,7 @@ function Map(props) {
         position={[-24.208, -0.048, 0.128]}
         rotation={[0, -0.375, 0]}
         scale={1.315}
+        castShadow
       />
       <mesh
         geometry={nodes.defaultMaterial.geometry}
@@ -145,6 +149,7 @@ function Map(props) {
         position={[-2.341, 2.149, 3.652]}
         rotation={[0, 0, 0.149]}
         scale={2.422}
+        castShadow
       />
       <mesh
         geometry={nodes.barrel_low_Material_0.geometry}
@@ -152,12 +157,14 @@ function Map(props) {
         position={[-2.797, 0, -2.579]}
         rotation={[-Math.PI / 2, 0, 1.247]}
         scale={0.323}
+        castShadow
       />
       <mesh
         geometry={nodes.pCube104_lambert2_0.geometry}
         material={materials.lambert2}
         position={[-4.998, 0.682, -2.833]}
         scale={[0.11, 0.042, 0.077]}
+        castShadow
       />
       <mesh
         geometry={nodes.Object_5.geometry}

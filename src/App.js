@@ -86,6 +86,7 @@ function App() {
           )
         )}
         <Canvas
+          shadows
           onCreated={() => {
             setIsLoaded(true);
           }}

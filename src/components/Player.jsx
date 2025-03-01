@@ -19,6 +19,7 @@ import {
   SPRITE_HEIGHT,
   INTRO_DURATION,
 } from "../constants";
+import SpriteShadow from "./SpriteShadow";
 
 const Player = forwardRef(function Player(
   { navMeshRef, npcNoNavMeshRefs, movementVector, isIntro, setIsIntro },
@@ -28,6 +29,7 @@ const Player = forwardRef(function Player(
   const playerDir = useRef(PLAYER_INIT_DIR);
   const isPlayerIdle = useRef(true);
   const raycasterRef = useRef();
+  const playerSpriteRef = useRef();
   const playerSpriteMap = useLoader(THREE.TextureLoader, playerSprite);
   const playerSpriteSequence = useRef([]);
   const sequenceIndex = useRef(0);
@@ -176,7 +178,7 @@ const Player = forwardRef(function Player(
       Math.floor(tileIndex.current / SPRITE_HORIZ_TILES_NUM) /
       SPRITE_VERT_TILES_NUM;
 
-    selfRef.current.material.map.offset.set(offsetX, offsetY);
+    playerSpriteRef.current.material.map.offset.set(offsetX, offsetY);
   }
 
   useFrame((state, delta, xrFrame) => {
@@ -214,13 +216,12 @@ const Player = forwardRef(function Player(
 
   return (
     <>
-      <sprite
-        ref={selfRef}
-        position={PLAYER_INIT_POS}
-        scale={[SPRITE_HEIGHT, SPRITE_WIDTH]}
-      >
-        <spriteMaterial map={playerSpriteMap} />
-      </sprite>
+      <group ref={selfRef} position={PLAYER_INIT_POS}>
+        <sprite ref={playerSpriteRef} scale={[SPRITE_HEIGHT, SPRITE_WIDTH]}>
+          <spriteMaterial map={playerSpriteMap} />
+        </sprite>
+        <SpriteShadow />
+      </group>
       <raycaster
         ref={raycasterRef}
         ray-direction={new THREE.Vector3(0, -1, 0)}
