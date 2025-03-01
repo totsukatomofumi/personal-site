@@ -1,8 +1,3 @@
-import { useRef, useState } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import * as THREE from "three";
-import { useFrame } from "@react-three/fiber";
 import { SoftShadows } from "@react-three/drei";
 
 function Lighting({ playerRef }) {
@@ -10,7 +5,7 @@ function Lighting({ playerRef }) {
     <>
       {/* Moonlight related */}
       <spotLight
-        position={[0, 20, -100]}
+        position={[0, 20, -105]}
         intensity={1000}
         castShadow
         shadow-mapSize-width={2048}
@@ -28,6 +23,43 @@ function Lighting({ playerRef }) {
       <directionalLight color="#0a0a33" intensity={20} position={[0, 10, 0]} />
       <fog attach="fog" args={["#0a0a33", 0, 180]} />
 
+      {/* Street lights related */}
+      <pointLight
+        color="#FFA500"
+        position={[3.8, 2, -15.9]}
+        intensity={40}
+        castShadow
+      />
+      <pointLight
+        color="#FFA500"
+        position={[-6.25, 2, -1.6]}
+        intensity={40}
+        castShadow
+      />
+      <pointLight
+        color="#FFA500"
+        position={[-0.15, 2.65, -22.3]}
+        intensity={20}
+        castShadow
+      />
+      <pointLight
+        color="#FFA500"
+        position={[6.4, 2, 4.7]}
+        intensity={40}
+        castShadow
+      />
+      <pointLight
+        color="#FFA500"
+        position={[-5.6, 2, -12.5]}
+        intensity={40}
+        castShadow
+      />
+      <pointLight
+        color="#FFA500"
+        position={[0, 10, -80]}
+        intensity={500}
+        castShadow
+      />
       <SoftShadows />
     </>
   );
