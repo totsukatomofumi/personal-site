@@ -54,12 +54,6 @@ function Lighting({ playerRef }) {
         intensity={40}
         castShadow
       />
-      <pointLight
-        color="#FFA500"
-        position={[0, 10, -80]}
-        intensity={500}
-        castShadow
-      />
       <SoftShadows />
     </>
   );
