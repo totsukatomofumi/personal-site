@@ -31,7 +31,7 @@ const NpcInteractableBase = forwardRef(function NpcInteractableBase(
   const selfRef = useRef();
   const dialogTriggerMeshRef = useRef();
   const dialogTriggerElapsedTime = useRef(0);
-  const [isDialogTriggered, setIsDialogTriggered] = useState(false);
+  const [isDialogTriggered, setIsDialogTriggered] = useState(null);
   const isRepeatTrigger = useRef(false);
 
   function checkTriggerDialog(delta) {
@@ -84,6 +84,8 @@ const NpcInteractableBase = forwardRef(function NpcInteractableBase(
   }, [isDialogTriggered, playerRef, npcDir, noNavMeshScale]);
 
   useEffect(() => {
+    if (isDialogTriggered === null) return;
+
     if (isDialogTriggered) {
       setIsDialogActive(true);
     } else {
