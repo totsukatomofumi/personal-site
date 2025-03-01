@@ -48,7 +48,7 @@ export const NPC_KNIGHT_DIALOG_ARRAY = [
   "Great work so far, and I can't wait to see what you'll achieve next.",
   "Ah, before you head out, don't forget to check your equipment and inventory.",
   "You'll find equipment from your past academic and work experiences.",
-  "Your projects in your inventory may come in handy during your journey.",
+  "And your projects in your inventory may come in handy during your journey.",
   "Whenever you seek guidance or a word of advice, you know where to find me.",
   "Safe adventures, traveller! May your path be bold and your resolve remain unshaken.",
 ];
