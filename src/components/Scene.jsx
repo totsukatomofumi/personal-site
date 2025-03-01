@@ -8,7 +8,12 @@ import NavMesh from "../models/Navmesh";
 import NpcKnight from "./NpcKnight";
 import NpcCat from "./NpcCat";
 
-function Scene({ movementVector, setIsDialogActive, toggleDialog }) {
+function Scene({
+  movementVector,
+  setIsDialogActive,
+  toggleDialog,
+  setToggleTutorialAnim,
+}) {
   const playerRef = useRef();
   const npcKnightNoNavMeshRef = useRef();
   const npcCatNoNavMeshRef = useRef();
@@ -33,6 +38,7 @@ function Scene({ movementVector, setIsDialogActive, toggleDialog }) {
         playerRef={playerRef}
         setIsDialogActive={setIsDialogActive}
         toggleDialog={toggleDialog}
+        setToggleTutorialAnim={setToggleTutorialAnim}
       />
       <NpcCat
         ref={npcCatNoNavMeshRef}

@@ -3,7 +3,10 @@ import { Html } from "@react-three/drei";
 import gsap from "gsap";
 import { TextPlugin } from "gsap/TextPlugin";
 import { useGSAP } from "@gsap/react";
-import { NPC_DIALOG_TEXT_TIME_PER_CHAR } from "../constants";
+import {
+  NPC_DIALOG_TEXT_TIME_PER_CHAR,
+  NPC_KNIGHT_DIALOG_TUTORIAL_INDEX,
+} from "../constants";
 import npcDialogBubbleBackground from "../sprites/npc-dialog-bubble.png";
 import npcDialogBubbleTail from "../sprites/npc-dialog-bubble-tail.png";
 import npcDialogDownwardArrow from "../sprites/npc-dialog-downward-arrow.png";
@@ -16,7 +19,7 @@ const TEST_DIALOG_ARR = [
   "Meow.",
 ];
 
-const NPC_DIALOG_BUBBLE_TAIL_OFFSET_X_SCALE = 57;
+const NPC_DIALOG_BUBBLE_TAIL_OFFSET_X_SCALE = 50;
 
 function NpcDialogBubble({
   position,
@@ -25,6 +28,7 @@ function NpcDialogBubble({
   setIsDialogTriggered,
   bubbleOffsetX = 0,
   bubbleOffsetY = 0,
+  onTutorial = () => {},
 }) {
   const selfRef = useRef();
   const textRef = useRef();
@@ -147,6 +151,12 @@ function NpcDialogBubble({
     }
   );
 
+  useEffect(() => {
+    if (dialogIndex === NPC_KNIGHT_DIALOG_TUTORIAL_INDEX) {
+      onTutorial();
+    }
+  }, [dialogIndex]);
+
   return (
     <>
       <Html
@@ -169,8 +179,10 @@ function NpcDialogBubble({
                 height:
                   dialogArr[dialogIndex].length > 100
                     ? "90%"
-                    : dialogArr[dialogIndex].length > 50
+                    : dialogArr[dialogIndex].length > 66
                     ? "70%"
+                    : dialogArr[dialogIndex].length > 50
+                    ? "50%"
                     : "30%",
               }}
             ></div>

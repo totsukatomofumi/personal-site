@@ -2,6 +2,7 @@ import NpcDialogIcon from "./NpcDialogIcon";
 import NpcDialogBubble from "./NpcDialogBubble";
 
 function NpcDialog({
+  dialogArr,
   toggleDialog,
   dialogTriggerMeshRef,
   dialogTriggerMeshScale = [2.2, 2.2],
@@ -10,17 +11,20 @@ function NpcDialog({
   position,
   bubbleOffsetX,
   bubbleOffsetY,
+  onTutorial,
 }) {
   return (
     <>
       <group position={position}>
         {isDialogTriggered && (
           <NpcDialogBubble
-            position={[0, 1.1, 0]}
+            position={[0, 1.3, 0]}
             toggleDialog={toggleDialog}
             setIsDialogTriggered={setIsDialogTriggered}
             bubbleOffsetX={bubbleOffsetX}
             bubbleOffsetY={bubbleOffsetY}
+            dialogArr={dialogArr}
+            onTutorial={onTutorial}
           />
         )}
         <NpcDialogIcon

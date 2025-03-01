@@ -17,6 +17,7 @@ function App() {
   const [isDialogActive, setIsDialogActive] = useState(false);
   const [toggleDialog, setToggleDialog] = useState(null); // null before use
   const [isMenu, setIsMenu] = useState(false);
+  const [toggleTutorialAnim, setToggleTutorialAnim] = useState(null);
 
   useEffect(() => {
     if (isDialogActive) {
@@ -61,7 +62,11 @@ function App() {
             setIsLoadingScreen={setIsLoadingScreen}
           />
         ) : null}
-        <Ui isMenu={isMenu} setIsMenu={setIsMenu} />
+        <Ui
+          isMenu={isMenu}
+          setIsMenu={setIsMenu}
+          toggleTutorialAnim={toggleTutorialAnim}
+        />
 
         {isDialogActive ? (
           <DialogControls setToggleDialog={setToggleDialog} />
@@ -86,6 +91,7 @@ function App() {
             movementVector={movementVector}
             setIsDialogActive={setIsDialogActive}
             toggleDialog={toggleDialog}
+            setToggleTutorialAnim={setToggleTutorialAnim}
           />
         </Canvas>
       </div>

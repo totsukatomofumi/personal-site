@@ -23,6 +23,8 @@ const NpcInteractableBase = forwardRef(function NpcInteractableBase(
     bubbleOffsetX,
     bubbleOffsetY,
     isFacePlayer = true,
+    dialogArr,
+    onTutorial,
   },
   noNavMeshRef
 ) {
@@ -112,6 +114,8 @@ const NpcInteractableBase = forwardRef(function NpcInteractableBase(
         position={dialogPos}
         bubbleOffsetX={bubbleOffsetX}
         bubbleOffsetY={bubbleOffsetY}
+        dialogArr={dialogArr}
+        onTutorial={onTutorial}
       />
     </group>
   );

@@ -2,6 +2,7 @@ import { forwardRef, useRef } from "react";
 import npcKnightSprite from "../sprites/npc-knight.png";
 import NpcInteractableBase from "./NpcInteractableBase";
 import {
+  NPC_KNIGHT_DIALOG_ARRAY,
   NPC_KNIGHT_INIT_POS,
   NPC_KNIGHT_INIT_DIR,
   NPC_KNIGHT_TIME_PER_IDLE_FRAME,
@@ -15,11 +16,15 @@ const NPC_KNIGHT_NO_NAV_MESH_SCALE = [2, 3];
 const NPC_KNIGHT_DIALOG_TRIGGER_MESH_SCALE = [2.2, 3.2];
 
 const NpcKnight = forwardRef(function NpcKnight(
-  { playerRef, setIsDialogActive, toggleDialog },
+  { playerRef, setIsDialogActive, toggleDialog, setToggleTutorialAnim },
   noNavMeshRef
 ) {
   const npcDir = useRef(NPC_KNIGHT_INIT_DIR);
   const isNpcIdle = useRef(true);
+
+  function handleTutorial() {
+    setToggleTutorialAnim((prev) => (prev ? !prev : true));
+  }
 
   return (
     <NpcInteractableBase
@@ -38,6 +43,8 @@ const NpcKnight = forwardRef(function NpcKnight(
       dialogTriggerMeshScale={NPC_KNIGHT_DIALOG_TRIGGER_MESH_SCALE}
       setIsDialogActive={setIsDialogActive}
       toggleDialog={toggleDialog}
+      dialogArr={NPC_KNIGHT_DIALOG_ARRAY}
+      onTutorial={handleTutorial}
     />
   );
 });
