@@ -5,8 +5,7 @@ import { animateUiButton } from "../animations";
 import uiStatus from "../sprites/ui-status.png";
 import uiButton from "../sprites/ui-button.png";
 
-function Ui() {
-  const [isMenu, setIsMenu] = useState(false);
+function Ui({ isMenu, setIsMenu }) {
   const [toggleButtonAnim, setToggleButtonAnim] = useState(null);
   const uiButtonRef = useRef();
 

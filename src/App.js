@@ -16,6 +16,7 @@ function App() {
   const movementVector = useRef([0, 0]); // x, z, [-1, 1]
   const [isDialogActive, setIsDialogActive] = useState(false);
   const [toggleDialog, setToggleDialog] = useState(null); // null before use
+  const [isMenu, setIsMenu] = useState(false);
 
   useEffect(() => {
     if (isDialogActive) {
@@ -24,6 +25,12 @@ function App() {
       setIsJoystickActive(false);
     }
   }, [isDialogActive]);
+
+  useEffect(() => {
+    if (isMenu) {
+      movementVector.current = [0, 0];
+    }
+  }, [isMenu]);
 
   if (!isMobile) {
     return (
@@ -54,7 +61,7 @@ function App() {
             setIsLoadingScreen={setIsLoadingScreen}
           />
         ) : null}
-        <Ui />
+        <Ui isMenu={isMenu} setIsMenu={setIsMenu} />
 
         {isDialogActive ? (
           <DialogControls setToggleDialog={setToggleDialog} />
@@ -65,7 +72,7 @@ function App() {
               setIsJoystickActive={setIsJoystickActive}
               movementVector={movementVector}
             />
-            {!isJoystickActive && (
+            {!isJoystickActive && !isMenu && (
               <KeyboardControls movementVector={movementVector} />
             )}
           </>
