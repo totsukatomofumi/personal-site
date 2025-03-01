@@ -8,19 +8,26 @@ function NpcDialog({
   isDialogTriggered,
   setIsDialogTriggered,
   position,
+  bubbleOffsetX,
+  bubbleOffsetY,
 }) {
   return (
     <>
       <group position={position}>
-        {isDialogTriggered ? (
+        {isDialogTriggered && (
           <NpcDialogBubble
             position={[0, 1.1, 0]}
             toggleDialog={toggleDialog}
             setIsDialogTriggered={setIsDialogTriggered}
+            bubbleOffsetX={bubbleOffsetX}
+            bubbleOffsetY={bubbleOffsetY}
           />
-        ) : (
-          <NpcDialogIcon position={[0, 0, 0]} scale={(0.8, 0.8)} />
         )}
+        <NpcDialogIcon
+          position={[0, 0, 0]}
+          scale={(0.8, 0.8)}
+          visible={!isDialogTriggered}
+        />
       </group>
       {/* Dialog trigger mesh */}
       <mesh

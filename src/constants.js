@@ -37,6 +37,8 @@ export const SPRITE_SEQUENCES = {
   walkDown: [28, 29, 30, 31],
 };
 export const SPRITE_DIAGONAL_THRESHOLD_SCALE = 0.6;
+export const NPC_DIALOG_TRIGGER_ELAPSED_TIME = 2;
+export const NPC_DIALOG_TEXT_TIME_PER_CHAR = 0.025;
 export const NPC_KNIGHT_INIT_POS = [0, 1, -5];
 export const NPC_KNIGHT_INIT_DIR = [false, false, true, false]; // up, left, down, right
 export const NPC_KNIGHT_TIME_PER_IDLE_FRAME = 6;

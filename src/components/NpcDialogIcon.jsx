@@ -8,7 +8,7 @@ const SPRITE_VERT_TILES_NUM = 1;
 const TIME_PER_FRAME = 0.4;
 const TIME_PER_LAST_FRAME = 0.8;
 
-function NpcDialogIcon({ position, scale }) {
+function NpcDialogIcon({ position, scale, visible = true }) {
   const spriteRef = useRef();
   const npcDialogIconSpriteMap = useLoader(
     THREE.TextureLoader,
@@ -53,7 +53,7 @@ function NpcDialogIcon({ position, scale }) {
   });
 
   return (
-    <sprite ref={spriteRef} scale={scale} position={position}>
+    <sprite ref={spriteRef} scale={scale} position={position} visible={visible}>
       <spriteMaterial map={npcDialogIconSpriteMap} />
     </sprite>
   );

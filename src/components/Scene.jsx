@@ -34,7 +34,12 @@ function Scene({ movementVector, setIsDialogActive, toggleDialog }) {
         setIsDialogActive={setIsDialogActive}
         toggleDialog={toggleDialog}
       />
-      <NpcCat ref={npcCatNoNavMeshRef} />
+      <NpcCat
+        ref={npcCatNoNavMeshRef}
+        playerRef={playerRef}
+        setIsDialogActive={setIsDialogActive}
+        toggleDialog={toggleDialog}
+      />
       <Map position={MAP_POS} rotation={MAP_ROT} renderOrder={1} />
       <NavMesh ref={navMeshRef} position={NAVMESH_POS} rotation={MAP_ROT} />
       <ambientLight intensity={2} />

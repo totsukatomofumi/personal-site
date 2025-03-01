@@ -1,6 +1,5 @@
 import { forwardRef, useEffect, useRef } from "react";
 import npcCatSprite from "../sprites/npc-cat.png";
-import NpcBase from "./NpcBase";
 import {
   NPC_CAT_INIT_POS,
   NPC_CAT_INIT_DIR,
@@ -9,28 +8,42 @@ import {
   NPC_CAT_TIME_PER_WALK_FRAME,
   MAX_NPC_CAT_BLINK_TIME_ADVANCE,
 } from "../constants";
-import NpcDialog from "./NpcDialog";
+import NpcInteractableBase from "./NpcInteractableBase";
 
-const NpcCat = forwardRef(function NpcCat(_, noNavMeshRef) {
+const NPC_CAT_DIALOG_POS = [0, 0.7, 0];
+const NPC_CAT_NO_NAV_MESH_SCALE = [2, 2];
+const NPC_CAT_DIALOG_TRIGGER_MESH_SCALE = [2.2, 2.2];
+const NPC_CAT_DIALOG_BUBBLE_OFFSET_X = -NPC_CAT_INIT_POS[0] * 0.5;
+const NPC_CAT_DIALOG_BUBBLE_OFFSET_Y = 0.4;
+
+const NpcCat = forwardRef(function NpcCat(
+  { playerRef, setIsDialogActive, toggleDialog },
+  noNavMeshRef
+) {
   const npcDir = useRef(NPC_CAT_INIT_DIR);
   const isNpcIdle = useRef(true);
 
   return (
-    <>
-      <group position={NPC_CAT_INIT_POS}>
-        <NpcBase
-          ref={noNavMeshRef}
-          npcDir={npcDir}
-          isNpcIdle={isNpcIdle}
-          npcSprite={npcCatSprite}
-          npcTimePerIdleFrame={NPC_CAT_TIME_PER_IDLE_FRAME}
-          npcTimePerBlinkFrame={NPC_CAT_TIME_PER_BLINK_FRAME}
-          npcTimePerWalkFrame={NPC_CAT_TIME_PER_WALK_FRAME}
-          maxNpcBlinkTimeAdvance={MAX_NPC_CAT_BLINK_TIME_ADVANCE}
-        />
-        {/* <NpcDialog position={[0, 0.3, 0]} /> */}
-      </group>
-    </>
+    <NpcInteractableBase
+      ref={noNavMeshRef}
+      playerRef={playerRef}
+      npcSprite={npcCatSprite}
+      npcDir={npcDir}
+      isNpcIdle={isNpcIdle}
+      npcInitPos={NPC_CAT_INIT_POS}
+      npcTimePerIdleFrame={NPC_CAT_TIME_PER_IDLE_FRAME}
+      npcTimePerBlinkFrame={NPC_CAT_TIME_PER_BLINK_FRAME}
+      npcTimePerWalkFrame={NPC_CAT_TIME_PER_WALK_FRAME}
+      maxNpcBlinkTimeAdvance={MAX_NPC_CAT_BLINK_TIME_ADVANCE}
+      noNavMeshScale={NPC_CAT_NO_NAV_MESH_SCALE}
+      dialogPos={NPC_CAT_DIALOG_POS}
+      dialogTriggerMeshScale={NPC_CAT_DIALOG_TRIGGER_MESH_SCALE}
+      setIsDialogActive={setIsDialogActive}
+      toggleDialog={toggleDialog}
+      bubbleOffsetX={NPC_CAT_DIALOG_BUBBLE_OFFSET_X}
+      bubbleOffsetY={NPC_CAT_DIALOG_BUBBLE_OFFSET_Y}
+      isFacePlayer={false}
+    />
   );
 });
 
