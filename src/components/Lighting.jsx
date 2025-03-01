@@ -16,7 +16,7 @@ function Lighting() {
 
     lampAnimElapsedTime.current = 0;
 
-    lampRef.current.intensity = Math.random() * 5 + 15;
+    lampRef.current.intensity = Math.random() * 7.5 + 12.5;
   }
 
   function animateTavern(delta) {
@@ -26,8 +26,8 @@ function Lighting() {
 
     tavernAnimElapsedTime.current = 0;
 
-    tavernARef.current.intensity = Math.random() * 5 + 35;
-    tavernBRef.current.intensity = Math.random() * 5 + 35;
+    tavernARef.current.intensity = Math.random() * 7.5 + 32.5;
+    tavernBRef.current.intensity = Math.random() * 7.5 + 32.5;
   }
 
   useFrame((_, delta) => {
