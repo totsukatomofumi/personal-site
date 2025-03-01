@@ -54,7 +54,7 @@ function Scene({
       />
       <Map position={MAP_POS} rotation={MAP_ROT} renderOrder={1} />
       <NavMesh ref={navMeshRef} position={NAVMESH_POS} rotation={MAP_ROT} />
-      <Lighting playerRef={playerRef} />
+      <Lighting />
     </>
   );
 }
