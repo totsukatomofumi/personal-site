@@ -12,6 +12,7 @@ function App() {
   const { isLandscape } = useMobileOrientation();
   const [isLoaded, setIsLoaded] = useState(false);
   const [isLoadingScreen, setIsLoadingScreen] = useState(true);
+  const [isIntro, setIsIntro] = useState(true);
   const [isJoystickActive, setIsJoystickActive] = useState(false);
   const movementVector = useRef([0, 0]); // x, z, [-1, 1]
   const [isDialogActive, setIsDialogActive] = useState(false);
@@ -71,16 +72,18 @@ function App() {
         {isDialogActive ? (
           <DialogControls setToggleDialog={setToggleDialog} />
         ) : (
-          <>
-            <JoystickControls
-              isJoystickActive={isJoystickActive}
-              setIsJoystickActive={setIsJoystickActive}
-              movementVector={movementVector}
-            />
-            {!isJoystickActive && !isMenu && (
-              <KeyboardControls movementVector={movementVector} />
-            )}
-          </>
+          !isIntro && (
+            <>
+              <JoystickControls
+                isJoystickActive={isJoystickActive}
+                setIsJoystickActive={setIsJoystickActive}
+                movementVector={movementVector}
+              />
+              {!isJoystickActive && !isMenu && (
+                <KeyboardControls movementVector={movementVector} />
+              )}
+            </>
+          )
         )}
         <Canvas
           onCreated={() => {
@@ -92,6 +95,8 @@ function App() {
             setIsDialogActive={setIsDialogActive}
             toggleDialog={toggleDialog}
             setToggleTutorialAnim={setToggleTutorialAnim}
+            isIntro={isIntro}
+            setIsIntro={setIsIntro}
           />
         </Canvas>
       </div>

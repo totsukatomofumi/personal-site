@@ -1,4 +1,6 @@
 import { forwardRef, useImperativeHandle, useRef } from "react";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
 import * as THREE from "three";
 import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import playerSprite from "../sprites/player.png";
@@ -15,10 +17,11 @@ import {
   PLAYER_TIME_PER_WALK_FRAME,
   SPRITE_WIDTH,
   SPRITE_HEIGHT,
+  INTRO_DURATION,
 } from "../constants";
 
 const Player = forwardRef(function Player(
-  { navMeshRef, npcNoNavMeshRefs, movementVector },
+  { navMeshRef, npcNoNavMeshRefs, movementVector, isIntro, setIsIntro },
   playerRef
 ) {
   const selfRef = useRef();
@@ -39,6 +42,8 @@ const Player = forwardRef(function Player(
   );
 
   function movePlayer(delta) {
+    if (isIntro) return; // if intro, dont do anything
+
     const [x, z] = movementVector.current;
 
     // set is idle
@@ -183,6 +188,29 @@ const Player = forwardRef(function Player(
     self: selfRef.current,
     raycaster: raycasterRef.current,
   }));
+
+  useGSAP(
+    () => {
+      const tl = gsap.timeline();
+
+      tl.call(() => {
+        isPlayerIdle.current = false;
+      });
+
+      tl.from(selfRef.current.position, {
+        z: PLAYER_V_SPEED * INTRO_DURATION,
+        duration: INTRO_DURATION,
+        delay: 0.5,
+        ease: "none",
+      });
+
+      tl.call(() => {
+        setIsIntro(false);
+        isPlayerIdle.current = true;
+      });
+    },
+    { dependencies: [] }
+  );
 
   return (
     <>

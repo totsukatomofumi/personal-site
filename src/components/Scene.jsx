@@ -13,6 +13,8 @@ function Scene({
   setIsDialogActive,
   toggleDialog,
   setToggleTutorialAnim,
+  isIntro,
+  setIsIntro,
 }) {
   const playerRef = useRef();
   const npcKnightNoNavMeshRef = useRef();
@@ -32,6 +34,8 @@ function Scene({
         navMeshRef={navMeshRef}
         npcNoNavMeshRefs={npcNoNavMeshRefs}
         movementVector={movementVector}
+        isIntro={isIntro}
+        setIsIntro={setIsIntro}
       />
       <NpcKnight
         ref={npcKnightNoNavMeshRef}
