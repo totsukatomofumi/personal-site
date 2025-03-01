@@ -11,20 +11,15 @@ import {
 } from "../constants";
 import NpcDialog from "./NpcDialog";
 
-const NpcCat = forwardRef(function NpcCat(_, npcRef) {
+const NpcCat = forwardRef(function NpcCat(_, noNavMeshRef) {
   const npcDir = useRef(NPC_CAT_INIT_DIR);
   const isNpcIdle = useRef(true);
 
-  useEffect(() => {
-    if (!npcRef.current) return;
-
-    npcRef.current.position.set(...NPC_CAT_INIT_POS);
-  }, [npcRef]);
-
   return (
     <>
-      <group ref={npcRef}>
+      <group position={NPC_CAT_INIT_POS}>
         <NpcBase
+          ref={noNavMeshRef}
           npcDir={npcDir}
           isNpcIdle={isNpcIdle}
           npcSprite={npcCatSprite}
@@ -33,7 +28,7 @@ const NpcCat = forwardRef(function NpcCat(_, npcRef) {
           npcTimePerWalkFrame={NPC_CAT_TIME_PER_WALK_FRAME}
           maxNpcBlinkTimeAdvance={MAX_NPC_CAT_BLINK_TIME_ADVANCE}
         />
-        <NpcDialog position={[0, 0.3, 0]} />
+        {/* <NpcDialog position={[0, 0.3, 0]} /> */}
       </group>
     </>
   );

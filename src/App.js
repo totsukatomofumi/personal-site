@@ -1,10 +1,11 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { isMobile, useMobileOrientation } from "react-device-detect";
 import LoadingScreen from "./components/LoadingScreen";
 import Ui from "./components/Ui";
 import JoystickControls from "./components/JoystickControls";
 import KeyboardControls from "./components/KeyboardControls";
+import DialogControls from "./components/DialogControls";
 import Scene from "./components/Scene";
 
 function App() {
@@ -13,6 +14,16 @@ function App() {
   const [isLoadingScreen, setIsLoadingScreen] = useState(true);
   const [isJoystickActive, setIsJoystickActive] = useState(false);
   const movementVector = useRef([0, 0]); // x, z, [-1, 1]
+  const [isDialogActive, setIsDialogActive] = useState(false);
+  const [toggleDialog, setToggleDialog] = useState(null); // null before use
+
+  useEffect(() => {
+    if (isDialogActive) {
+      // reset movement vector, i.e. player stops moving
+      movementVector.current = [0, 0];
+      setIsJoystickActive(false);
+    }
+  }, [isDialogActive]);
 
   if (!isMobile) {
     return (
@@ -44,20 +55,31 @@ function App() {
           />
         ) : null}
         <Ui />
-        <JoystickControls
-          isJoystickActive={isJoystickActive}
-          setIsJoystickActive={setIsJoystickActive}
-          movementVector={movementVector}
-        />
-        {!isJoystickActive && (
-          <KeyboardControls movementVector={movementVector} />
+
+        {isDialogActive ? (
+          <DialogControls setToggleDialog={setToggleDialog} />
+        ) : (
+          <>
+            <JoystickControls
+              isJoystickActive={isJoystickActive}
+              setIsJoystickActive={setIsJoystickActive}
+              movementVector={movementVector}
+            />
+            {!isJoystickActive && (
+              <KeyboardControls movementVector={movementVector} />
+            )}
+          </>
         )}
         <Canvas
           onCreated={() => {
             setIsLoaded(true);
           }}
         >
-          <Scene movementVector={movementVector} />
+          <Scene
+            movementVector={movementVector}
+            setIsDialogActive={setIsDialogActive}
+            toggleDialog={toggleDialog}
+          />
         </Canvas>
       </div>
     </div>

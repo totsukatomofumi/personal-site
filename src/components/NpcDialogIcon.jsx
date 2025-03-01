@@ -9,18 +9,19 @@ const TIME_PER_FRAME = 0.4;
 const TIME_PER_LAST_FRAME = 0.8;
 
 function NpcDialogIcon({ position, scale }) {
+  const spriteRef = useRef();
   const npcDialogIconSpriteMap = useLoader(
     THREE.TextureLoader,
     npcDialogIconSprite
   );
+  const elapsedTime = useRef(0);
+  const tileIndex = useRef(0);
+
   npcDialogIconSpriteMap.magFilter = THREE.NearestFilter;
   npcDialogIconSpriteMap.repeat.set(
     1 / SPRITE_HORIZ_TILES_NUM,
     1 / SPRITE_VERT_TILES_NUM
   );
-  const spriteRef = useRef();
-  const elapsedTime = useRef(0);
-  const tileIndex = useRef(0);
 
   function animateIcon(delta) {
     elapsedTime.current += delta;

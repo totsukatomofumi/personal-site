@@ -32,16 +32,20 @@ function Camera({ playerRef }) {
 
   useGSAP(
     () => {
-      if (playerRef.current === null || playerRef.current === undefined) return;
+      if (
+        playerRef.current?.self === null ||
+        playerRef.current?.self === undefined
+      )
+        return;
 
       // [-4, 4]
       const playerHoriz = Math.min(
-        Math.max(playerRef.current.position.x, MIN_CAM_TRACK_HORIZ),
+        Math.max(playerRef.current.self.position.x, MIN_CAM_TRACK_HORIZ),
         MAX_CAM_TRACK_HORIZ
       );
       // [-10, 0]
       const playerDepth = Math.min(
-        Math.max(playerRef.current.position.z, MIN_CAM_TRACK_DEPTH),
+        Math.max(playerRef.current.self.position.z, MIN_CAM_TRACK_DEPTH),
         MAX_CAM_TRACK_DEPTH
       );
 

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { forwardRef, useRef } from "react";
 import * as THREE from "three";
 import { useFrame, useLoader } from "@react-three/fiber";
 import {
@@ -9,15 +9,19 @@ import {
   SPRITE_HEIGHT,
 } from "../constants";
 
-function NpcBase({
-  npcDir,
-  isNpcIdle,
-  npcSprite,
-  npcTimePerIdleFrame,
-  npcTimePerBlinkFrame,
-  npcTimePerWalkFrame,
-  maxNpcBlinkTimeAdvance,
-}) {
+const NpcBase = forwardRef(function NpcBase(
+  {
+    npcDir,
+    isNpcIdle,
+    npcSprite,
+    npcTimePerIdleFrame,
+    npcTimePerBlinkFrame,
+    npcTimePerWalkFrame,
+    maxNpcBlinkTimeAdvance,
+    noNavMeshScale = [2, 2],
+  },
+  noNavMeshRef
+) {
   const spriteRef = useRef();
   const isNpcBlinking = useRef(false);
   const npcSpriteMap = useLoader(THREE.TextureLoader, npcSprite);
@@ -124,13 +128,17 @@ function NpcBase({
       <sprite ref={spriteRef} scale={[SPRITE_HEIGHT, SPRITE_WIDTH]}>
         <spriteMaterial map={npcSpriteMap} />
       </sprite>
-      {/* No Nav Mesh */}
-      <mesh position={[0, -2, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[2, 2]} />
-        <meshBasicMaterial color="white" />
+      {/* No nav mesh */}
+      <mesh
+        ref={noNavMeshRef}
+        position={[0, -2, 0]}
+        rotation={[-Math.PI / 2, 0, 0]}
+      >
+        <planeGeometry args={noNavMeshScale} />
+        <meshBasicMaterial color="black" />
       </mesh>
     </>
   );
-}
+});
 
 export default NpcBase;

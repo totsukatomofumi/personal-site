@@ -8,14 +8,14 @@ import NavMesh from "../models/Navmesh";
 import NpcKnight from "./NpcKnight";
 import NpcCat from "./NpcCat";
 
-function Scene({ movementVector }) {
+function Scene({ movementVector, setIsDialogActive, toggleDialog }) {
   const playerRef = useRef();
-  const npcKnightRef = useRef();
-  const npcCatRef = useRef();
+  const npcKnightNoNavMeshRef = useRef();
+  const npcCatNoNavMeshRef = useRef();
   const navMeshRef = useRef();
-  const npcRefs = useRef([npcKnightRef, npcCatRef]);
+  const npcNoNavMeshRefs = useRef([npcKnightNoNavMeshRef, npcCatNoNavMeshRef]);
 
-  useThree(({ gl, camera }) => {
+  useThree(({ gl }) => {
     gl.setClearColor("white");
   });
 
@@ -25,11 +25,16 @@ function Scene({ movementVector }) {
       <Player
         ref={playerRef}
         navMeshRef={navMeshRef}
-        npcRefs={npcRefs}
+        npcNoNavMeshRefs={npcNoNavMeshRefs}
         movementVector={movementVector}
       />
-      <NpcKnight ref={npcKnightRef} />
-      <NpcCat ref={npcCatRef} />
+      <NpcKnight
+        ref={npcKnightNoNavMeshRef}
+        playerRef={playerRef}
+        setIsDialogActive={setIsDialogActive}
+        toggleDialog={toggleDialog}
+      />
+      <NpcCat ref={npcCatNoNavMeshRef} />
       <Map position={MAP_POS} rotation={MAP_ROT} renderOrder={1} />
       <NavMesh ref={navMeshRef} position={NAVMESH_POS} rotation={MAP_ROT} />
       <ambientLight intensity={2} />

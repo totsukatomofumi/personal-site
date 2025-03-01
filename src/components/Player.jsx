@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef } from "react";
+import { forwardRef, useImperativeHandle, useRef } from "react";
 import * as THREE from "three";
 import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import playerSprite from "../sprites/player.png";
@@ -18,9 +18,10 @@ import {
 } from "../constants";
 
 const Player = forwardRef(function Player(
-  { navMeshRef, npcRefs, movementVector },
+  { navMeshRef, npcNoNavMeshRefs, movementVector },
   playerRef
 ) {
+  const selfRef = useRef();
   const playerDir = useRef(PLAYER_INIT_DIR);
   const isPlayerIdle = useRef(true);
   const raycasterRef = useRef();
@@ -60,29 +61,33 @@ const Player = forwardRef(function Player(
     const vertDist = z * PLAYER_V_SPEED * delta;
 
     // do prediction for horizontal movement
-    predictionOrigin.copy(playerRef.current.position);
+    predictionOrigin.copy(selfRef.current.position);
     predictionOrigin.x += horizDist;
     raycasterRef.current.ray.origin.copy(predictionOrigin);
     if (
       raycasterRef.current.intersectObject(navMeshRef.current).length > 0 &&
       raycasterRef.current.intersectObjects(
-        npcRefs.current ? npcRefs.current.map((npcRef) => npcRef.current) : []
+        npcNoNavMeshRefs.current
+          ? npcNoNavMeshRefs.current.map((npcRef) => npcRef.current)
+          : []
       ).length === 0
     ) {
-      playerRef.current.position.x += horizDist;
+      selfRef.current.position.x += horizDist;
     }
 
     // do prediction for vertical movement
-    predictionOrigin.copy(playerRef.current.position);
+    predictionOrigin.copy(selfRef.current.position);
     predictionOrigin.z += vertDist;
     raycasterRef.current.ray.origin.copy(predictionOrigin);
     if (
       raycasterRef.current.intersectObject(navMeshRef.current).length > 0 &&
       raycasterRef.current.intersectObjects(
-        npcRefs.current ? npcRefs.current.map((npcRef) => npcRef.current) : []
+        npcNoNavMeshRefs.current
+          ? npcNoNavMeshRefs.current.map((npcRef) => npcRef.current)
+          : []
       ).length === 0
     ) {
-      playerRef.current.position.z += vertDist;
+      selfRef.current.position.z += vertDist;
     }
   }
 
@@ -166,7 +171,7 @@ const Player = forwardRef(function Player(
       Math.floor(tileIndex.current / SPRITE_HORIZ_TILES_NUM) /
       SPRITE_VERT_TILES_NUM;
 
-    playerRef.current.material.map.offset.set(offsetX, offsetY);
+    selfRef.current.material.map.offset.set(offsetX, offsetY);
   }
 
   useFrame((state, delta, xrFrame) => {
@@ -174,10 +179,15 @@ const Player = forwardRef(function Player(
     animatePlayer(delta);
   });
 
+  useImperativeHandle(playerRef, () => ({
+    self: selfRef.current,
+    raycaster: raycasterRef.current,
+  }));
+
   return (
     <>
       <sprite
-        ref={playerRef}
+        ref={selfRef}
         position={PLAYER_INIT_POS}
         scale={[SPRITE_HEIGHT, SPRITE_WIDTH]}
       >
