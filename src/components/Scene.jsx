@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import * as THREE from "three";
 import { useThree } from "@react-three/fiber";
 import Camera from "./Camera";
 import Player from "./Player";
