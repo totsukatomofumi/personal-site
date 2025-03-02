@@ -54,20 +54,20 @@ function Lighting() {
       {/* tavern lights */}
       <pointLight
         ref={tavernARef}
-        color="#FFA500"
+        color="#FFC170"
         position={[3.8, 2, -15.9]}
         intensity={60}
         castShadow
       />
       <pointLight
         ref={tavernBRef}
-        color="#FFA500"
+        color="#FFC170"
         position={[-6.25, 2, -1.6]}
         intensity={60}
         castShadow
       />
       <pointLight
-        color="#FFA500"
+        color="#FFC170"
         position={[6.4, 2, 4.7]}
         intensity={60}
         castShadow
