@@ -47,8 +47,8 @@ function Lighting() {
         shadow-mapSize-height={4096}
       />
       {/* Bluish night related */}
-      <directionalLight color="#120a3a" intensity={20} position={[0, 10, 0]} />
-      <fog attach="fog" args={["#120a3a", 0, 180]} />
+      <directionalLight color="#140730" intensity={20} position={[0, 10, 0]} />
+      <fog attach="fog" args={["#140730", 0, 180]} />
       {/* Street lights related */}
       <pointLight
         ref={tavernARef}

@@ -25,7 +25,7 @@ function Scene({
   const npcNoNavMeshRefs = useRef([npcKnightNoNavMeshRef, npcCatNoNavMeshRef]);
 
   useThree(({ gl }) => {
-    gl.setClearColor("#120a3a");
+    gl.setClearColor("#140730");
   });
 
   return (
