@@ -83,9 +83,9 @@ function Lighting() {
       />
       {/* castle light up */}
       <pointLight
-        position={[0, 15, -94]}
+        position={[0, 12.5, -95]}
         intensity={200}
-        distance={20}
+        distance={30}
         castShadow
       />
       <SoftShadows />
