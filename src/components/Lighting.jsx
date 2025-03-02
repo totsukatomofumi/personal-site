@@ -16,18 +16,18 @@ function Lighting() {
 
     lampAnimElapsedTime.current = 0;
 
-    lampRef.current.intensity = Math.random() * 7.5 + 12.5;
+    lampRef.current.intensity = Math.random() * 10 + 10;
   }
 
   function animateTavern(delta) {
     tavernAnimElapsedTime.current += delta;
 
-    if (tavernAnimElapsedTime.current < 3) return;
+    if (tavernAnimElapsedTime.current < 2) return;
 
     tavernAnimElapsedTime.current = 0;
 
-    tavernARef.current.intensity = Math.random() * 7.5 + 32.5;
-    tavernBRef.current.intensity = Math.random() * 7.5 + 32.5;
+    tavernARef.current.intensity = Math.random() * 10 + 50;
+    tavernBRef.current.intensity = Math.random() * 10 + 50;
   }
 
   useFrame((_, delta) => {
@@ -38,13 +38,7 @@ function Lighting() {
   return (
     <>
       {/* Moonlight related */}
-      <spotLight
-        position={[0, 20, -105]}
-        intensity={1000}
-        castShadow
-        shadow-mapSize-width={2048}
-        shadow-mapSize-height={2048}
-      />
+      <spotLight position={[0, 20, -105]} intensity={1000} castShadow />
       <spotLight
         position={[0, 20, -70]}
         intensity={500}
@@ -52,24 +46,22 @@ function Lighting() {
         shadow-mapSize-width={4096}
         shadow-mapSize-height={4096}
       />
-
       {/* Bluish night related */}
-      <directionalLight color="#0a0a33" intensity={20} position={[0, 10, 0]} />
-      <fog attach="fog" args={["#0a0a33", 0, 180]} />
-
+      <directionalLight color="#120a3a" intensity={20} position={[0, 10, 0]} />
+      <fog attach="fog" args={["#120a3a", 0, 180]} />
       {/* Street lights related */}
       <pointLight
         ref={tavernARef}
         color="#FFA500"
         position={[3.8, 2, -15.9]}
-        intensity={40}
+        intensity={60}
         castShadow
       />
       <pointLight
         ref={tavernBRef}
         color="#FFA500"
         position={[-6.25, 2, -1.6]}
-        intensity={40}
+        intensity={60}
         castShadow
       />
       {/* lamp */}
@@ -83,7 +75,13 @@ function Lighting() {
       <pointLight
         color="#FFA500"
         position={[6.4, 2, 4.7]}
-        intensity={40}
+        intensity={60}
+        castShadow
+      />
+      <pointLight
+        color="#FFFFFF"
+        position={[0, 15, -93]}
+        intensity={200}
         castShadow
       />
       <SoftShadows />
