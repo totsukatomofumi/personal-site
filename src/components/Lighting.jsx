@@ -46,21 +46,29 @@ function Lighting() {
         shadow-mapSize-width={4096}
         shadow-mapSize-height={4096}
       />
-      {/* Bluish night related */}
-      <directionalLight color="#140730" intensity={20} position={[0, 10, 0]} />
-      <fog attach="fog" args={["#140730", 0, 180]} />
+      {/* Fantasy night related */}
+      <directionalLight color="#2C0B4B" intensity={10} position={[0, 10, 0]} />
+      <fog attach="fog" args={["#2C0B4B", 0, 180]} />
+
       {/* Street lights related */}
+      {/* tavern lights */}
       <pointLight
         ref={tavernARef}
-        color="#FFA500"
+        color="#FFC170"
         position={[3.8, 2, -15.9]}
         intensity={60}
         castShadow
       />
       <pointLight
         ref={tavernBRef}
-        color="#FFA500"
+        color="#FFC170"
         position={[-6.25, 2, -1.6]}
+        intensity={60}
+        castShadow
+      />
+      <pointLight
+        color="#FFC170"
+        position={[6.4, 2, 4.7]}
         intensity={60}
         castShadow
       />
@@ -70,18 +78,14 @@ function Lighting() {
         color="#FFA500"
         position={[-0.15, 2.65, -22.3]}
         intensity={20}
+        distance={5}
         castShadow
       />
+      {/* castle light up */}
       <pointLight
-        color="#FFA500"
-        position={[6.4, 2, 4.7]}
-        intensity={60}
-        castShadow
-      />
-      <pointLight
-        color="#FFFFFF"
-        position={[0, 15, -93]}
+        position={[0, 15, -94]}
         intensity={200}
+        distance={20}
         castShadow
       />
       <SoftShadows />

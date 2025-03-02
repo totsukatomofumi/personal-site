@@ -9,6 +9,7 @@ import NavMesh from "../models/Navmesh";
 import NpcKnight from "./NpcKnight";
 import NpcCat from "./NpcCat";
 import Lighting from "./Lighting";
+import Preprocessing from "./Preprocessing";
 
 function Scene({
   movementVector,
@@ -25,7 +26,7 @@ function Scene({
   const npcNoNavMeshRefs = useRef([npcKnightNoNavMeshRef, npcCatNoNavMeshRef]);
 
   useThree(({ gl }) => {
-    gl.setClearColor("#140730");
+    gl.setClearColor("#2C0B4B");
   });
 
   return (
@@ -55,6 +56,7 @@ function Scene({
       <Map position={MAP_POS} rotation={MAP_ROT} renderOrder={1} />
       <NavMesh ref={navMeshRef} position={NAVMESH_POS} rotation={MAP_ROT} />
       <Lighting />
+      <Preprocessing />
     </>
   );
 }
