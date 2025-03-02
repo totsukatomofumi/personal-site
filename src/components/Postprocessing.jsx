@@ -13,7 +13,7 @@ function Postprocessing() {
         contrast={0.05} // contrast: min -1, max: 1
       />
       <Bloom luminanceThreshold={0.2} luminanceSmoothing={1} />
-      <DepthOfField focusDistance={0.04} focalLength={0.1} bokehScale={2} />
+      <DepthOfField focusDistance={0.04} focalLength={0.1} bokehScale={3} />
     </EffectComposer>
   );
 }

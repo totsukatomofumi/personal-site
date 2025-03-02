@@ -38,7 +38,12 @@ function Lighting() {
   return (
     <>
       {/* Moonlight related */}
-      <spotLight position={[0, 20, -105]} intensity={1000} castShadow />
+      <spotLight
+        position={[0, 20, -105]}
+        intensity={1000}
+        distance={70}
+        castShadow
+      />
       <spotLight
         position={[0, 20, -70]}
         intensity={500}
@@ -84,7 +89,7 @@ function Lighting() {
       {/* castle light up */}
       <pointLight
         position={[0, 12.5, -95]}
-        intensity={200}
+        intensity={300}
         distance={30}
         castShadow
       />
