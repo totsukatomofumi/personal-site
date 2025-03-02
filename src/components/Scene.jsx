@@ -9,7 +9,7 @@ import NavMesh from "../models/Navmesh";
 import NpcKnight from "./NpcKnight";
 import NpcCat from "./NpcCat";
 import Lighting from "./Lighting";
-import Preprocessing from "./Preprocessing";
+import Postprocessing from "./Postprocessing";
 
 function Scene({
   movementVector,
@@ -56,7 +56,7 @@ function Scene({
       <Map position={MAP_POS} rotation={MAP_ROT} renderOrder={1} />
       <NavMesh ref={navMeshRef} position={NAVMESH_POS} rotation={MAP_ROT} />
       <Lighting />
-      <Preprocessing />
+      <Postprocessing />
     </>
   );
 }
