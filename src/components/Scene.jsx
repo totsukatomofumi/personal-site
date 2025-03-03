@@ -10,6 +10,8 @@ import NpcCat from "./NpcCat";
 import Lighting from "./Lighting";
 import Postprocessing from "./Postprocessing";
 import Dust from "./Dust";
+import { Cloud, Clouds } from "@react-three/drei";
+import * as THREE from "three";
 
 function Scene({
   movementVector,
@@ -58,6 +60,15 @@ function Scene({
       <Lighting />
       <Postprocessing />
       <Dust />
+      <Clouds material={THREE.MeshBasicMaterial} position={[0, -2, -50]}>
+        <Cloud
+          seed={1}
+          segments={50}
+          bounds={[8, 0, 100]}
+          opacity={0.2}
+          speed={-0.2}
+        />
+      </Clouds>
     </>
   );
 }
