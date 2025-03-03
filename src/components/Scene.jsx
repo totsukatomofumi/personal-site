@@ -9,6 +9,7 @@ import NpcKnight from "./NpcKnight";
 import NpcCat from "./NpcCat";
 import Lighting from "./Lighting";
 import Postprocessing from "./Postprocessing";
+import Dust from "./Dust";
 
 function Scene({
   movementVector,
@@ -56,6 +57,7 @@ function Scene({
       <NavMesh ref={navMeshRef} position={NAVMESH_POS} rotation={MAP_ROT} />
       <Lighting />
       <Postprocessing />
+      <Dust />
     </>
   );
 }
