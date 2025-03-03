@@ -33,7 +33,7 @@ function Dust() {
     const particles = arrayRef.current;
 
     for (let i = 0; i < particles.length; i += 3) {
-      particles[i] += Math.random() * 0.01;
+      particles[i] += Math.random() * 0.02;
       particles[i + 1] +=
         Math.random() *
         0.005 *
