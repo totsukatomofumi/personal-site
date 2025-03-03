@@ -10,7 +10,13 @@ import NpcCat from "./NpcCat";
 import Lighting from "./Lighting";
 import Postprocessing from "./Postprocessing";
 import Dust from "./Dust";
-import { Cloud, Clouds } from "@react-three/drei";
+import {
+  AdaptiveDpr,
+  AdaptiveEvents,
+  BakeShadows,
+  Cloud,
+  Clouds,
+} from "@react-three/drei";
 import * as THREE from "three";
 
 function Scene({
@@ -69,6 +75,8 @@ function Scene({
           speed={-0.2}
         />
       </Clouds>
+      <AdaptiveDpr pixelated />
+      <BakeShadows />
     </>
   );
 }
