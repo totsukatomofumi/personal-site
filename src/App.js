@@ -7,6 +7,7 @@ import JoystickControls from "./components/JoystickControls";
 import KeyboardControls from "./components/KeyboardControls";
 import DialogControls from "./components/DialogControls";
 import Scene from "./components/Scene";
+import { AdaptiveDpr, BakeShadows } from "@react-three/drei";
 
 function App() {
   const { isLandscape } = useMobileOrientation();
@@ -99,6 +100,8 @@ function App() {
             isIntro={isIntro}
             setIsIntro={setIsIntro}
           />
+          <AdaptiveDpr pixelated />
+          <BakeShadows />
         </Canvas>
       </div>
     </div>
