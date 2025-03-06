@@ -8,6 +8,7 @@ import KeyboardControls from "./components/KeyboardControls";
 import DialogControls from "./components/DialogControls";
 import Scene from "./components/Scene";
 import { AdaptiveDpr, BakeShadows } from "@react-three/drei";
+import { DEBUG_DISABLE_CANVAS } from "./constants";
 
 function App() {
   const { isLandscape } = useMobileOrientation();
@@ -69,7 +70,6 @@ function App() {
           setIsMenu={setIsMenu}
           toggleTutorialAnim={toggleTutorialAnim}
         />
-
         {isDialogActive ? (
           <DialogControls setToggleDialog={setToggleDialog} />
         ) : (
@@ -86,23 +86,25 @@ function App() {
             </>
           )
         )}
-        <Canvas
-          shadows
-          onCreated={() => {
-            setIsLoaded(true);
-          }}
-        >
-          <Scene
-            movementVector={movementVector}
-            setIsDialogActive={setIsDialogActive}
-            toggleDialog={toggleDialog}
-            setToggleTutorialAnim={setToggleTutorialAnim}
-            isIntro={isIntro}
-            setIsIntro={setIsIntro}
-          />
-          <AdaptiveDpr pixelated />
-          <BakeShadows />
-        </Canvas>
+        {!DEBUG_DISABLE_CANVAS && (
+          <Canvas
+            shadows
+            onCreated={() => {
+              setIsLoaded(true);
+            }}
+          >
+            <Scene
+              movementVector={movementVector}
+              setIsDialogActive={setIsDialogActive}
+              toggleDialog={toggleDialog}
+              setToggleTutorialAnim={setToggleTutorialAnim}
+              isIntro={isIntro}
+              setIsIntro={setIsIntro}
+            />
+            <AdaptiveDpr pixelated />
+            <BakeShadows />
+          </Canvas>
+        )}
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import * as THREE from "three";
 
+export const DEBUG_DISABLE_CANVAS = true;
 export const MAP_POS = [0, 0, 0];
 export const MAP_ROT = [0, -Math.PI / 2, 0];
 export const NAVMESH_POS = [MAP_POS[0], MAP_POS[1] - 1, MAP_POS[2]];
