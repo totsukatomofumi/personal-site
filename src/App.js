@@ -59,12 +59,12 @@ function App() {
   return (
     <div className="fixed top-0 left-0 w-screen h-screen pb-[80px] touch-none bg-black">
       <div className="relative w-full h-full">
-        {isLoadingScreen ? (
+        {!DEBUG_DISABLE_CANVAS && isLoadingScreen && (
           <LoadingScreen
             isLoaded={isLoaded}
             setIsLoadingScreen={setIsLoadingScreen}
           />
-        ) : null}
+        )}
         <Ui
           isMenu={isMenu}
           setIsMenu={setIsMenu}
