@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useThree } from "@react-three/fiber";
 import Camera from "./Camera";
 import Player from "./Player";
-import { MAP_POS, MAP_ROT, NAVMESH_POS } from "../constants";
+import { MAP_POS, MAP_ROT, NAVMESH_POS, NIGHT_SKY_COLOR } from "../constants";
 import Map from "../models/Map";
 import NavMesh from "../models/Navmesh";
 import NpcKnight from "./NpcKnight";
@@ -28,7 +28,7 @@ function Scene({
   const npcNoNavMeshRefs = useRef([npcKnightNoNavMeshRef, npcCatNoNavMeshRef]);
 
   useThree(({ gl }) => {
-    gl.setClearColor("#2C0B4B");
+    gl.setClearColor(NIGHT_SKY_COLOR);
   });
 
   return (

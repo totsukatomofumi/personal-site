@@ -1,6 +1,7 @@
 import { forwardRef, useRef } from "react";
 import * as THREE from "three";
 import { useFrame, useLoader } from "@react-three/fiber";
+import SpriteShadow from "./SpriteShadow";
 import {
   SPRITE_HORIZ_TILES_NUM,
   SPRITE_VERT_TILES_NUM,
@@ -8,7 +9,6 @@ import {
   SPRITE_WIDTH,
   SPRITE_HEIGHT,
 } from "../constants";
-import SpriteShadow from "./SpriteShadow";
 
 const NpcBase = forwardRef(function NpcBase(
   {

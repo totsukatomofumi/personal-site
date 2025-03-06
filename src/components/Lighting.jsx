@@ -1,6 +1,13 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { SoftShadows } from "@react-three/drei";
+import {
+  CASTLE_LIGHT_BRIGHTNESS_SCALE,
+  LAMP_LIGHT_COLOR,
+  MOON_LIGHT_BRIGHTNESS_SCALE,
+  NIGHT_SKY_COLOR,
+  TAVERN_LIGHT_COLOR,
+  TOWN_LIGHT_BRIGHTNESS_SCALE,
+} from "../constants";
 
 function Lighting() {
   const lampRef = useRef();
@@ -16,7 +23,8 @@ function Lighting() {
 
     lampAnimElapsedTime.current = 0;
 
-    lampRef.current.intensity = Math.random() * 10 + 10;
+    lampRef.current.intensity =
+      TOWN_LIGHT_BRIGHTNESS_SCALE * Math.random() * 10 + 10;
   }
 
   function animateTavern(delta) {
@@ -26,8 +34,10 @@ function Lighting() {
 
     tavernAnimElapsedTime.current = 0;
 
-    tavernARef.current.intensity = Math.random() * 10 + 50;
-    tavernBRef.current.intensity = Math.random() * 10 + 50;
+    tavernARef.current.intensity =
+      TOWN_LIGHT_BRIGHTNESS_SCALE * Math.random() * 10 + 50;
+    tavernBRef.current.intensity =
+      TOWN_LIGHT_BRIGHTNESS_SCALE * Math.random() * 10 + 50;
   }
 
   useFrame((_, delta) => {
@@ -40,60 +50,63 @@ function Lighting() {
       {/* Moonlight related */}
       <spotLight
         position={[0, 20, -105]}
-        intensity={1000}
+        intensity={MOON_LIGHT_BRIGHTNESS_SCALE * 1000}
         distance={70}
         castShadow
       />
       <spotLight
         position={[0, 20, -70]}
-        intensity={500}
+        intensity={MOON_LIGHT_BRIGHTNESS_SCALE * 500}
         castShadow
         shadow-mapSize-width={4096}
         shadow-mapSize-height={4096}
       />
       {/* Fantasy night related */}
-      <directionalLight color="#2C0B4B" intensity={10} position={[0, 10, 0]} />
-      <fog attach="fog" args={["#2C0B4B", 0, 180]} />
+      <directionalLight
+        color={NIGHT_SKY_COLOR}
+        intensity={10}
+        position={[0, 10, 0]}
+      />
+      <fog attach="fog" args={[NIGHT_SKY_COLOR, 0, 180]} />
 
       {/* Street lights related */}
       {/* tavern lights */}
       <pointLight
         ref={tavernARef}
-        color="#FFC170"
+        color={TAVERN_LIGHT_COLOR}
         position={[3.8, 2, -15.9]}
-        intensity={60}
+        intensity={TOWN_LIGHT_BRIGHTNESS_SCALE * 60}
         castShadow
       />
       <pointLight
         ref={tavernBRef}
-        color="#FFC170"
+        color={TAVERN_LIGHT_COLOR}
         position={[-6.25, 2, -1.6]}
-        intensity={60}
+        intensity={TOWN_LIGHT_BRIGHTNESS_SCALE * 60}
         castShadow
       />
       <pointLight
-        color="#FFC170"
+        color={TAVERN_LIGHT_COLOR}
         position={[6.4, 2, 4.7]}
-        intensity={60}
+        intensity={TOWN_LIGHT_BRIGHTNESS_SCALE * 60}
         castShadow
       />
       {/* lamp */}
       <pointLight
         ref={lampRef}
-        color="#FFA500"
+        color={LAMP_LIGHT_COLOR}
         position={[-0.15, 2.65, -22.3]}
-        intensity={20}
+        intensity={TOWN_LIGHT_BRIGHTNESS_SCALE * 20}
         distance={5}
         castShadow
       />
       {/* castle light up */}
       <pointLight
         position={[0, 12.5, -95]}
-        intensity={300}
+        intensity={CASTLE_LIGHT_BRIGHTNESS_SCALE * 300}
         distance={30}
         castShadow
       />
-      <SoftShadows />
     </>
   );
 }
