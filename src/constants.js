@@ -3,7 +3,7 @@ import * as THREE from "three";
 
 export const AGE = moment().diff("2000-12-15", "years");
 export const OCCUPATION = "Undergraduate";
-export const DEBUG_DISABLE_CANVAS = true;
+export const DEBUG_DISABLE_CANVAS = false;
 export const MAP_POS = [0, 0, 0];
 export const MAP_ROT = [0, -Math.PI / 2, 0];
 export const NAVMESH_POS = [MAP_POS[0], MAP_POS[1] - 1, MAP_POS[2]];
