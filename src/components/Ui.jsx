@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
-import Menu from "./Menu";
+import MenuBase from "./MenuBase";
 import { animateUiButton } from "../animations";
 import uiStatus from "../sprites/ui-status.png";
 import uiButton from "../sprites/ui-button.png";
@@ -61,7 +61,7 @@ function Ui({ isMenu, setIsMenu, toggleTutorialAnim }) {
         />
       </div>
 
-      {isMenu ? <Menu setIsMenu={setIsMenu} /> : null}
+      {isMenu ? <MenuBase setIsMenu={setIsMenu} /> : null}
     </>
   );
 }
