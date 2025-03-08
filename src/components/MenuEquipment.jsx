@@ -4,7 +4,7 @@ import { AGE, OCCUPATION } from "../constants";
 function MenuEquipment() {
   return (
     <>
-      <div className="absolute top-[52.5px] left-[22.5px] z-50 px-1 flex flex-col justify-center items-center text-xs text-left font-synemono text-custom-off-white whitespace-pre-line leading-snug drop-shadow-[5px_5px_1px_rgba(0,0,0,0.25)]">
+      <div className="absolute top-[52.5px] left-[22.5px] z-50 px-1 flex flex-col justify-center items-center text-xs text-left font-synemono text-custom-off-white whitespace-pre-line leading-snug">
         <p>
           <span className="text-custom-white text-base font-bold leading-none">
             Totsuka Tomofumi
