@@ -1,5 +1,23 @@
 import uiEquipment from "../sprites/ui-equipment.png";
-import { AGE, OCCUPATION } from "../constants";
+import nusSword from "../sprites/nus-sword.png";
+import rsChestplate from "../sprites/rs-chestplate.png";
+import { AGE, NAME, OCCUPATION } from "../constants";
+import MenuItemDescBox from "./MenuItemDescBox";
+
+function MenuEquipment({ setItemDescBox }) {
+  function handleOnClickNusSword(e) {
+    e.stopPropagation();
+    setItemDescBox(
+      <MenuItemDescBox position={{ x: e.clientX, y: e.clientY }} />
+    );
+  }
+
+  function handleOnClickRsChestplate(e) {
+    e.stopPropagation();
+    setItemDescBox(
+      <MenuItemDescBox position={{ x: e.clientX, y: e.clientY }} />
+    );
+  }
 
 function MenuEquipment() {
   return (
@@ -7,7 +25,7 @@ function MenuEquipment() {
       <div className="absolute top-[52.5px] left-[22.5px] z-50 px-1 flex flex-col justify-center items-center text-xs text-left font-synemono text-custom-off-white whitespace-pre-line leading-snug">
         <p>
           <span className="text-custom-white text-base font-bold leading-none">
-            Totsuka Tomofumi
+            {NAME}
           </span>
           {`\n`}
           {OCCUPATION}

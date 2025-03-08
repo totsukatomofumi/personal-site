@@ -1,6 +1,7 @@
 import moment from "moment";
 import * as THREE from "three";
 
+export const NAME = "Totsuka Tomofumi";
 export const AGE = moment().diff("2000-12-15", "years");
 export const OCCUPATION = "Undergraduate";
 export const DEBUG_DISABLE_CANVAS = false;
