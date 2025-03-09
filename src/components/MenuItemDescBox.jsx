@@ -47,13 +47,10 @@ function MenuItemDescBox({ position, description }) {
 
     if (
       selfRef.current.offsetHeight + position.y >
-      document.documentElement.clientHeight -
-        SCREEN_BOTTOM_PADDING -
-        MENU_ITEM_DESC_BOX_EDGE_PADDING
+      document.documentElement.clientHeight - MENU_ITEM_DESC_BOX_EDGE_PADDING
     ) {
       setBoxHeight(
         document.documentElement.clientHeight -
-          SCREEN_BOTTOM_PADDING -
           position.y -
           MENU_ITEM_DESC_BOX_EDGE_PADDING
       );

@@ -58,8 +58,8 @@ function App() {
 
   return (
     <div
-      className="fixed top-0 left-0 w-screen h-screen touch-none select-none bg-black"
-      style={{ paddingBottom: SCREEN_BOTTOM_PADDING }}
+      className="fixed top-0 left-0 w-screen touch-none select-none bg-black"
+      style={{ height: document.documentElement.clientHeight }}
     >
       <div className="relative w-full h-full">
         {!DEBUG_DISABLE_CANVAS && isLoadingScreen && (
