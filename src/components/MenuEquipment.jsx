@@ -22,8 +22,13 @@ function MenuEquipment({ setItemDescBox }) {
       {EQUIPMENT.map((equipment, index) => (
         <div
           key={index}
-          className="absolute z-50 w-[58px] h-[58px] drop-shadow-[0px_5px_2px_rgba(0,0,0,0.3)]"
-          style={{ top: equipment.position.y, left: equipment.position.x }}
+          className="absolute z-50 drop-shadow-[0px_5px_2px_rgba(0,0,0,0.3)]"
+          style={{
+            top: equipment.position.y,
+            left: equipment.position.x,
+            width: equipment.scale * 58,
+            height: equipment.scale * 58,
+          }}
           onClick={(e) => {
             e.stopPropagation();
             setItemDescBox(

@@ -1,5 +1,8 @@
 import moment from "moment";
 import * as THREE from "three";
+import nusSword from "./sprites/nus-sword.png";
+import rsChestplate from "./sprites/rs-chestplate.png";
+import cuBelt from "./sprites/cu-belt.png";
 
 export const NAME = "Totsuka Tomofumi";
 export const AGE = moment().diff("2000-12-15", "years");
@@ -137,6 +140,56 @@ export const RS_CHESTPLATE_DESC = {
     ],
   ],
 };
+export const CU_BELT_DESC = {
+  name: "CU Belt",
+  attributes: [["HP: ", "+128"]],
+  description: [
+    "A belt weaved in the halls of Chulalongkorn University.",
+    "A symbol of the wearer's semester-long NUS Student Exchange Programme (Aug 2023 – Dec 2023) to Chulalongkorn University, where the wearer engaged in coursework in the Bachelor of Engineering in Information and Communication Engineering (International Program).",
+  ],
+  additional: [
+    "Relevant Coursework:",
+    [
+      "- Internet of Things",
+      "- User Interface Design",
+      "- Principles of Information System",
+      "- Netcentric Architecture",
+    ],
+  ],
+};
+
+export const EQUIPMENT = [
+  {
+    name: "NUS Sword",
+    img: {
+      src: nusSword,
+      alt: "nus-sword",
+    },
+    scale: 1,
+    position: { x: 27, y: 130 },
+    description: NUS_SWORD_DESC,
+  },
+  {
+    name: "R&S Chestplate",
+    img: {
+      src: rsChestplate,
+      alt: "rs-chestplate",
+    },
+    scale: 1,
+    position: { x: 242, y: 236 },
+    description: RS_CHESTPLATE_DESC,
+  },
+  {
+    name: "CU Belt",
+    img: {
+      src: cuBelt,
+      alt: "cu-belt",
+    },
+    scale: 0.9,
+    position: { x: 29, y: 239 },
+    description: CU_BELT_DESC,
+  },
+];
 export const MENU_ITEM_DESC_BOX_EDGE_PADDING = 10;
 export const MENU_ITEM_DESC_BOX_DEFAULT_WIDTH = 250;
 export const MENU_ITEM_DESC_BOX_DEFAULT_HEIGHT = "fit-content";
