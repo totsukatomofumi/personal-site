@@ -145,7 +145,7 @@ export const CU_BELT_DESC = {
   attributes: [["HP: ", "+128"]],
   description: [
     "A belt weaved in the halls of Chulalongkorn University.",
-    "A symbol of the wearer's semester-long NUS Student Exchange Programme (Aug 2023 – Dec 2023) to Chulalongkorn University, where the wearer engaged in coursework in the Bachelor of Engineering in Information and Communication Engineering (International Program).",
+    "A symbol of the wearer's semester-long NUS Student Exchange Programme (Aug 2023 – Dec 2023), where the wearer engaged in coursework in the Bachelor of Engineering in Information and Communication Engineering (International Program) at Chulalongkorn University.",
   ],
   additional: [
     "Relevant Coursework:",
