@@ -93,7 +93,7 @@ export const NUS_SWORD_DESC = {
   attributes: [["ATK: ", "+1461"]],
   description: [
     "A blade forged in the halls of the National University of Singapore.",
-    "It is a testament to the ongoing study in the Bachelor of Computing Computing (Honours) in Computer Science, with a focus area in Artificial Intelligence.",
+    "A testament to the wearer's ongoing four-year study (Aug 2021 – Present) in the Bachelor of Computing Computing (Honours) in Computer Science, with a focus area in Artificial Intelligence.",
   ],
   additional: [
     "Relevant Coursework:",
@@ -116,27 +116,24 @@ export const NUS_SWORD_DESC = {
 };
 export const RS_CHESTPLATE_DESC = {
   name: "R&S Chestplate",
-  attributes: [["ATK: ", "+1461"]],
+  attributes: [["DEF: ", "+88"]],
   description: [
-    "A blade forged in the halls of the National University of Singapore.",
-    "It is a testament to the ongoing study in the Bachelor of Computing Computing (Honours) in Computer Science, with a focus area in Artificial Intelligence.",
+    "A sturdy chestplate forged in the industry-leading electronics company, Rohde & Schwarz.",
+    "A testament to a three-month internship (May 2024 – Aug 2024), where the wearer developed a full-stack, microservice architecture-based lab management dashboard to interface with legacy lab software.",
   ],
   additional: [
-    "Relevant Coursework:",
+    "Leveraged Knowledge:",
     [
-      "- Programming Methodology",
-      "- Programming Methodology II",
-      "- Data Structures and Algorithms",
-      "- Software Engineering",
-      "- Computer Organisation",
-      "- Introduction to Operating Systems",
-      "- Database Systems",
-      "- Introduction to Information Security",
-      "- Introduction to AI and Machine Learning",
-      "- Design and Analysis of Algorithms",
-      "- Foundations of Machine Learning",
-      "- Natural Language Processing",
-      "- Computer Vision and Pattern Recognition",
+      "- TypeScript",
+      "- React",
+      "- Redux",
+      "- C#",
+      "- ASP.NET Core 8.0",
+      "- SignalR",
+      "- gRPC",
+      "- Consul",
+      "- Git",
+      "- GitLab",
     ],
   ],
 };
