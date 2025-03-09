@@ -1,0 +1,128 @@
+import { useEffect, useRef, useState } from "react";
+import {
+  MENU_ITEM_DESC_BOX_DEFAULT_HEIGHT,
+  MENU_ITEM_DESC_BOX_DEFAULT_WIDTH,
+  MENU_ITEM_DESC_BOX_EDGE_PADDING,
+  SCREEN_BOTTOM_PADDING,
+} from "../constants";
+
+function MenuItemDescBox({ position, description }) {
+  const selfRef = useRef();
+  const [boxWidth, setBoxWidth] = useState(MENU_ITEM_DESC_BOX_DEFAULT_WIDTH);
+  const [boxHeight, setBoxHeight] = useState(MENU_ITEM_DESC_BOX_DEFAULT_HEIGHT);
+  const [toggleVerticalResize, setToggleVerticalResize] = useState(false); // toggle vertical resize after fit-content
+  const divider = (
+    <div className="w-full h-[1px] my-2 bg-custom-gold opacity-30" />
+  );
+  const isRenderRightSide =
+    position.x < document.documentElement.clientWidth / 2;
+
+  useEffect(() => {
+    if (isRenderRightSide) {
+      setBoxWidth(
+        Math.min(
+          document.documentElement.clientWidth -
+            position.x -
+            MENU_ITEM_DESC_BOX_EDGE_PADDING,
+          MENU_ITEM_DESC_BOX_DEFAULT_WIDTH
+        )
+      );
+    } else {
+      setBoxWidth(
+        Math.min(
+          position.x - MENU_ITEM_DESC_BOX_EDGE_PADDING,
+          MENU_ITEM_DESC_BOX_DEFAULT_WIDTH
+        )
+      );
+    }
+  }, [selfRef, position, isRenderRightSide]);
+
+  useEffect(() => {
+    setBoxHeight(MENU_ITEM_DESC_BOX_DEFAULT_HEIGHT);
+    setToggleVerticalResize((prev) => !prev);
+  }, [selfRef, position]);
+
+  useEffect(() => {
+    if (boxHeight !== MENU_ITEM_DESC_BOX_DEFAULT_HEIGHT) return;
+
+    if (
+      selfRef.current.offsetHeight + position.y >
+      document.documentElement.clientHeight -
+        SCREEN_BOTTOM_PADDING -
+        MENU_ITEM_DESC_BOX_EDGE_PADDING
+    ) {
+      setBoxHeight(
+        document.documentElement.clientHeight -
+          SCREEN_BOTTOM_PADDING -
+          position.y -
+          MENU_ITEM_DESC_BOX_EDGE_PADDING
+      );
+      return;
+    }
+  }, [selfRef, toggleVerticalResize]);
+
+  return (
+    <div
+      ref={selfRef}
+      className="fixed z-50 p-2 bg-black border-[1px] border-custom-gold bg-opacity-70 font-synemono text-custom-off-white overflow-x-auto"
+      style={
+        isRenderRightSide
+          ? {
+              top: position.y,
+              left: position.x,
+              width: boxWidth,
+              height: boxHeight,
+            }
+          : {
+              top: position.y,
+              right: document.documentElement.clientWidth - position.x,
+              width: boxWidth,
+              height: boxHeight,
+            }
+      }
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* corner icon */}
+      <div
+        className="absolute top-1 w-[10px] h-[10px] border-t-[1px] border-l-[1px] border-custom-gold"
+        style={isRenderRightSide ? { left: 4 } : { right: 4, rotate: "90deg" }}
+      />
+
+      <p className="text-center text-custom-white font-semibold">
+        {description["name"]}
+      </p>
+      {divider}
+      {description["attributes"] &&
+        description["attributes"].map((attr) => {
+          return (
+            <div className="text-sm">
+              <p>
+                <span className="text-custom-gold">{attr[0]}</span>
+                {attr[1]}
+              </p>
+            </div>
+          );
+        })}
+      {description["attributes"] && divider}
+      <div className="text-xs">
+        {description["description"].map((desc, index) => {
+          return (
+            <>
+              <p>{desc}</p>
+              {index !== description["description"].length - 1 && <br />}
+            </>
+          );
+        })}
+      </div>
+      {divider}
+      <div className="text-xs">
+        <p className="text-custom-gold">{description["additional"][0]}</p>
+        {description["additional"][1].map((add) => {
+          return <p>{add}</p>;
+        })}
+      </div>
+    </div>
+  );
+}
+
+export default MenuItemDescBox;

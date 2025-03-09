@@ -9,9 +9,6 @@ import MenuEquipment from "./MenuEquipment";
 import MenuInventory from "./MenuInventory";
 import MenuCredits from "./MenuCredits";
 
-const PAGES = [<MenuEquipment />, <MenuInventory />, <MenuCredits />];
-const TITLES = ["Equipment", "Inventory", "Credits"];
-
 function MenuBase({ setIsMenu }) {
   const [pageNum, setPageNum] = useState(1);
   const uiNavLeftButtonRef = useRef();
@@ -22,6 +19,14 @@ function MenuBase({ setIsMenu }) {
   const [toggleUiNavRightButtonAnim, setToggleUiNavRightButtonAnim] =
     useState(null);
   const [toggleUiCloseButtonAnim, setToggleUiCloseButtonAnim] = useState(null);
+  const [itemDescBox, setItemDescBox] = useState(null);
+
+  const pages = [
+    <MenuEquipment setItemDescBox={setItemDescBox} />,
+    <MenuInventory />,
+    <MenuCredits />,
+  ];
+  const titles = ["Equipment", "Inventory", "Credits"];
 
   function handleOnClickUiNavLeftButton() {
     setToggleUiNavLeftButtonAnim((prev) => (prev === null ? false : !prev));
@@ -48,6 +53,10 @@ function MenuBase({ setIsMenu }) {
     }, 100);
   }
 
+  function handleOnClickCloseItemDescBox() {
+    setItemDescBox(null);
+  }
+
   useGSAP(
     () => animateUiButton(uiNavLeftButtonRef, toggleUiNavLeftButtonAnim, 0.8),
     {
@@ -70,13 +79,16 @@ function MenuBase({ setIsMenu }) {
   );
 
   return (
-    <div className="absolute top-0 left-0 z-50 w-full h-full flex justify-center items-center">
+    <div
+      className="absolute top-0 left-0 z-50 w-full h-full flex justify-center items-center"
+      onClick={handleOnClickCloseItemDescBox}
+    >
       <div className="relative w-fit h-[500px]">
-        {PAGES[pageNum - 1]}
+        {pages[pageNum - 1]}
         <div className="absolute -top-[6px] left-0 z-40 w-full h-fit flex justify-center items-center">
           <div className="relative w-fit h-[30px]">
             <div className="absolute top-[2px] left-0 w-full h-full text-center align-middle text-custom-gold font-synemono font-semibold">
-              {TITLES[pageNum - 1]}
+              {titles[pageNum - 1]}
             </div>
             <img src={uiMenuTitle} alt="ui-menu-title" className="h-full" />
           </div>
@@ -124,6 +136,7 @@ function MenuBase({ setIsMenu }) {
         className="absolute top-0 left-0 w-full h-full -z-50 bg-black opacity-50"
         onClick={handleOnClickOutsideMenu}
       ></div>
+      {itemDescBox}
     </div>
   );
 }

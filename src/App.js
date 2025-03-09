@@ -8,7 +8,7 @@ import KeyboardControls from "./components/KeyboardControls";
 import DialogControls from "./components/DialogControls";
 import Scene from "./components/Scene";
 import { AdaptiveDpr, BakeShadows } from "@react-three/drei";
-import { DEBUG_DISABLE_CANVAS } from "./constants";
+import { DEBUG_DISABLE_CANVAS, SCREEN_BOTTOM_PADDING } from "./constants";
 
 function App() {
   const { isLandscape } = useMobileOrientation();
@@ -57,7 +57,10 @@ function App() {
   }
 
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen pb-[80px] touch-none bg-black">
+    <div
+      className="fixed top-0 left-0 w-screen h-screen touch-none bg-black"
+      style={{ paddingBottom: SCREEN_BOTTOM_PADDING }}
+    >
       <div className="relative w-full h-full">
         {!DEBUG_DISABLE_CANVAS && isLoadingScreen && (
           <LoadingScreen

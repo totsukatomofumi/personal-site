@@ -5,6 +5,7 @@ export const NAME = "Totsuka Tomofumi";
 export const AGE = moment().diff("2000-12-15", "years");
 export const OCCUPATION = "Undergraduate";
 export const DEBUG_DISABLE_CANVAS = false;
+export const SCREEN_BOTTOM_PADDING = 80;
 export const MAP_POS = [0, 0, 0];
 export const MAP_ROT = [0, -Math.PI / 2, 0];
 export const NAVMESH_POS = [MAP_POS[0], MAP_POS[1] - 1, MAP_POS[2]];
@@ -87,3 +88,58 @@ export const NIGHT_SKY_COLOR = "#2C0B4B";
 export const TOWN_LIGHT_BRIGHTNESS_SCALE = 1;
 export const MOON_LIGHT_BRIGHTNESS_SCALE = 1;
 export const CASTLE_LIGHT_BRIGHTNESS_SCALE = 1;
+export const NUS_SWORD_DESC = {
+  name: "NUS Sword",
+  attributes: [["ATK: ", "+1461"]],
+  description: [
+    "A blade forged in the halls of the National University of Singapore.",
+    "It is a testament to the ongoing study in the Bachelor of Computing Computing (Honours) in Computer Science, with a focus area in Artificial Intelligence.",
+  ],
+  additional: [
+    "Relevant Coursework:",
+    [
+      "- Programming Methodology",
+      "- Programming Methodology II",
+      "- Data Structures and Algorithms",
+      "- Software Engineering",
+      "- Computer Organisation",
+      "- Introduction to Operating Systems",
+      "- Database Systems",
+      "- Introduction to Information Security",
+      "- Introduction to AI and Machine Learning",
+      "- Design and Analysis of Algorithms",
+      "- Foundations of Machine Learning",
+      "- Natural Language Processing",
+      "- Computer Vision and Pattern Recognition",
+    ],
+  ],
+};
+export const RS_CHESTPLATE_DESC = {
+  name: "R&S Chestplate",
+  attributes: [["ATK: ", "+1461"]],
+  description: [
+    "A blade forged in the halls of the National University of Singapore.",
+    "It is a testament to the ongoing study in the Bachelor of Computing Computing (Honours) in Computer Science, with a focus area in Artificial Intelligence.",
+  ],
+  additional: [
+    "Relevant Coursework:",
+    [
+      "- Programming Methodology",
+      "- Programming Methodology II",
+      "- Data Structures and Algorithms",
+      "- Software Engineering",
+      "- Computer Organisation",
+      "- Introduction to Operating Systems",
+      "- Database Systems",
+      "- Introduction to Information Security",
+      "- Introduction to AI and Machine Learning",
+      "- Design and Analysis of Algorithms",
+      "- Foundations of Machine Learning",
+      "- Natural Language Processing",
+      "- Computer Vision and Pattern Recognition",
+    ],
+  ],
+};
+export const MENU_ITEM_DESC_BOX_EDGE_PADDING = 10;
+export const MENU_ITEM_DESC_BOX_DEFAULT_WIDTH = 250;
+export const MENU_ITEM_DESC_BOX_DEFAULT_HEIGHT = "fit-content";
