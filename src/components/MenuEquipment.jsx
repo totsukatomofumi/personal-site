@@ -47,18 +47,17 @@ function MenuEquipment({ setItemDescBox }) {
         <img src={uiEquipment} alt="ui-equipment" className="h-full" />
       </div>
       <div
-        className="absolute top-[130px] left-[25px] z-50 w-[60px] h-[60px] flex justify-center items-center"
+        className="absolute top-[130px] left-[27px] z-50 w-[58px] h-[58px] flex justify-center items-center drop-shadow-[0px_5px_2px_rgba(0,0,0,0.3)]"
         onClick={handleOnClickNusSword}
       >
         <img src={nusSword} alt="nus-sword" className="h-full" />
       </div>
       <div
-        className="absolute top-[235px] right-[25px] z-50 w-[60px] h-[60px] flex justify-center items-center"
+        className="absolute top-[236px] right-[26px] z-50 w-[58px] h-[58px] flex justify-center items-center drop-shadow-[0px_5px_2px_rgba(0,0,0,0.3)]"
         onClick={handleOnClickRsChestplate}
       >
         <img src={rsChestplate} alt="rs-chestplate" className="h-full" />
       </div>
-      {/* <MenuItemDescBox position={{ x: 25, y: 20 }} /> */}
     </>
   );
 }
