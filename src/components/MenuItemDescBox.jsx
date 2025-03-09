@@ -93,9 +93,9 @@ function MenuItemDescBox({ position, description }) {
       </p>
       {divider}
       {description["attributes"] &&
-        description["attributes"].map((attr) => {
+        description["attributes"].map((attr, key) => {
           return (
-            <div className="text-sm">
+            <div className="text-sm" key={key}>
               <p>
                 <span className="text-custom-gold">{attr[0]}</span>
                 {attr[1]}
@@ -107,18 +107,18 @@ function MenuItemDescBox({ position, description }) {
       <div className="text-xs">
         {description["description"].map((desc, index) => {
           return (
-            <>
+            <div key={index}>
               <p>{desc}</p>
               {index !== description["description"].length - 1 && <br />}
-            </>
+            </div>
           );
         })}
       </div>
       {divider}
       <div className="text-xs">
         <p className="text-custom-gold">{description["additional"][0]}</p>
-        {description["additional"][1].map((add) => {
-          return <p>{add}</p>;
+        {description["additional"][1].map((add, key) => {
+          return <p key={key}>{add}</p>;
         })}
       </div>
     </div>
