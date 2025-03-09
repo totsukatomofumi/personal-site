@@ -58,7 +58,7 @@ function App() {
 
   return (
     <div
-      className="fixed top-0 left-0 w-screen h-screen touch-none bg-black"
+      className="fixed top-0 left-0 w-screen h-screen touch-none select-none bg-black"
       style={{ paddingBottom: SCREEN_BOTTOM_PADDING }}
     >
       <div className="relative w-full h-full">
