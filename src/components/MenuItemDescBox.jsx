@@ -80,9 +80,14 @@ function MenuItemDescBox({ position, description }) {
       onClick={(e) => e.stopPropagation()}
     >
       {/* corner icon */}
+
       <div
-        className="absolute top-1 w-[10px] h-[10px] border-t-[1px] border-l-[1px] border-custom-gold"
-        style={isRenderRightSide ? { left: 4 } : { right: 4, rotate: "90deg" }}
+        className="absolute top-[2px] w-0 h-0 border-l-[7px] border-l-transparent border-r-[7px] border-r-transparent border-b-[7px] border-b-custom-gold"
+        style={
+          isRenderRightSide
+            ? { left: -1, rotate: "-45deg" }
+            : { right: -1, rotate: "45deg" }
+        }
       />
 
       <p className="text-center text-custom-white font-semibold">
