@@ -9,7 +9,6 @@ import {
 } from "../constants";
 import npcDialogBubbleBackground from "../sprites/npc-dialog-bubble.png";
 import npcDialogBubbleTail from "../sprites/npc-dialog-bubble-tail.png";
-import npcDialogDownwardArrow from "../sprites/npc-dialog-downward-arrow.png";
 
 gsap.registerPlugin(TextPlugin);
 
@@ -189,14 +188,9 @@ function NpcDialogBubble({
           </div>
           <div
             ref={iconRef}
-            className="absolute bottom-[45%] right-[5%] w-[22px] h-[23px] opacity-0"
-          >
-            <img
-              src={npcDialogDownwardArrow}
-              alt="npc-dialog-downward-arrow"
-              className="h-full aspect-square"
-            />
-          </div>
+            className="absolute bottom-[47.5%] right-[5.5%] w-0 h-0 border-l-[9px] border-l-transparent border-r-[9px] border-r-transparent border-b-[9px] border-b-custom-dark-brown opacity-1 rotate-180 opacity-0"
+          ></div>
+
           <div className="absolute top-0 left-0 -z-50 w-full h-full opacity-85">
             <img
               src={npcDialogBubbleBackground}
