@@ -17,7 +17,9 @@ import {
   PLAYER_TIME_PER_WALK_FRAME,
   SPRITE_WIDTH,
   SPRITE_HEIGHT,
-  INTRO_DURATION,
+  PLAYER_INTRO_Z,
+  PLAYER_INTRO_DELAY,
+  PLAYER_INTRO_SPEED_OFFSET,
 } from "../constants";
 import SpriteShadow from "./SpriteShadow";
 
@@ -200,9 +202,11 @@ const Player = forwardRef(function Player(
       });
 
       tl.from(selfRef.current.position, {
-        z: PLAYER_V_SPEED * INTRO_DURATION,
-        duration: INTRO_DURATION,
-        delay: 0.5,
+        z: PLAYER_INTRO_Z,
+        duration:
+          Math.abs(PLAYER_INIT_POS[2] - PLAYER_INTRO_Z) / PLAYER_V_SPEED +
+          PLAYER_INTRO_SPEED_OFFSET,
+        delay: PLAYER_INTRO_DELAY,
         ease: "none",
       });
 
@@ -224,6 +228,7 @@ const Player = forwardRef(function Player(
       </group>
       <raycaster
         ref={raycasterRef}
+        ray-origin={PLAYER_INIT_POS}
         ray-direction={new THREE.Vector3(0, -1, 0)}
         camera={camera}
       />
