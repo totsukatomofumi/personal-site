@@ -244,9 +244,7 @@ const MYSTUDENT_PROJ_DESC = {
 };
 const RESUME_DESC = {
   name: "Resume",
-  description: [
-    "A document detailing the holder's academic background, work experience, and projects.",
-  ],
+  description: ["A document containing the holder's resume."],
   link: ["Click here to view document.", "/resume.pdf"],
 };
 export const INVENTORY = [
