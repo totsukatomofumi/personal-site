@@ -6,6 +6,7 @@ import cuBelt from "./sprites/cu-belt.png";
 import mystudentProj from "./sprites/mystudent-proj.png";
 import battleshipProj from "./sprites/battleship-proj.png";
 import smarttrashcanProj from "./sprites/smarttrashcan-proj.png";
+import resumeIcon from "./sprites/resume-icon.png";
 
 export const NAME = "Totsuka Tomofumi";
 export const AGE = moment().diff("2000-12-15", "years");
@@ -96,12 +97,12 @@ export const NIGHT_SKY_COLOR = "#2C0B4B";
 export const TOWN_LIGHT_BRIGHTNESS_SCALE = 1;
 export const MOON_LIGHT_BRIGHTNESS_SCALE = 1;
 export const CASTLE_LIGHT_BRIGHTNESS_SCALE = 1;
-export const NUS_SWORD_DESC = {
+const NUS_SWORD_DESC = {
   name: "NUS Sword",
   attributes: [["ATK: ", "+1461"]],
   description: [
     "A blade forged in the halls of the National University of Singapore.",
-    "A testament to the wearer's ongoing four-year study (Aug 2021 – Present) in the Bachelor of Computing Computing (Honours) in Computer Science, with a focus area in Artificial Intelligence.",
+    "A testament to the wielder's ongoing four-year study (Aug 2021 – Present) in the Bachelor of Computing Computing (Honours) in Computer Science, with a focus area in Artificial Intelligence.",
   ],
   additional: [
     "Relevant Coursework:",
@@ -122,7 +123,7 @@ export const NUS_SWORD_DESC = {
     ],
   ],
 };
-export const RS_CHESTPLATE_DESC = {
+const RS_CHESTPLATE_DESC = {
   name: "R&S Chestplate",
   attributes: [["DEF: ", "+88"]],
   description: [
@@ -146,7 +147,7 @@ export const RS_CHESTPLATE_DESC = {
     ],
   ],
 };
-export const CU_BELT_DESC = {
+const CU_BELT_DESC = {
   name: "CU Belt",
   attributes: [["HP: ", "+128"]],
   description: [
@@ -163,7 +164,6 @@ export const CU_BELT_DESC = {
     ],
   ],
 };
-
 export const EQUIPMENT = [
   {
     img: {
@@ -193,23 +193,21 @@ export const EQUIPMENT = [
     description: CU_BELT_DESC,
   },
 ];
-
-export const SMARTTRASHCAN_PROJ_DESC = {
+const SMARTTRASHCAN_PROJ_DESC = {
   name: "Smart Trash Can Blueprint",
   description: [
-    "A blueprint detailing the IoT-based Smart Trash Can co-developed during the wearer's time at Chulalongkorn University.",
+    "A blueprint detailing the IoT-based Smart Trash Can co-developed during the holder's time at Chulalongkorn University.",
     "Using an STM32 MCU and Raspberry Pi with cross-board serial communication, it sorts recyclable waste using multiple servos, sensors, and a camera powered by a TensorFlow Lite pretrained model. The system also features integrated real-time LINE notifications and a NETPIE dashboard for live device monitoring.",
-    "The wearer was primarily responsible for software implementation and integration.",
+    "The holder was primarily responsible for software implementation and integration.",
   ],
   additional: ["Utilised:", ["- C", "- Python", "- STM32", "- Raspberry Pi"]],
 };
-
-export const BATTLESHIP_PROJ_DESC = {
+const BATTLESHIP_PROJ_DESC = {
   name: "Battleship Grimoire",
   description: [
-    "An enchanted tome containing a real-time, online multiplayer, browser-based Battleship game, co-developed during the wearer's time at Chulalongkorn University.",
+    "A grimoire containing a real-time, online multiplayer, browser-based Battleship game, co-developed during the holder's time at Chulalongkorn University.",
     "Built with JavaScript and React for the frontend, the project features an Express with Node.js backend with Socket.IO and Redis enabling real-time player interactions and game state updates. Mongoose and MongoDB were integrated to manage persistent player data.",
-    "The wearer was primarily responsible for backend development. ",
+    "The holder was primarily responsible for backend development. ",
   ],
   additional: [
     "Utilised:",
@@ -223,21 +221,34 @@ export const BATTLESHIP_PROJ_DESC = {
       "- GitHub",
     ],
   ],
+  link: [
+    "Click here to view project repository.",
+    "https://github.com/battleship-web/battleship",
+  ],
 };
-
-export const MYSTUDENT_PROJ_DESC = {
+const MYSTUDENT_PROJ_DESC = {
   name: "myStudent Grimoire",
   description: [
-    "An enchanted tome containing the myStudent desktop application, designed to help tuition centers manage students, tutors, and classes, co-developed during the wearer's time at the National University of Singapore.",
+    "A grimoire containing the myStudent desktop application, designed to help tuition centers manage students, tutors, and classes, co-developed during the holder's time at the National University of Singapore.",
     "Built with Java and JavaFX, the application uses local JSON-based data persistence and incorporates JUnit for unit testing.",
-    "The wearer was primary responsible for implementing the core application logic.",
+    "The holder was primary responsible for implementing the core application logic.",
   ],
   additional: [
     "Utilised:",
     ["- Java", "- JavaFX", "- JUnit", "- Git", "- GitHub", "- Codecov"],
   ],
+  link: [
+    "Click here to view project website.",
+    "http://ay2223s1-cs2103t-f12-4.github.io/tp/",
+  ],
 };
-
+const RESUME_DESC = {
+  name: "Resume",
+  description: [
+    "A document detailing the holder's academic background, work experience, and projects.",
+  ],
+  link: ["Click here to view document.", "/resume.pdf"],
+};
 export const INVENTORY = [
   {
     img: {
@@ -265,6 +276,15 @@ export const INVENTORY = [
     scale: 1.05,
     position: { x: 168.5, y: 54 },
     description: MYSTUDENT_PROJ_DESC,
+  },
+  {
+    img: {
+      src: resumeIcon,
+      alt: "resume-icon",
+    },
+    scale: 1,
+    position: { x: 241.5, y: 55.5 },
+    description: RESUME_DESC,
   },
 ];
 

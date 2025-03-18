@@ -80,7 +80,6 @@ function MenuItemDescBox({ position, description }) {
       onClick={(e) => e.stopPropagation()}
     >
       {/* corner icon */}
-
       <div
         className="absolute top-[2px] w-0 h-0 border-l-[7px] border-l-transparent border-r-[7px] border-r-transparent border-b-[7px] border-b-custom-gold"
         style={
@@ -90,10 +89,12 @@ function MenuItemDescBox({ position, description }) {
         }
       />
 
+      {/* title */}
       <p className="text-center text-custom-white font-semibold">
         {description["name"]}
       </p>
-      {divider}
+      {/* attributes */}
+      {description["attributes"] && divider}
       {description["attributes"] &&
         description["attributes"].map((attr, key) => {
           return (
@@ -105,7 +106,8 @@ function MenuItemDescBox({ position, description }) {
             </div>
           );
         })}
-      {description["attributes"] && divider}
+      {/* desc */}
+      {divider}
       <div className="text-xs">
         {description["description"].map((desc, index) => {
           return (
@@ -116,13 +118,25 @@ function MenuItemDescBox({ position, description }) {
           );
         })}
       </div>
-      {divider}
-      <div className="text-xs">
-        <p className="text-custom-gold">{description["additional"][0]}</p>
-        {description["additional"][1].map((add, key) => {
-          return <p key={key}>{add}</p>;
-        })}
-      </div>
+      {/* additional */}
+      {description["additional"] && divider}
+      {description["additional"] && (
+        <div className="text-xs">
+          <p className="text-custom-gold">{description["additional"][0]}</p>
+          {description["additional"][1].map((add, key) => {
+            return <p key={key}>{add}</p>;
+          })}
+        </div>
+      )}
+      {/* link */}
+      {description["link"] && divider}
+      {description["link"] && (
+        <a href={description["link"][1]} target="_blank" rel="noreferrer">
+          <p className="text-xs text-custom-gold underline">
+            {description["link"][0]}
+          </p>
+        </a>
+      )}
     </div>
   );
 }
