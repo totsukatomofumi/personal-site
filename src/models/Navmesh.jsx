@@ -15,8 +15,8 @@ const NavMesh = forwardRef(function NavMesh(props, ref) {
     <group {...props} dispose={null}>
       <mesh
         ref={ref}
-        geometry={nodes.Plane023.geometry}
-        material={nodes.Plane023.material}
+        geometry={nodes.Plane019.geometry}
+        material={nodes.Plane019.material}
         position={[-22.16, 0, -0.84]}
         rotation={[0, -0.449, 0]}
         scale={[0.777, 0.404, 0.094]}
