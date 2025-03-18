@@ -207,7 +207,7 @@ export const SMARTTRASHCAN_PROJ_DESC = {
 export const BATTLESHIP_PROJ_DESC = {
   name: "Battleship Grimoire",
   description: [
-    "An enchanted tome containing a real-time, online multiplayer Battleship game, co-developed during the wearer's time at Chulalongkorn University.",
+    "An enchanted tome containing a real-time, online multiplayer, browser-based Battleship game, co-developed during the wearer's time at Chulalongkorn University.",
     "Built with JavaScript and React for the frontend, the project features an Express with Node.js backend with Socket.IO and Redis enabling real-time player interactions and game state updates. Mongoose and MongoDB were integrated to manage persistent player data.",
     "The wearer was primarily responsible for backend development. ",
   ],
@@ -228,7 +228,7 @@ export const BATTLESHIP_PROJ_DESC = {
 export const MYSTUDENT_PROJ_DESC = {
   name: "myStudent Grimoire",
   description: [
-    "An enchanted tome containing a desktop application designed to help tuition centers manage students, tutors, and classes, co-developed during the wearer's time at the National University of Singapore.",
+    "An enchanted tome containing the myStudent desktop application, designed to help tuition centers manage students, tutors, and classes, co-developed during the wearer's time at the National University of Singapore.",
     "Built with Java and JavaFX, the application uses local JSON-based data persistence and incorporates JUnit for unit testing.",
     "The wearer was primary responsible for implementing the core application logic.",
   ],
