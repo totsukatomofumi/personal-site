@@ -287,7 +287,6 @@ export const INVENTORY = [
     description: RESUME_DESC,
   },
 ];
-
 export const MENU_ITEM_DESC_BOX_EDGE_PADDING = 10;
-export const MENU_ITEM_DESC_BOX_DEFAULT_WIDTH = 250;
+export const MENU_ITEM_DESC_BOX_DEFAULT_WIDTH = 225;
 export const MENU_ITEM_DESC_BOX_DEFAULT_HEIGHT = "fit-content";
