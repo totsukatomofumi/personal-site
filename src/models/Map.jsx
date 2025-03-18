@@ -12,6 +12,7 @@ function Map(props) {
   const { nodes, materials } = useGLTF(mapModel);
   return (
     <group {...props} dispose={null}>
+      {/* floor */}
       <mesh
         geometry={nodes.Plane006.geometry}
         material={materials["brick1.001"]}
@@ -19,18 +20,7 @@ function Map(props) {
         scale={[59.797, 21.777, 21.777]}
         receiveShadow
       />
-      <mesh
-        geometry={nodes.banner_0001.geometry}
-        material={materials.wood_banner}
-        position={[-53.543, 5.486, 2.049]}
-        rotation={[-Math.PI / 2, 0, 0]}
-      />
-      <mesh
-        geometry={nodes.banner_1001.geometry}
-        material={materials.banner_flag}
-        position={[-53.543, 5.486, 2.049]}
-        rotation={[-Math.PI / 2, 0, Math.PI / 2]}
-      />
+      {/* signs */}
       <mesh
         geometry={nodes.Object_10002.geometry}
         material={materials["Material.004"]}
@@ -38,6 +28,7 @@ function Map(props) {
         rotation={[0.698, 0, 0]}
         scale={[0.045, 0.054, 0.504]}
       />
+      {/* street lamp */}
       <mesh
         geometry={nodes.Object_4004.geometry}
         material={materials.Torch2_lambert1_AlbedoTransparency}
@@ -45,6 +36,7 @@ function Map(props) {
         scale={139.333}
         castShadow
       />
+      {/* house */}
       <mesh
         geometry={nodes.obj_house_1_material_planks_0001.geometry}
         material={materials["material_planks.002"]}
@@ -75,7 +67,6 @@ function Map(props) {
         position={[-7.827, 7.892, 5.825]}
         rotation={[-1.52, 0, Math.PI / 2]}
         scale={[0.091, 0.065, 0.999]}
-        castShadow
       />
       <mesh
         geometry={nodes.obj_house_1_material_wood_0001.geometry}
@@ -85,14 +76,16 @@ function Map(props) {
         scale={[0.091, 0.065, 0.999]}
         castShadow
       />
+      {/* wall */}
       <mesh
-        geometry={nodes.porte_main_0.geometry}
-        material={materials.main}
-        position={[-55.866, 0, -0.003]}
+        geometry={nodes.porte_main_0008.geometry}
+        material={materials["main.002"]}
+        position={[-55.866, 0, 31.997]}
         rotation={[0, Math.PI / 2, 0]}
         scale={0.01}
         castShadow
       />
+      {/* notice board */}
       <mesh
         geometry={nodes.Cube__0.geometry}
         material={materials["Scene_-_Root"]}
@@ -100,6 +93,33 @@ function Map(props) {
         rotation={[-Math.PI / 2, 0, 0.059]}
         castShadow
       />
+      {/* ladder */}
+      <mesh
+        geometry={nodes.defaultMaterial.geometry}
+        material={materials.initialShadingGroup}
+        position={[-2.341, 2.149, 3.652]}
+        rotation={[0, 0, 0.149]}
+        scale={2.422}
+        castShadow
+      />
+      {/* barrel */}
+      <mesh
+        geometry={nodes.barrel_low_Material_0.geometry}
+        material={materials.Material}
+        position={[-2.797, 0, -2.579]}
+        rotation={[-Math.PI / 2, 0, 1.247]}
+        scale={0.323}
+        castShadow
+      />
+      {/* stall */}
+      <mesh
+        geometry={nodes.pCube104_lambert2_0.geometry}
+        material={materials.lambert2}
+        position={[-4.998, 0.682, -2.833]}
+        scale={[0.11, 0.042, 0.077]}
+        castShadow
+      />
+      {/* cart */}
       <mesh
         geometry={nodes.Object_4.geometry}
         material={materials.Fire_lamp_2_0}
@@ -143,29 +163,7 @@ function Map(props) {
         scale={1.315}
         castShadow
       />
-      <mesh
-        geometry={nodes.defaultMaterial.geometry}
-        material={materials.initialShadingGroup}
-        position={[-2.341, 2.149, 3.652]}
-        rotation={[0, 0, 0.149]}
-        scale={2.422}
-        castShadow
-      />
-      <mesh
-        geometry={nodes.barrel_low_Material_0.geometry}
-        material={materials.Material}
-        position={[-2.797, 0, -2.579]}
-        rotation={[-Math.PI / 2, 0, 1.247]}
-        scale={0.323}
-        castShadow
-      />
-      <mesh
-        geometry={nodes.pCube104_lambert2_0.geometry}
-        material={materials.lambert2}
-        position={[-4.998, 0.682, -2.833]}
-        scale={[0.11, 0.042, 0.077]}
-        castShadow
-      />
+      {/* castle */}
       <mesh
         geometry={nodes.Object_5.geometry}
         material={materials.material}
