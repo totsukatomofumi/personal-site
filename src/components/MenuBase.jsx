@@ -23,7 +23,7 @@ function MenuBase({ setIsMenu }) {
 
   const pages = [
     <MenuEquipment setItemDescBox={setItemDescBox} />,
-    <MenuInventory />,
+    <MenuInventory setItemDescBox={setItemDescBox} />,
     <MenuCredits />,
   ];
   const titles = ["Equipment", "Inventory", "Credits"];

@@ -3,6 +3,9 @@ import * as THREE from "three";
 import nusSword from "./sprites/nus-sword.png";
 import rsChestplate from "./sprites/rs-chestplate.png";
 import cuBelt from "./sprites/cu-belt.png";
+import mystudentProj from "./sprites/mystudent-proj.png";
+import battleshipProj from "./sprites/battleship-proj.png";
+import smarttrashcanProj from "./sprites/smarttrashcan-proj.png";
 
 export const NAME = "Totsuka Tomofumi";
 export const AGE = moment().diff("2000-12-15", "years");
@@ -125,6 +128,7 @@ export const RS_CHESTPLATE_DESC = {
   description: [
     "A sturdy chestplate forged in the industry-leading electronics company, Rohde & Schwarz.",
     "A testament to a three-month internship (May 2024 – Aug 2024), where the wearer developed a full-stack, microservice architecture-based lab management dashboard to interface with legacy lab software.",
+    "Built using TypeScript, React, and Redux for the frontend, the system utilises an ASP.NET backend with SignalR for real-time dashboard updates. Microservices were developed to interface with legacy software and called via gRPC, with service discovery through Consul.",
   ],
   additional: [
     "Leveraged Knowledge:",
@@ -162,36 +166,108 @@ export const CU_BELT_DESC = {
 
 export const EQUIPMENT = [
   {
-    name: "NUS Sword",
     img: {
       src: nusSword,
       alt: "nus-sword",
     },
     scale: 1,
-    position: { x: 27, y: 130 },
+    position: { x: 26, y: 132 },
     description: NUS_SWORD_DESC,
   },
   {
-    name: "R&S Chestplate",
     img: {
       src: rsChestplate,
       alt: "rs-chestplate",
     },
     scale: 1,
-    position: { x: 242, y: 236 },
+    position: { x: 242, y: 237 },
     description: RS_CHESTPLATE_DESC,
   },
   {
-    name: "CU Belt",
     img: {
       src: cuBelt,
       alt: "cu-belt",
     },
-    scale: 0.9,
-    position: { x: 29, y: 239 },
+    scale: 1,
+    position: { x: 26.5, y: 237 },
     description: CU_BELT_DESC,
   },
 ];
+
+export const SMARTTRASHCAN_PROJ_DESC = {
+  name: "Smart Trash Can Blueprint",
+  description: [
+    "A blueprint detailing the IoT-based Smart Trash Can co-developed during the wearer's time at Chulalongkorn University.",
+    "Using an STM32 MCU and Raspberry Pi with cross-board serial communication, it sorts recyclable waste using multiple servos, sensors, and a camera powered by a TensorFlow Lite pretrained model. The system also features integrated real-time LINE notifications and a NETPIE dashboard for live device monitoring.",
+    "The wearer was primarily responsible for software implementation and integration.",
+  ],
+  additional: ["Utilised:", ["- C", "- Python", "- STM32", "- Raspberry Pi"]],
+};
+
+export const BATTLESHIP_PROJ_DESC = {
+  name: "Battleship Grimoire",
+  description: [
+    "An enchanted tome containing a real-time, online multiplayer Battleship game, co-developed during the wearer's time at Chulalongkorn University.",
+    "Built with JavaScript and React for the frontend, the project features an Express with Node.js backend with Socket.IO and Redis enabling real-time player interactions and game state updates. Mongoose and MongoDB were integrated to manage persistent player data.",
+    "The wearer was primarily responsible for backend development. ",
+  ],
+  additional: [
+    "Utilised:",
+    [
+      "- JavaScript",
+      "- Express",
+      "- Socket.IO",
+      "- Redis",
+      "- Mongoose",
+      "- Git",
+      "- GitHub",
+    ],
+  ],
+};
+
+export const MYSTUDENT_PROJ_DESC = {
+  name: "myStudent Grimoire",
+  description: [
+    "An enchanted tome containing a desktop application designed to help tuition centers manage students, tutors, and classes, co-developed during the wearer's time at the National University of Singapore.",
+    "Built with Java and JavaFX, the application uses local JSON-based data persistence and incorporates JUnit for unit testing.",
+    "The wearer was primary responsible for implementing the core application logic.",
+  ],
+  additional: [
+    "Utilised:",
+    ["- Java", "- JavaFX", "- JUnit", "- Git", "- GitHub", "- Codecov"],
+  ],
+};
+
+export const INVENTORY = [
+  {
+    img: {
+      src: smarttrashcanProj,
+      alt: "smarttrashcan-proj",
+    },
+    scale: 0.95,
+    position: { x: 27.5, y: 58 },
+    description: SMARTTRASHCAN_PROJ_DESC,
+  },
+  {
+    img: {
+      src: battleshipProj,
+      alt: "battleship-proj",
+    },
+    scale: 1.05,
+    position: { x: 97, y: 54 },
+    description: BATTLESHIP_PROJ_DESC,
+  },
+  {
+    img: {
+      src: mystudentProj,
+      alt: "mystudent-proj",
+    },
+    scale: 1.05,
+    position: { x: 168.5, y: 54 },
+    description: MYSTUDENT_PROJ_DESC,
+  },
+];
+
 export const MENU_ITEM_DESC_BOX_EDGE_PADDING = 10;
 export const MENU_ITEM_DESC_BOX_DEFAULT_WIDTH = 250;
 export const MENU_ITEM_DESC_BOX_DEFAULT_HEIGHT = "fit-content";
