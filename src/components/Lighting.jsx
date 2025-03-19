@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import {
   CASTLE_LIGHT_BRIGHTNESS_SCALE,
+  DEBUG_ENABLE_AMBIENT_LIGHT,
   LAMP_LIGHT_COLOR,
   MOON_LIGHT_BRIGHTNESS_SCALE,
   NIGHT_SKY_COLOR,
@@ -91,6 +92,12 @@ function Lighting() {
         intensity={TOWN_LIGHT_BRIGHTNESS_SCALE * 60}
         castShadow
       />
+      <pointLight
+        color={TAVERN_LIGHT_COLOR}
+        position={[2.2, 2, -43.2]}
+        intensity={TOWN_LIGHT_BRIGHTNESS_SCALE * 60}
+        castShadow
+      />
       {/* lamp */}
       <pointLight
         ref={lampRef}
@@ -107,6 +114,10 @@ function Lighting() {
         distance={30}
         castShadow
       />
+      {/* DEBUG */}
+      {DEBUG_ENABLE_AMBIENT_LIGHT && (
+        <ambientLight intensity={1} color={"white"} />
+      )}
     </>
   );
 }

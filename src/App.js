@@ -8,7 +8,11 @@ import KeyboardControls from "./components/KeyboardControls";
 import DialogControls from "./components/DialogControls";
 import Scene from "./components/Scene";
 import { AdaptiveDpr, BakeShadows } from "@react-three/drei";
-import { DEBUG_DISABLE_CANVAS, SCREEN_BOTTOM_PADDING } from "./constants";
+import {
+  DEBUG_DISABLE_CANVAS,
+  DEBUG_ENABLE_CAM_ORBIT_CONTROLS,
+  SCREEN_BOTTOM_PADDING,
+} from "./constants";
 
 function App() {
   const { isLandscape } = useMobileOrientation();
@@ -78,11 +82,13 @@ function App() {
         ) : (
           !isIntro && (
             <>
-              <JoystickControls
-                isJoystickActive={isJoystickActive}
-                setIsJoystickActive={setIsJoystickActive}
-                movementVector={movementVector}
-              />
+              {!DEBUG_ENABLE_CAM_ORBIT_CONTROLS && (
+                <JoystickControls
+                  isJoystickActive={isJoystickActive}
+                  setIsJoystickActive={setIsJoystickActive}
+                  movementVector={movementVector}
+                />
+              )}
               {!isJoystickActive && !isMenu && (
                 <KeyboardControls movementVector={movementVector} />
               )}

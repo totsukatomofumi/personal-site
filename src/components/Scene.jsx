@@ -2,7 +2,14 @@ import { useRef } from "react";
 import { useThree } from "@react-three/fiber";
 import Camera from "./Camera";
 import Player from "./Player";
-import { MAP_POS, MAP_ROT, NAVMESH_POS, NIGHT_SKY_COLOR } from "../constants";
+import {
+  DEBUG_CAM_ORBIT_CONTROLS_TARGET,
+  DEBUG_ENABLE_CAM_ORBIT_CONTROLS,
+  MAP_POS,
+  MAP_ROT,
+  NAVMESH_POS,
+  NIGHT_SKY_COLOR,
+} from "../constants";
 import Map from "../models/Map";
 import NavMesh from "../models/Navmesh";
 import NpcKnight from "./NpcKnight";
@@ -10,7 +17,7 @@ import NpcCat from "./NpcCat";
 import Lighting from "./Lighting";
 import Postprocessing from "./Postprocessing";
 import Dust from "./Dust";
-import { Cloud, Clouds } from "@react-three/drei";
+import { Cloud, Clouds, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 
 function Scene({
@@ -33,7 +40,17 @@ function Scene({
 
   return (
     <>
-      <Camera playerRef={playerRef} />
+      {DEBUG_ENABLE_CAM_ORBIT_CONTROLS ? (
+        <>
+          <OrbitControls target={DEBUG_CAM_ORBIT_CONTROLS_TARGET} />
+          <mesh position={DEBUG_CAM_ORBIT_CONTROLS_TARGET}>
+            <sphereGeometry args={[0.1]} />
+            <meshBasicMaterial color="red" />
+          </mesh>
+        </>
+      ) : (
+        <Camera playerRef={playerRef} />
+      )}
       <Player
         ref={playerRef}
         navMeshRef={navMeshRef}
@@ -60,13 +77,14 @@ function Scene({
       <Lighting />
       <Postprocessing />
       <Dust />
-      <Clouds material={THREE.MeshBasicMaterial} position={[0, -2, -50]}>
+      <Clouds material={THREE.MeshBasicMaterial} position={[0, 0, -42]}>
         <Cloud
           seed={1}
           segments={50}
-          bounds={[8, 0, 100]}
-          opacity={0.2}
-          speed={-0.2}
+          bounds={[10, 0, 53]}
+          growth={2}
+          opacity={0.05}
+          speed={-0.3}
         />
       </Clouds>
     </>

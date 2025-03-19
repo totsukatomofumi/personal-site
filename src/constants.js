@@ -8,10 +8,14 @@ import battleshipProj from "./sprites/battleship-proj.png";
 import smarttrashcanProj from "./sprites/smarttrashcan-proj.png";
 import resumeIcon from "./sprites/resume-icon.png";
 
+export const DEBUG_DISABLE_CANVAS = false;
+export const DEBUG_DISABLE_COLLISION = false;
+export const DEBUG_ENABLE_CAM_ORBIT_CONTROLS = false;
+export const DEBUG_CAM_ORBIT_CONTROLS_TARGET = [0, 2, -30];
+export const DEBUG_ENABLE_AMBIENT_LIGHT = false;
 export const NAME = "Totsuka Tomofumi";
 export const AGE = moment().diff("2000-12-15", "years");
 export const OCCUPATION = "Undergraduate";
-export const DEBUG_DISABLE_CANVAS = false;
 export const SCREEN_BOTTOM_PADDING = 80;
 export const MAP_POS = [0, 0, 0];
 export const MAP_ROT = [0, -Math.PI / 2, 0];

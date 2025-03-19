@@ -20,6 +20,7 @@ import {
   PLAYER_INTRO_Z,
   PLAYER_INTRO_DELAY,
   PLAYER_INTRO_SPEED_OFFSET,
+  DEBUG_DISABLE_COLLISION,
 } from "../constants";
 import SpriteShadow from "./SpriteShadow";
 
@@ -68,6 +69,17 @@ const Player = forwardRef(function Player(
     const predictionOrigin = new THREE.Vector3();
     const horizDist = x * PLAYER_H_SPEED * delta;
     const vertDist = z * PLAYER_V_SPEED * delta;
+
+    if (DEBUG_DISABLE_COLLISION) {
+      selfRef.current.position.x += horizDist;
+      selfRef.current.position.z += vertDist;
+
+      if (x !== 0 || z !== 0) {
+        console.log("Player position:", selfRef.current.position);
+      }
+
+      return;
+    }
 
     // do prediction for horizontal movement
     predictionOrigin.copy(selfRef.current.position);
