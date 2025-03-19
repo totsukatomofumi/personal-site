@@ -15,8 +15,7 @@ function MenuCredits() {
         <div>
           <p>{FINAL_NOTE}</p>
         </div>
-        <br />
-        <div className="w-full h-fit flex flex-row justify-center items-center gap-5 text-custom-white">
+        <div className="w-full h-fit my-5 flex flex-row justify-center items-center gap-5 text-custom-white">
           <a href={LINKEDIN} target="_blank" rel="noreferrer">
             <i class="fa-brands fa-linkedin fa-2x"></i>
           </a>
@@ -30,7 +29,7 @@ function MenuCredits() {
             <i class="fa-solid fa-envelope fa-2x"></i>
           </a>
         </div>
-        <div className="relative top-7">
+        <div>
           <p className="text-custom-gold">Attributions:</p>
           <div className="text-[10px]">
             {ATTRIBUTIONS.map((attr, key) => {
