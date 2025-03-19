@@ -29,9 +29,9 @@ function MenuCredits() {
             <i class="fa-solid fa-envelope fa-2x"></i>
           </a>
         </div>
-        <div>
+        <div className="text-[10px]">
           <p className="text-custom-gold">Attributions:</p>
-          <div className="text-[10px]">
+          <div>
             {ATTRIBUTIONS.map((attr, key) => {
               return (
                 <p key={key}>
