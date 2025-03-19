@@ -292,3 +292,62 @@ export const INVENTORY = [
 export const MENU_ITEM_DESC_BOX_EDGE_PADDING = 10;
 export const MENU_ITEM_DESC_BOX_DEFAULT_WIDTH = 225;
 export const MENU_ITEM_DESC_BOX_DEFAULT_HEIGHT = "fit-content";
+export const ATTRIBUTIONS = [
+  {
+    title: ["Notice board low-poly", "https://skfb.ly/oQNPu"],
+    creator: ["Viktor_", "https://sketchfab.com/Viktor.Zhuravlev"],
+    license: ["CC BY 4.0", "https://creativecommons.org/licenses/by/4.0/"],
+  },
+  {
+    title: ["Barrels", "https://skfb.ly/o8vFz"],
+    creator: ["RipeR", "https://sketchfab.com/RipeR"],
+    license: ["CC BY 4.0", "https://creativecommons.org/licenses/by/4.0/"],
+  },
+  {
+    title: ["Medieval Lamp Post", "https://skfb.ly/6XuLK"],
+    creator: ["Daan van Leeuwen", "https://sketchfab.com/superwortel"],
+    license: ["CC BY 4.0", "https://creativecommons.org/licenses/by/4.0/"],
+  },
+  {
+    title: ["Shop", "https://skfb.ly/6XnSq"],
+    creator: ["Vadim Rychkov", "https://sketchfab.com/vadim_rychkov"],
+    license: ["CC BY 4.0", "https://creativecommons.org/licenses/by/4.0/"],
+  },
+  {
+    title: ["Stylized medieval cart with a lamp", "https://skfb.ly/orPrz"],
+    creator: ["3D_Kod", "https://sketchfab.com/3D_Kod"],
+    license: ["CC BY 4.0", "https://creativecommons.org/licenses/by/4.0/"],
+  },
+  {
+    title: ["Castle", "https://skfb.ly/otLpZ"],
+    creator: ["hamidkhan224", "https://sketchfab.com/hamidkhan224"],
+    license: ["CC BY 4.0", "https://creativecommons.org/licenses/by/4.0/"],
+  },
+  {
+    title: ["Medieval_Wooden-Ladder", "https://skfb.ly/6snwq"],
+    creator: ["ArcheoteryxFr", "https://sketchfab.com/Archeopteryxfr"],
+    license: [
+      "CC BY-NC-ND 4.0",
+      "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+    ],
+  },
+  {
+    title: ["Porte Saint-Vincent Gate, Vannes", "https://skfb.ly/6UWUo"],
+    creator: ["Lost Gecko", "https://sketchfab.com/Lost_Gecko"],
+    license: ["CC BY 4.0", "https://creativecommons.org/licenses/by/4.0/"],
+  },
+  {
+    title: [
+      "lowpoly animated medieval signs (Blender.file)",
+      "https://skfb.ly/p7Dw9",
+    ],
+    creator: ["n-malmberg", "https://sketchfab.com/n-malmberg"],
+    license: ["CC BY 4.0", "https://creativecommons.org/licenses/by/4.0/"],
+  },
+];
+export const FINAL_NOTE =
+  "Built with React, Tailwind CSS, and Three.js with R3F libraries, and deployed with Vercel.";
+export const EMAIL = "totsukatomofumi@gmail.com";
+export const GITHUB = "https://github.com/totsukatomofumi";
+export const KAGGLE = "https://www.kaggle.com/totsukatomofumi";
+export const LINKEDIN = "https://www.linkedin.com/in/totsukatomofumi";
