@@ -17,7 +17,6 @@ export const DYNAMIC_DPR_FACTOR = 0.4; // 0 to 1, 1 is max dpr
 export const NAME = "Totsuka Tomofumi";
 export const AGE = moment().diff("2000-12-15", "years");
 export const OCCUPATION = "Undergraduate";
-export const SCREEN_BOTTOM_PADDING = 80;
 export const MAP_POS = [0, 0, 0];
 export const MAP_ROT = [0, -Math.PI / 2, 0];
 export const NAVMESH_POS = [MAP_POS[0], MAP_POS[1] - 1, MAP_POS[2]];

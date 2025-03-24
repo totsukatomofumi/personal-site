@@ -3,7 +3,6 @@ import {
   MENU_ITEM_DESC_BOX_DEFAULT_HEIGHT,
   MENU_ITEM_DESC_BOX_DEFAULT_WIDTH,
   MENU_ITEM_DESC_BOX_EDGE_PADDING,
-  SCREEN_BOTTOM_PADDING,
 } from "../constants";
 
 function MenuItemDescBox({ position, description }) {
