@@ -19,6 +19,7 @@ import Postprocessing from "./Postprocessing";
 import Dust from "./Dust";
 import { Cloud, Clouds, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
+import Glowing from "../models/Glowing";
 
 function Scene({
   movementVector,
@@ -75,6 +76,7 @@ function Scene({
         toggleDialog={toggleDialog}
       />
       <Map position={MAP_POS} rotation={MAP_ROT} renderOrder={1} />
+      <Glowing position={MAP_POS} rotation={MAP_ROT} />
       <NavMesh ref={navMeshRef} position={NAVMESH_POS} rotation={MAP_ROT} />
       <Lighting />
       <Postprocessing />
