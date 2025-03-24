@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { AdaptiveDpr, BakeShadows } from "@react-three/drei";
 import { isMobile, useMobileOrientation } from "react-device-detect";
-import { useWindowSize } from "@uidotdev/usehooks";
 import LoadingScreen from "./components/LoadingScreen";
 import Ui from "./components/Ui";
 import JoystickControls from "./components/JoystickControls";
@@ -26,7 +25,6 @@ function App() {
   const [toggleDialog, setToggleDialog] = useState(null); // null before use
   const [isMenu, setIsMenu] = useState(false);
   const [toggleTutorialAnim, setToggleTutorialAnim] = useState(null);
-  const windowSize = useWindowSize();
 
   useEffect(() => {
     if (isDialogActive) {
