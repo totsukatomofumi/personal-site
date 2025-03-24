@@ -21,7 +21,7 @@ function Postprocessing() {
         <HueSaturation
           saturation={-0.25} // saturation in radians
         />
-        <Noise opacity={0.04} />
+        <Noise opacity={0.03} />
       </EffectComposer>
       <SoftShadows />
     </>
