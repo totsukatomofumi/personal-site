@@ -1,18 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
+import { AdaptiveDpr, BakeShadows } from "@react-three/drei";
 import { isMobile, useMobileOrientation } from "react-device-detect";
+import { useWindowSize } from "@uidotdev/usehooks";
 import LoadingScreen from "./components/LoadingScreen";
 import Ui from "./components/Ui";
 import JoystickControls from "./components/JoystickControls";
 import KeyboardControls from "./components/KeyboardControls";
 import DialogControls from "./components/DialogControls";
 import Scene from "./components/Scene";
-import { AdaptiveDpr, BakeShadows } from "@react-three/drei";
 import {
   DEBUG_DISABLE_CANVAS,
   DEBUG_ENABLE_CAM_ORBIT_CONTROLS,
-  SCREEN_BOTTOM_PADDING,
 } from "./constants";
+import RotateScreenOverlay from "./components/RotateScreenOverlay";
 
 function App() {
   const { isLandscape } = useMobileOrientation();
@@ -25,6 +26,7 @@ function App() {
   const [toggleDialog, setToggleDialog] = useState(null); // null before use
   const [isMenu, setIsMenu] = useState(false);
   const [toggleTutorialAnim, setToggleTutorialAnim] = useState(null);
+  const windowSize = useWindowSize();
 
   useEffect(() => {
     if (isDialogActive) {
@@ -40,32 +42,13 @@ function App() {
     }
   }, [isMenu]);
 
-  if (!isMobile) {
-    return (
-      <div className="fixed top-0 left-0 w-screen h-screen pb-[80px] touch-none ">
-        <div className="flex justify-center items-center w-full h-full">
-          <div className="text-2xl font-bold">Please use a mobile device</div>
-        </div>
-      </div>
-    );
-  }
-
-  if (isLandscape) {
-    return (
-      <div className="fixed top-0 left-0 w-screen h-screen pb-[80px] touch-none ">
-        <div className="flex justify-center items-center w-full h-full">
-          <div className="text-2xl font-bold">Please use potrait mode</div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div
-      className="fixed top-0 left-0 w-screen touch-none select-none bg-black"
-      style={{ height: document.documentElement.clientHeight }}
+      className="fixed top-0 left-0 touch-none select-none bg-black"
+      style={{ height: windowSize.height, width: windowSize.width }}
     >
       <div className="relative w-full h-full">
+        {isMobile && isLandscape && <RotateScreenOverlay />}
         {!DEBUG_DISABLE_CANVAS && isLoadingScreen && (
           <LoadingScreen
             isLoaded={isLoaded}

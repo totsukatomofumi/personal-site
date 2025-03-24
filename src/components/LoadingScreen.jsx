@@ -47,7 +47,7 @@ function LoadingScreen({ isLoaded, setIsLoadingScreen }) {
       ref={self}
       className="absolute top-0 left-0 z-50 w-full h-full flex justify-center items-center bg-black"
     >
-      <div ref={loadingRef} className="text-white text-2xl font-vt323">
+      <div ref={loadingRef} className="text-custom-white text-2xl font-vt323">
         <p>
           Loading<span ref={firstDotRef}>.</span>
           <span ref={secondDotRef}>.</span>

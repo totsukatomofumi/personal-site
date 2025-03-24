@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useWindowSize } from "@uidotdev/usehooks";
 import {
   CAM_FOV,
   CAM_INIT_POS,
@@ -19,12 +20,17 @@ import {
 function Camera({ playerRef }) {
   const [toggleAnim, setToggleAnim] = useState(false);
   const { camera } = useThree();
+  const windowSize = useWindowSize();
 
   useEffect(() => {
     camera.setFocalLength(CAM_FOV);
     camera.position.set(...CAM_INIT_POS); // horiz x [-1, 1] vert y [6] depth z [10, 22]
     camera.rotation.set(...CAM_ROT); // angle at -5
   }, [camera]);
+
+  useEffect(() => {
+    camera.setFocalLength(CAM_FOV);
+  }, [windowSize]);
 
   useFrame(() => {
     setToggleAnim((prev) => !prev);
