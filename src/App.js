@@ -43,10 +43,7 @@ function App() {
   }, [isMenu]);
 
   return (
-    <div
-      className="fixed top-0 left-0 touch-none select-none bg-black"
-      style={{ height: windowSize.height, width: windowSize.width }}
-    >
+    <div className="fixed top-0 left-0 w-dvw h-dvh touch-none select-none bg-black">
       <div className="relative w-full h-full">
         {isMobile && isLandscape && <RotateScreenOverlay />}
         {!DEBUG_DISABLE_CANVAS && isLoadingScreen && (
