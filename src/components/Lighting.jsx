@@ -25,7 +25,7 @@ function Lighting() {
     lampAnimElapsedTime.current = 0;
 
     lampRef.current.intensity =
-      TOWN_LIGHT_BRIGHTNESS_SCALE * Math.random() * 10 + 10;
+      TOWN_LIGHT_BRIGHTNESS_SCALE * (Math.random() * 10 + 10);
   }
 
   function animateTavern(delta) {
@@ -36,9 +36,9 @@ function Lighting() {
     tavernAnimElapsedTime.current = 0;
 
     tavernARef.current.intensity =
-      TOWN_LIGHT_BRIGHTNESS_SCALE * Math.random() * 10 + 50;
+      TOWN_LIGHT_BRIGHTNESS_SCALE * (Math.random() * 10 + 50);
     tavernBRef.current.intensity =
-      TOWN_LIGHT_BRIGHTNESS_SCALE * Math.random() * 10 + 50;
+      TOWN_LIGHT_BRIGHTNESS_SCALE * (Math.random() * 10 + 50);
   }
 
   useFrame((_, delta) => {
