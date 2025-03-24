@@ -82,7 +82,7 @@ function Lighting() {
       <pointLight
         ref={tavernBRef}
         color={TAVERN_LIGHT_COLOR}
-        position={[-6.25, 2, -1.67]}
+        position={[-6.25, 2, -3.3]}
         intensity={TOWN_LIGHT_BRIGHTNESS_SCALE * 60}
         castShadow
       />

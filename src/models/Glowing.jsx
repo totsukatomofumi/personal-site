@@ -15,8 +15,8 @@ function Glowing(props) {
       <mesh
         geometry={nodes.obj_house_1_material_planks_02262.geometry}
         material={materials["material_planks.003"]}
-        position={[-6.144, 4.593, 6.442]}
-        rotation={[-1.52, 0, Math.PI / 2]}
+        position={[-6.344, 4.593, 6.442]}
+        rotation={[-1.523, -0.001, 1.57]}
         scale={[0.091, 0.065, 0.999]}
       />
       <mesh
