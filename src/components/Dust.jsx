@@ -42,10 +42,10 @@ function Dust() {
     const particles = arrayRef.current;
 
     for (let i = 0; i < particles.length; i += 3) {
-      particles[i] += Math.random() * 0.02;
+      particles[i] += Math.random() * 0.01;
       particles[i + 1] +=
         Math.random() *
-        0.005 *
+        0.0025 *
         Math.sin(Date.now() * 0.001 + (i * Math.PI) / 2);
 
       if (particles[i] > DUST_X_AXIS_MAX) {
