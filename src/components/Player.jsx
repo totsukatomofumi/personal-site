@@ -25,7 +25,14 @@ import {
 import SpriteShadow from "./SpriteShadow";
 
 const Player = forwardRef(function Player(
-  { navMeshRef, npcNoNavMeshRefs, movementVector, isIntro, setIsIntro },
+  {
+    navMeshRef,
+    npcNoNavMeshRefs,
+    movementVector,
+    isIntro,
+    setIsIntro,
+    isLoaded,
+  },
   playerRef
 ) {
   const selfRef = useRef();
@@ -207,6 +214,8 @@ const Player = forwardRef(function Player(
 
   useGSAP(
     () => {
+      if (!isLoaded) return;
+
       const tl = gsap.timeline();
 
       tl.call(() => {
@@ -227,7 +236,7 @@ const Player = forwardRef(function Player(
         isPlayerIdle.current = true;
       });
     },
-    { dependencies: [] }
+    { dependencies: [isLoaded] }
   );
 
   return (

@@ -27,6 +27,7 @@ function Scene({
   setToggleTutorialAnim,
   isIntro,
   setIsIntro,
+  isLoaded,
 }) {
   const playerRef = useRef();
   const npcKnightNoNavMeshRef = useRef();
@@ -58,6 +59,7 @@ function Scene({
         movementVector={movementVector}
         isIntro={isIntro}
         setIsIntro={setIsIntro}
+        isLoaded={isLoaded}
       />
       <NpcKnight
         ref={npcKnightNoNavMeshRef}

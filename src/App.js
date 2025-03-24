@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { AdaptiveDpr, BakeShadows } from "@react-three/drei";
+import { BakeShadows, PerformanceMonitor } from "@react-three/drei";
 import { isMobile, useMobileOrientation } from "react-device-detect";
 import LoadingScreen from "./components/LoadingScreen";
 import Ui from "./components/Ui";
@@ -8,11 +8,12 @@ import JoystickControls from "./components/JoystickControls";
 import KeyboardControls from "./components/KeyboardControls";
 import DialogControls from "./components/DialogControls";
 import Scene from "./components/Scene";
+import RotateScreenOverlay from "./components/RotateScreenOverlay";
 import {
   DEBUG_DISABLE_CANVAS,
   DEBUG_ENABLE_CAM_ORBIT_CONTROLS,
+  DYNAMIC_DPR_FACTOR,
 } from "./constants";
-import RotateScreenOverlay from "./components/RotateScreenOverlay";
 
 function App() {
   const { isLandscape } = useMobileOrientation();
@@ -25,6 +26,7 @@ function App() {
   const [toggleDialog, setToggleDialog] = useState(null); // null before use
   const [isMenu, setIsMenu] = useState(false);
   const [toggleTutorialAnim, setToggleTutorialAnim] = useState(null);
+  const [dpr, setDpr] = useState(window.devicePixelRatio);
 
   useEffect(() => {
     if (isDialogActive) {
@@ -74,12 +76,19 @@ function App() {
           )
         )}
         {!DEBUG_DISABLE_CANVAS && (
-          <Canvas
-            shadows
-            onCreated={() => {
-              setIsLoaded(true);
-            }}
-          >
+          <Canvas shadows dpr={dpr}>
+            <PerformanceMonitor
+              factor={1}
+              onChange={({ factor }) => {
+                setIsLoaded(true); // set is loaded when performance monitor is ready
+                setDpr(
+                  Math.max(
+                    factor * DYNAMIC_DPR_FACTOR * window.devicePixelRatio,
+                    0.5
+                  )
+                );
+              }}
+            />
             <Scene
               movementVector={movementVector}
               setIsDialogActive={setIsDialogActive}
@@ -87,8 +96,8 @@ function App() {
               setToggleTutorialAnim={setToggleTutorialAnim}
               isIntro={isIntro}
               setIsIntro={setIsIntro}
+              isLoaded={isLoaded}
             />
-            <AdaptiveDpr pixelated />
             <BakeShadows />
           </Canvas>
         )}

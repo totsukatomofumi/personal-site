@@ -13,6 +13,7 @@ export const DEBUG_DISABLE_COLLISION = false;
 export const DEBUG_ENABLE_CAM_ORBIT_CONTROLS = false;
 export const DEBUG_CAM_ORBIT_CONTROLS_TARGET = [0, 2, -30];
 export const DEBUG_ENABLE_AMBIENT_LIGHT = false;
+export const DYNAMIC_DPR_FACTOR = 0.4; // 0 to 1, 1 is max dpr
 export const NAME = "Totsuka Tomofumi";
 export const AGE = moment().diff("2000-12-15", "years");
 export const OCCUPATION = "Undergraduate";
