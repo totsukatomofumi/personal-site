@@ -4,6 +4,8 @@ import {
   DepthOfField,
   EffectComposer,
   BrightnessContrast,
+  Noise,
+  HueSaturation,
 } from "@react-three/postprocessing";
 
 function Postprocessing() {
@@ -16,6 +18,10 @@ function Postprocessing() {
         />
         <Bloom luminanceThreshold={0.2} luminanceSmoothing={1} />
         <DepthOfField focusDistance={0.04} focalLength={0.1} bokehScale={3} />
+        <HueSaturation
+          saturation={-0.25} // saturation in radians
+        />
+        <Noise opacity={0.04} />
       </EffectComposer>
       <SoftShadows />
     </>
