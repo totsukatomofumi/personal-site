@@ -1,7 +1,22 @@
+import { useEffect } from "react";
+
 function DialogControls({ setToggleDialog }) {
   function handleOnClick() {
     setToggleDialog((prev) => (prev ? !prev : true)); // can be null
   }
+
+  useEffect(() => {
+    function handleOnKeyDown(e) {
+      if (e.key === "Enter" || e.key === " ") {
+        handleOnClick();
+      }
+    }
+
+    document.addEventListener("keydown", handleOnKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleOnKeyDown);
+    };
+  }, []);
 
   return (
     <div

@@ -70,7 +70,10 @@ function App() {
                 />
               )}
               {!isJoystickActive && !isMenu && (
-                <KeyboardControls movementVector={movementVector} />
+                <KeyboardControls
+                  movementVector={movementVector}
+                  setIsMenu={setIsMenu}
+                />
               )}
             </>
           )

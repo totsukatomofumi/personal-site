@@ -7,11 +7,11 @@ const KEY_INDICES = {
   d: 3,
 };
 
-function KeyboardControls({ movementVector }) {
+function KeyboardControls({ movementVector, setIsMenu }) {
   const [activeKeys, setActiveKeys] = useState([false, false, false, false]);
 
   useEffect(() => {
-    function handleKeyDown(e) {
+    function handleKeyDownMovement(e) {
       if (e.repeat) return;
 
       setActiveKeys((prev) =>
@@ -19,17 +19,25 @@ function KeyboardControls({ movementVector }) {
       );
     }
 
-    function handleKeyUp(e) {
+    function handleKeyDownMenu(e) {
+      if (e.key === "i") {
+        setIsMenu(true);
+      }
+    }
+
+    function handleKeyUpMovement(e) {
       setActiveKeys((prev) =>
         prev.map((_, i) => (i === KEY_INDICES[e.key] ? false : _))
       );
     }
 
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
+    window.addEventListener("keydown", handleKeyDownMovement);
+    window.addEventListener("keyup", handleKeyUpMovement);
+    window.addEventListener("keydown", handleKeyDownMenu);
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
+      window.removeEventListener("keydown", handleKeyDownMovement);
+      window.removeEventListener("keyup", handleKeyUpMovement);
+      window.removeEventListener("keydown", handleKeyDownMenu);
     };
   }, []);
 

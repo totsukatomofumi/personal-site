@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import { BrowserView, isMobile, MobileView } from "react-device-detect";
 import { animateUiButton } from "../animations";
@@ -87,6 +87,20 @@ function MenuBase({ setIsMenu }) {
       dependencies: [toggleUiCloseButtonAnim],
     }
   );
+
+  useEffect(() => {
+    function handleOnKeyDownClose(e) {
+      if (e.key === "Escape" || e.key === "i") {
+        setIsMenu(false);
+      }
+    }
+
+    window.addEventListener("keydown", handleOnKeyDownClose);
+
+    return () => {
+      window.removeEventListener("keydown", handleOnKeyDownClose);
+    };
+  }, []);
 
   return (
     <div
