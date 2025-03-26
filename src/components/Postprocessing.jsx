@@ -19,7 +19,7 @@ function Postprocessing() {
         <Bloom luminanceThreshold={0.2} luminanceSmoothing={1} />
         <DepthOfField focusDistance={0.04} focalLength={0.1} bokehScale={3} />
         <HueSaturation
-          saturation={-0.25} // saturation in radians
+          saturation={-0.15} // saturation in radians
         />
         <Noise opacity={0.03} />
       </EffectComposer>
