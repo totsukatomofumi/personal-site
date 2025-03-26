@@ -51,7 +51,8 @@ function KeyboardControls({
 
   useEffect(() => {
     if (isMenu || isDialogActive) {
-      setActiveKeys([false, false, false, false]);
+      movementVector.current = [0, 0];
+      return;
     }
 
     const [w, a, s, d] = activeKeys;
