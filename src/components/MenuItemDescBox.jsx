@@ -60,7 +60,7 @@ function MenuItemDescBox({ position, description }) {
   return (
     <div
       ref={selfRef}
-      className="fixed z-50 p-2 bg-black border-[1px] border-custom-gold bg-opacity-70 font-synemono text-custom-off-white overflow-y-auto overflow-x-hidden"
+      className="fixed z-50 p-2 bg-black border-[1px] border-custom-gold bg-opacity-70 font-synemono text-custom-off-white overflow-y-auto overflow-x-hidden origin-top-left"
       style={
         isRenderRightSide
           ? {
