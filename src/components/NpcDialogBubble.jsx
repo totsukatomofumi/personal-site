@@ -169,7 +169,7 @@ function NpcDialogBubble({
         distanceFactor={15}
         zIndexRange={[0, 0]}
       >
-        <div className="scale-100 md:scale-110 lg:scale-125">
+        <div className="scale-100 md:scale-105 lg:scale-110">
           <div
             ref={selfRef}
             className="h-[320px] opacity-0 scale-0 aspect-square"
