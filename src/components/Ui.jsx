@@ -6,6 +6,7 @@ import { animateUiButton } from "../animations";
 import uiStatus from "../sprites/ui-status.png";
 import uiButton from "../sprites/ui-button.png";
 import ControlsOverlay from "./ControlsOverlay";
+import { isMobile } from "react-device-detect";
 
 function Ui({ isMenu, setIsMenu, toggleTutorialAnim, isDialogActive }) {
   const [toggleButtonAnim, setToggleButtonAnim] = useState(null);
@@ -63,7 +64,9 @@ function Ui({ isMenu, setIsMenu, toggleTutorialAnim, isDialogActive }) {
       </div>
 
       <div className="absolute bottom-5 left-5 m-10 z-30 w-[170px] h-[fit] md:scale-110 lg:scale-125 origin-bottom-left opacity-90">
-        <ControlsOverlay isMenu={isMenu} isDialogActive={isDialogActive} />
+        {!isMobile && (
+          <ControlsOverlay isMenu={isMenu} isDialogActive={isDialogActive} />
+        )}
       </div>
 
       {isMenu ? <MenuBase setIsMenu={setIsMenu} /> : null}
