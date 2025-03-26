@@ -79,7 +79,7 @@ function App() {
           )
         )}
         {!DEBUG_DISABLE_CANVAS && (
-          <Canvas shadows dpr={dpr}>
+          <Canvas shadows dpr={dpr} className="saturate-[0.8]">
             <PerformanceMonitor
               factor={1}
               onChange={({ factor }) => {
