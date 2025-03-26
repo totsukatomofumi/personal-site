@@ -79,7 +79,7 @@ function Scene({
       <Glowing position={MAP_POS} rotation={MAP_ROT} />
       <NavMesh ref={navMeshRef} position={NAVMESH_POS} rotation={MAP_ROT} />
       <Lighting />
-      {/* <Postprocessing /> */}
+      <Postprocessing />
       <Dust />
       <Clouds material={THREE.MeshBasicMaterial} position={[0, 0, -42]}>
         <Cloud
