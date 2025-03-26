@@ -88,20 +88,6 @@ function MenuBase({ setIsMenu }) {
     }
   );
 
-  useEffect(() => {
-    function handleOnKeyDownClose(e) {
-      if (e.key === "Escape" || e.key === "i") {
-        setIsMenu(false);
-      }
-    }
-
-    window.addEventListener("keydown", handleOnKeyDownClose);
-
-    return () => {
-      window.removeEventListener("keydown", handleOnKeyDownClose);
-    };
-  }, []);
-
   return (
     <div
       className="absolute top-0 left-0 z-50 w-full h-full flex justify-center items-center"

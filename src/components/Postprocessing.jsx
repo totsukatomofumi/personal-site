@@ -5,7 +5,6 @@ import {
   EffectComposer,
   BrightnessContrast,
   Noise,
-  Pixelation,
 } from "@react-three/postprocessing";
 
 function Postprocessing() {

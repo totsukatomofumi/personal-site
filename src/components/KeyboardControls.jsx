@@ -7,7 +7,12 @@ const KEY_INDICES = {
   d: 3,
 };
 
-function KeyboardControls({ movementVector, setIsMenu }) {
+function KeyboardControls({
+  movementVector,
+  setIsMenu,
+  isMenu,
+  isDialogActive,
+}) {
   const [activeKeys, setActiveKeys] = useState([false, false, false, false]);
 
   useEffect(() => {
@@ -21,7 +26,10 @@ function KeyboardControls({ movementVector, setIsMenu }) {
 
     function handleKeyDownMenu(e) {
       if (e.key === "i") {
-        setIsMenu(true);
+        setIsMenu((prev) => !prev);
+      }
+      if (e.key === "Escape") {
+        setIsMenu(false);
       }
     }
 
@@ -42,6 +50,10 @@ function KeyboardControls({ movementVector, setIsMenu }) {
   }, []);
 
   useEffect(() => {
+    if (isMenu || isDialogActive) {
+      setActiveKeys([false, false, false, false]);
+    }
+
     const [w, a, s, d] = activeKeys;
     const x = d - a;
     const y = s - w;

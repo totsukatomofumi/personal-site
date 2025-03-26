@@ -56,27 +56,23 @@ function App() {
           isMenu={isMenu}
           setIsMenu={setIsMenu}
           toggleTutorialAnim={toggleTutorialAnim}
+          isDialogActive={isDialogActive}
         />
-        {isDialogActive ? (
-          <DialogControls setToggleDialog={setToggleDialog} />
-        ) : (
-          !isIntro && (
-            <>
-              {!DEBUG_ENABLE_CAM_ORBIT_CONTROLS && (
-                <JoystickControls
-                  isJoystickActive={isJoystickActive}
-                  setIsJoystickActive={setIsJoystickActive}
-                  movementVector={movementVector}
-                />
-              )}
-              {!isJoystickActive && !isMenu && (
-                <KeyboardControls
-                  movementVector={movementVector}
-                  setIsMenu={setIsMenu}
-                />
-              )}
-            </>
-          )
+        {isDialogActive && <DialogControls setToggleDialog={setToggleDialog} />}
+        {!isIntro && !DEBUG_ENABLE_CAM_ORBIT_CONTROLS && !isDialogActive && (
+          <JoystickControls
+            isJoystickActive={isJoystickActive}
+            setIsJoystickActive={setIsJoystickActive}
+            movementVector={movementVector}
+          />
+        )}
+        {!isIntro && !isJoystickActive && (
+          <KeyboardControls
+            movementVector={movementVector}
+            setIsMenu={setIsMenu}
+            isMenu={isMenu}
+            isDialogActive={isDialogActive}
+          />
         )}
         {!DEBUG_DISABLE_CANVAS && (
           <Canvas shadows dpr={dpr} className="saturate-[0.8]">
