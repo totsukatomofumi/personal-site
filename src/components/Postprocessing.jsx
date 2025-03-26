@@ -17,6 +17,7 @@ function Postprocessing() {
           contrast={0.1} // contrast: min -1, max: 1
         />
         <HueSaturation
+          hue={0}
           saturation={-0.225} // saturation in radians
         />
         <Bloom luminanceThreshold={0.2} luminanceSmoothing={1} />
