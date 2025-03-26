@@ -63,7 +63,7 @@ function Ui({ isMenu, setIsMenu, toggleTutorialAnim, isDialogActive }) {
         />
       </div>
 
-      <div className="absolute bottom-5 left-5 m-10 z-30 w-[170px] h-[fit] md:scale-110 lg:scale-125 origin-bottom-left opacity-90">
+      <div className="absolute bottom-5 left-5 m-10 z-[60] w-[170px] h-[fit] md:scale-110 lg:scale-125 origin-bottom-left opacity-90">
         {!isMobile && (
           <ControlsOverlay isMenu={isMenu} isDialogActive={isDialogActive} />
         )}

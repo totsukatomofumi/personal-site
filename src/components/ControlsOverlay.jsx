@@ -101,8 +101,8 @@ function ControlsOverlay({ isMenu, isDialogActive }) {
     <>
       {isMenu && closeInventoryControls}
       {!isMenu && !isDialogActive && moveControls}
-      {!isMenu && !isDialogActive && openInventoryControls}
-      {isDialogActive && dialogueControls}
+      {!isMenu && openInventoryControls}
+      {isDialogActive && !isMenu && dialogueControls}
     </>
   );
 }
