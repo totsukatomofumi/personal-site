@@ -169,48 +169,53 @@ function NpcDialogBubble({
         distanceFactor={15}
         zIndexRange={[0, 0]}
       >
-        <div ref={selfRef} className="w-[320px] h-[320px] opacity-0 scale-0">
-          <div className="absolute top-[89px] left-0 w-[90%] h-[30%] pl-5 flex justify-center items-center">
-            <div
-              ref={textRef}
-              className="text-sm text-left w-full h-[90%] py-1 text-custom-dark-brown font-synemono"
-              style={{
-                height:
-                  dialogArr[dialogIndex].length > 100
-                    ? "90%"
-                    : dialogArr[dialogIndex].length > 66
-                    ? "70%"
-                    : dialogArr[dialogIndex].length > 50
-                    ? "50%"
-                    : "30%",
-              }}
-            ></div>
-          </div>
+        <div className="scale-100 md:scale-110 lg:scale-125">
           <div
-            ref={iconRef}
-            className="absolute bottom-[47.5%] right-[5.5%] w-0 h-0 border-l-[9px] border-l-transparent border-r-[9px] border-r-transparent border-b-[9px] border-b-custom-dark-brown opacity-1 rotate-180 opacity-0"
-          ></div>
-
-          <div className="absolute top-0 left-0 -z-50 w-full h-full opacity-85">
-            <img
-              src={npcDialogBubbleBackground}
-              alt="npc-dialog-bubble"
-              className="h-full aspect-square"
-            />
-          </div>
-          <div
-            className="absolute top-0 left-0 -z-50 w-full h-full opacity-85"
-            style={{
-              transform: `translateX(${
-                -bubbleOffsetX * NPC_DIALOG_BUBBLE_TAIL_OFFSET_X_SCALE
-              }px)`,
-            }}
+            ref={selfRef}
+            className="h-[320px] opacity-0 scale-0 aspect-square"
           >
-            <img
-              src={npcDialogBubbleTail}
-              alt="npc-dialog-bubble-tail"
-              className="h-full aspect-square"
-            />
+            <div className="absolute top-[89px] left-0 w-[90%] h-[30%] pl-5 flex justify-center items-center">
+              <div
+                ref={textRef}
+                className="text-sm text-left w-full h-[90%] py-1 text-custom-dark-brown font-synemono"
+                style={{
+                  height:
+                    dialogArr[dialogIndex].length > 100
+                      ? "90%"
+                      : dialogArr[dialogIndex].length > 66
+                      ? "70%"
+                      : dialogArr[dialogIndex].length > 50
+                      ? "50%"
+                      : "30%",
+                }}
+              ></div>
+            </div>
+            <div
+              ref={iconRef}
+              className="absolute bottom-[47.5%] right-[5.5%] w-0 h-0 border-l-[9px] border-l-transparent border-r-[9px] border-r-transparent border-b-[9px] border-b-custom-dark-brown opacity-1 rotate-180 opacity-0"
+            ></div>
+
+            <div className="absolute top-0 left-0 -z-50 w-full h-full opacity-85">
+              <img
+                src={npcDialogBubbleBackground}
+                alt="npc-dialog-bubble"
+                className="h-full aspect-square"
+              />
+            </div>
+            <div
+              className="absolute top-0 left-0 -z-50 w-full h-full opacity-85"
+              style={{
+                transform: `translateX(${
+                  -bubbleOffsetX * NPC_DIALOG_BUBBLE_TAIL_OFFSET_X_SCALE
+                }px)`,
+              }}
+            >
+              <img
+                src={npcDialogBubbleTail}
+                alt="npc-dialog-bubble-tail"
+                className="h-full aspect-square"
+              />
+            </div>
           </div>
         </div>
       </Html>

@@ -18,7 +18,7 @@ function NpcDialog({
       <group position={position}>
         {isDialogTriggered && (
           <NpcDialogBubble
-            position={[0, 0.9, 0]}
+            position={[0, 1, 0]}
             toggleDialog={toggleDialog}
             setIsDialogTriggered={setIsDialogTriggered}
             bubbleOffsetX={bubbleOffsetX}
