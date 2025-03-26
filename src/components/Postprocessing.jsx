@@ -18,10 +18,10 @@ function Postprocessing() {
         />
         {/* <Bloom luminanceThreshold={0.2} luminanceSmoothing={1} /> */}
         <DepthOfField focusDistance={0.04} focalLength={0.1} bokehScale={3} />
-        <HueSaturation
+        {/* <HueSaturation
           saturation={-0.225} // saturation in radians
-        />
-        <Noise opacity={0.02} />
+        /> */}
+        {/* <Noise opacity={0.02} /> */}
       </EffectComposer>
       <SoftShadows />
     </>
