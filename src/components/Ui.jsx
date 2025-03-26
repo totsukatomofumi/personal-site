@@ -47,11 +47,11 @@ function Ui({ isMenu, setIsMenu, toggleTutorialAnim }) {
 
   return (
     <>
-      <div className="absolute top-5 left-5 z-40 w-fit h-[80px] md:h-[100px] lg:h-[120px]">
+      <div className="absolute top-5 left-5 z-40 w-fit h-[80px] md:scale-110 lg:scale-125 origin-top-left">
         <img src={uiStatus} alt="ui-status" className="h-full" />
       </div>
 
-      <div className="absolute bottom-5 z-40 right-5 w-fit h-[80px] md:h-[100px] lg:h-[120px]">
+      <div className="absolute bottom-5 z-40 right-5 w-fit h-[80px] md:scale-110 lg:scale-125 origin-bottom-right">
         <img
           ref={uiButtonRef}
           src={uiButton}
