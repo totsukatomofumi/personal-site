@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/three": "^0.170.0",
     "@uidotdev/usehooks": "^2.4.1",
+    "@vercel/analytics": "^1.5.0",
     "ajv": "^8.17.1",
     "ajv-keywords": "^5.1.0",
     "gsap": "^3.12.5",
