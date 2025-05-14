@@ -8,6 +8,7 @@ import {
   NPC_CAT_TIME_PER_WALK_FRAME,
   MAX_NPC_CAT_BLINK_TIME_ADVANCE,
   NPC_CAT_DIALOG_ARRAY,
+  NPC_CAT_NAME,
 } from "../constants";
 import NpcInteractableBase from "./NpcInteractableBase";
 
@@ -28,6 +29,7 @@ const NpcCat = forwardRef(function NpcCat(
     <NpcInteractableBase
       ref={noNavMeshRef}
       playerRef={playerRef}
+      npcName={NPC_CAT_NAME}
       npcSprite={npcCatSprite}
       npcDir={npcDir}
       isNpcIdle={isNpcIdle}

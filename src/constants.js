@@ -60,6 +60,7 @@ export const SPRITE_SEQUENCES = {
 export const SPRITE_DIAGONAL_THRESHOLD_SCALE = 0.6;
 export const NPC_DIALOG_TRIGGER_ELAPSED_TIME = 2;
 export const NPC_DIALOG_TEXT_TIME_PER_CHAR = 0.025;
+export const NPC_KNIGHT_NAME = "Captain Stronoff";
 export const NPC_KNIGHT_DIALOG_ARRAY = [
   "Ah, Totsuka Tomofumi! Welcome back, traveller. It's good to see you again.",
   "Word of your journey has spread far and wide, reaching even the farthest corners of the continent.",
@@ -80,6 +81,7 @@ export const NPC_KNIGHT_TIME_PER_IDLE_FRAME = 6;
 export const NPC_KNIGHT_TIME_PER_WALK_FRAME = 0.1;
 export const NPC_KNIGHT_TIME_PER_BLINK_FRAME = 0.1;
 export const MAX_NPC_KNIGHT_BLINK_TIME_ADVANCE = 3;
+export const NPC_CAT_NAME = "Dave the Magical Cheese Wizard";
 export const NPC_CAT_DIALOG_ARRAY = ["Meow..."];
 export const NPC_CAT_INIT_POS = [-2.2, 1, -17];
 export const NPC_CAT_INIT_DIR = [false, false, false, true]; // up, left, down, right

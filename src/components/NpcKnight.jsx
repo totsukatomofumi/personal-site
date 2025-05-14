@@ -9,6 +9,7 @@ import {
   NPC_KNIGHT_TIME_PER_BLINK_FRAME,
   NPC_KNIGHT_TIME_PER_WALK_FRAME,
   MAX_NPC_KNIGHT_BLINK_TIME_ADVANCE,
+  NPC_KNIGHT_NAME,
 } from "../constants";
 
 const NPC_KNIGHT_DIALOG_POS = [0, 1.25, 0];
@@ -30,6 +31,7 @@ const NpcKnight = forwardRef(function NpcKnight(
     <NpcInteractableBase
       ref={noNavMeshRef}
       playerRef={playerRef}
+      npcName={NPC_KNIGHT_NAME}
       npcSprite={npcKnightSprite}
       npcDir={npcDir}
       isNpcIdle={isNpcIdle}

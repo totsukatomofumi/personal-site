@@ -8,6 +8,7 @@ import NpcDialogTriggerProgress from "./NpcDialogTriggerProgress";
 const NpcInteractableBase = forwardRef(function NpcInteractableBase(
   {
     playerRef,
+    npcName,
     npcSprite,
     npcDir,
     isNpcIdle,
@@ -119,6 +120,7 @@ const NpcInteractableBase = forwardRef(function NpcInteractableBase(
         bubbleOffsetY={bubbleOffsetY}
         dialogArr={dialogArr}
         onTutorial={onTutorial}
+        npcName={npcName}
       />
       <NpcDialogTriggerProgress
         dialogTriggerElapsedTime={dialogTriggerElapsedTime}

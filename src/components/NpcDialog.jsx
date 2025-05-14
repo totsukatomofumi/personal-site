@@ -12,6 +12,7 @@ function NpcDialog({
   bubbleOffsetX,
   bubbleOffsetY,
   onTutorial,
+  npcName,
 }) {
   return (
     <>
@@ -25,6 +26,7 @@ function NpcDialog({
             bubbleOffsetY={bubbleOffsetY}
             dialogArr={dialogArr}
             onTutorial={onTutorial}
+            npcName={npcName}
           />
         )}
         <NpcDialogIcon

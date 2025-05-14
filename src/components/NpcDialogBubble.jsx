@@ -28,6 +28,7 @@ function NpcDialogBubble({
   bubbleOffsetX = 0,
   bubbleOffsetY = 0,
   onTutorial = () => {},
+  npcName,
 }) {
   const selfRef = useRef();
   const textRef = useRef();
@@ -174,6 +175,9 @@ function NpcDialogBubble({
             ref={selfRef}
             className="h-[320px] opacity-0 scale-0 aspect-square"
           >
+            <div className="absolute top-[85px] left-4 text-[13px] text-left font-black text-custom-dark-brown font-synemono">
+              {npcName}
+            </div>
             <div className="absolute top-[89px] left-0 w-[90%] h-[30%] pl-5 flex justify-center items-center">
               <div
                 ref={textRef}
