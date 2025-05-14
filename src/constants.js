@@ -1,5 +1,6 @@
 import moment from "moment";
 import * as THREE from "three";
+import { isMobile } from "react-device-detect";
 import nusSword from "./sprites/nus-sword.png";
 import rsChestplate from "./sprites/rs-chestplate.png";
 import cuBelt from "./sprites/cu-belt.png";
@@ -290,7 +291,7 @@ export const INVENTORY = [
   },
 ];
 export const MENU_ITEM_DESC_BOX_EDGE_PADDING = 10;
-export const MENU_ITEM_DESC_BOX_DEFAULT_WIDTH = 225;
+export const MENU_ITEM_DESC_BOX_DEFAULT_WIDTH = isMobile ? 225 : 250;
 export const MENU_ITEM_DESC_BOX_DEFAULT_HEIGHT = "fit-content";
 export const ATTRIBUTIONS = [
   {
