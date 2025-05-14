@@ -11,19 +11,16 @@ function ControlsOverlay({ isMenu, isDialogActive }) {
               W
             </p>
           </div>
-          <div className="font-synemono text-base text-custom-white">/</div>
           <div className="inline-flex w-[15px] h-[15px] bg-custom-white rounded-sm justify-center items-center">
             <p className="font-synemono text-xs font-bold text-black text-center align-middle">
               A
             </p>
           </div>
-          <div className="font-synemono text-base text-custom-white">/</div>
           <div className="inline-flex w-[15px] h-[15px] bg-custom-white rounded-sm justify-center items-center">
             <p className="font-synemono text-xs font-bold text-black text-center align-middle">
               S
             </p>
           </div>
-          <div className="font-synemono text-base text-custom-white">/</div>
           <div className="inline-flex w-[15px] h-[15px] bg-custom-white rounded-sm justify-center items-center">
             <p className="font-synemono text-xs font-bold text-black text-center align-middle">
               D
@@ -63,7 +60,6 @@ function ControlsOverlay({ isMenu, isDialogActive }) {
               I
             </p>
           </div>
-          <div className="font-synemono text-base text-custom-white">/</div>
           <div className="inline-flex w-fit h-[15px] px-1 bg-custom-white rounded-sm justify-center items-center">
             <p className="font-synemono text-xs font-bold text-black text-center align-middle">
               Esc
@@ -86,7 +82,6 @@ function ControlsOverlay({ isMenu, isDialogActive }) {
               Enter ↵
             </p>
           </div>
-          <div className="font-synemono text-base text-custom-white">/</div>
           <div className="inline-flex w-fit h-[15px] px-3 bg-custom-white rounded-sm justify-center items-center">
             <p className="font-synemono text-xs font-bold text-black text-center align-middle">
               Space
