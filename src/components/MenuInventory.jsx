@@ -28,6 +28,15 @@ function MenuInventory({ setItemDescBox }) {
               />
             );
           }}
+          onMouseMove={(e) => {
+            e.stopPropagation();
+            setItemDescBox(
+              <MenuItemDescBox
+                position={{ x: e.clientX, y: e.clientY }}
+                description={inventory.description}
+              />
+            );
+          }}
         >
           <img
             src={inventory.img.src}

@@ -145,7 +145,10 @@ function MenuBase({ setIsMenu }) {
         </div>
       </MobileView>
       <BrowserView>
-        <div className="relative w-fit h-[500px] flex flex-row gap-3">
+        <div
+          className="relative w-fit h-[500px] flex flex-row gap-3"
+          onMouseMove={handleOnClickCloseItemDescBox}
+        >
           <div className="relative w-fit h-full">
             {pages[0]}
             <div className="absolute -top-[6px] left-0 z-40 w-full h-fit flex justify-center items-center">

@@ -38,6 +38,15 @@ function MenuEquipment({ setItemDescBox }) {
               />
             );
           }}
+          onMouseMove={(e) => {
+            e.stopPropagation();
+            setItemDescBox(
+              <MenuItemDescBox
+                position={{ x: e.clientX, y: e.clientY }}
+                description={equipment.description}
+              />
+            );
+          }}
         >
           <img
             src={equipment.img.src}
