@@ -23,6 +23,8 @@ import {
   DEBUG_DISABLE_COLLISION,
 } from "../constants";
 import SpriteShadow from "./SpriteShadow";
+import { PositionalAudio } from "@react-three/drei";
+import footstepSoundUrl from "../sounds/footsteps.mp3";
 
 const Player = forwardRef(function Player(
   {
@@ -46,6 +48,7 @@ const Player = forwardRef(function Player(
   const tileIndex = useRef(0);
   const elapsedTime = useRef(0);
   const { camera } = useThree();
+  const footstepSound = useRef();
 
   playerSpriteMap.magFilter = THREE.NearestFilter;
   playerSpriteMap.repeat.set(
@@ -239,6 +242,16 @@ const Player = forwardRef(function Player(
     { dependencies: [isLoaded] }
   );
 
+  useFrame(() => {
+    if (!isPlayerIdle.current) {
+      if (footstepSound.current.isPlaying) return;
+      footstepSound.current.play();
+    } else {
+      if (!footstepSound.current.isPlaying) return;
+      footstepSound.current.stop();
+    }
+  });
+
   return (
     <>
       <group ref={selfRef} position={PLAYER_INIT_POS}>
@@ -246,6 +259,13 @@ const Player = forwardRef(function Player(
           <spriteMaterial map={playerSpriteMap} />
         </sprite>
         <SpriteShadow />
+        <PositionalAudio
+          ref={footstepSound}
+          url={footstepSoundUrl}
+          distance={2}
+          autoplay
+          loop
+        />
       </group>
       <raycaster
         ref={raycasterRef}

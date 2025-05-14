@@ -20,6 +20,7 @@ import Dust from "./Dust";
 import { Cloud, Clouds, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import Glowing from "../models/Glowing";
+import GlobalSound from "./GlobalSound";
 
 function Scene({
   movementVector,
@@ -91,6 +92,7 @@ function Scene({
           speed={-0.3}
         />
       </Clouds>
+      <GlobalSound playerRef={playerRef} />
     </>
   );
 }
