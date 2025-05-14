@@ -11,6 +11,7 @@ import {
   MAX_NPC_KNIGHT_BLINK_TIME_ADVANCE,
   NPC_KNIGHT_NAME,
 } from "../constants";
+import npcKnightLaughSoundUrl from "../sounds/npc-knight-laugh.mp3";
 
 const NPC_KNIGHT_DIALOG_POS = [0, 1.25, 0];
 const NPC_KNIGHT_NO_NAV_MESH_SCALE = [2, 3];
@@ -47,6 +48,7 @@ const NpcKnight = forwardRef(function NpcKnight(
       toggleDialog={toggleDialog}
       dialogArr={NPC_KNIGHT_DIALOG_ARRAY}
       onTutorial={handleTutorial}
+      dialogTriggerSoundUrl={npcKnightLaughSoundUrl}
     />
   );
 });

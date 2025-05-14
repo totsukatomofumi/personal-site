@@ -11,12 +11,14 @@ import {
   NPC_CAT_NAME,
 } from "../constants";
 import NpcInteractableBase from "./NpcInteractableBase";
+import npcCatMeowSoundUrl from "../sounds/npc-cat-meow.mp3";
 
 const NPC_CAT_DIALOG_POS = [0, 0.7, 0];
 const NPC_CAT_NO_NAV_MESH_SCALE = [2, 3];
 const NPC_CAT_DIALOG_TRIGGER_MESH_SCALE = [2.2, 3.2];
 const NPC_CAT_DIALOG_BUBBLE_OFFSET_X = -NPC_CAT_INIT_POS[0] * 0.5;
 const NPC_CAT_DIALOG_BUBBLE_OFFSET_Y = 0.3;
+const NPC_CAT_DIALOG_TRIGGER_SOUND_VOLUME = 3;
 
 const NpcCat = forwardRef(function NpcCat(
   { playerRef, setIsDialogActive, toggleDialog },
@@ -47,6 +49,8 @@ const NpcCat = forwardRef(function NpcCat(
       bubbleOffsetY={NPC_CAT_DIALOG_BUBBLE_OFFSET_Y}
       isFacePlayer={false}
       dialogArr={NPC_CAT_DIALOG_ARRAY}
+      dialogTriggerSoundUrl={npcCatMeowSoundUrl}
+      dialogTriggerSoundVolume={NPC_CAT_DIALOG_TRIGGER_SOUND_VOLUME}
     />
   );
 });

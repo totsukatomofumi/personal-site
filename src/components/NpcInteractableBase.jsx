@@ -4,6 +4,7 @@ import NpcBase from "./NpcBase";
 import NpcDialog from "./NpcDialog";
 import { NPC_DIALOG_TRIGGER_ELAPSED_TIME } from "../constants";
 import NpcDialogTriggerProgress from "./NpcDialogTriggerProgress";
+import { PositionalAudio } from "@react-three/drei";
 
 const NpcInteractableBase = forwardRef(function NpcInteractableBase(
   {
@@ -27,6 +28,8 @@ const NpcInteractableBase = forwardRef(function NpcInteractableBase(
     isFacePlayer = true,
     dialogArr,
     onTutorial,
+    dialogTriggerSoundUrl,
+    dialogTriggerSoundVolume = 20,
   },
   noNavMeshRef
 ) {
@@ -35,6 +38,7 @@ const NpcInteractableBase = forwardRef(function NpcInteractableBase(
   const dialogTriggerElapsedTime = useRef(0);
   const [isDialogTriggered, setIsDialogTriggered] = useState(null);
   const isRepeatTrigger = useRef(false);
+  const dialogTriggerSound = useRef();
 
   function checkTriggerDialog(delta) {
     if (isDialogTriggered) return;
@@ -96,6 +100,12 @@ const NpcInteractableBase = forwardRef(function NpcInteractableBase(
     }
   }, [isDialogTriggered, setIsDialogActive]);
 
+  useEffect(() => {
+    if (!isDialogTriggered) return;
+
+    dialogTriggerSound.current.play();
+  }, [isDialogTriggered]);
+
   return (
     <group ref={selfRef} position={npcInitPos}>
       <NpcBase
@@ -127,6 +137,13 @@ const NpcInteractableBase = forwardRef(function NpcInteractableBase(
         isDialogTriggered={isDialogTriggered}
         isRepeatTrigger={isRepeatTrigger}
         dialogPos={dialogPos}
+      />
+      <PositionalAudio
+        url={dialogTriggerSoundUrl}
+        ref={dialogTriggerSound}
+        distance={dialogTriggerSoundVolume}
+        loop={false}
+        autoplay={false}
       />
     </group>
   );
