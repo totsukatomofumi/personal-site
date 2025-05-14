@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import NpcBase from "./NpcBase";
 import NpcDialog from "./NpcDialog";
 import { NPC_DIALOG_TRIGGER_ELAPSED_TIME } from "../constants";
+import NpcDialogTriggerProgress from "./NpcDialogTriggerProgress";
 
 const NpcInteractableBase = forwardRef(function NpcInteractableBase(
   {
@@ -118,6 +119,12 @@ const NpcInteractableBase = forwardRef(function NpcInteractableBase(
         bubbleOffsetY={bubbleOffsetY}
         dialogArr={dialogArr}
         onTutorial={onTutorial}
+      />
+      <NpcDialogTriggerProgress
+        dialogTriggerElapsedTime={dialogTriggerElapsedTime}
+        isDialogTriggered={isDialogTriggered}
+        isRepeatTrigger={isRepeatTrigger}
+        dialogPos={dialogPos}
       />
     </group>
   );
