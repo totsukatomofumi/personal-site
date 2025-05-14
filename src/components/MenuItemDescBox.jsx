@@ -4,6 +4,7 @@ import {
   MENU_ITEM_DESC_BOX_DEFAULT_WIDTH,
   MENU_ITEM_DESC_BOX_EDGE_PADDING,
 } from "../constants";
+import { isMobile } from "react-device-detect";
 
 function MenuItemDescBox({ position, description }) {
   const selfRef = useRef();
@@ -14,7 +15,7 @@ function MenuItemDescBox({ position, description }) {
     <div className="w-full h-[1px] my-2 bg-custom-gold opacity-30" />
   );
   const isRenderRightSide =
-    position.x < document.documentElement.clientWidth / 2;
+    !isMobile || position.x < document.documentElement.clientWidth / 2;
 
   useEffect(() => {
     if (isRenderRightSide) {
