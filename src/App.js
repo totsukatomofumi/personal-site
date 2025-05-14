@@ -58,7 +58,9 @@ function App() {
           toggleTutorialAnim={toggleTutorialAnim}
           isDialogActive={isDialogActive}
         />
-        {isDialogActive && <DialogControls setToggleDialog={setToggleDialog} />}
+        {isDialogActive && !isMenu && (
+          <DialogControls setToggleDialog={setToggleDialog} />
+        )}
         {!isIntro && !DEBUG_ENABLE_CAM_ORBIT_CONTROLS && !isDialogActive && (
           <JoystickControls
             isJoystickActive={isJoystickActive}
