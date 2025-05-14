@@ -185,7 +185,7 @@ export const EQUIPMENT = [
       alt: "rs-chestplate",
     },
     scale: 1,
-    position: { x: 242, y: 237 },
+    position: { x: 242, y: 236 },
     description: RS_CHESTPLATE_DESC,
   },
   {
