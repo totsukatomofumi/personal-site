@@ -49,6 +49,7 @@ const NpcKnight = forwardRef(function NpcKnight(
       dialogArr={NPC_KNIGHT_DIALOG_ARRAY}
       onTutorial={handleTutorial}
       dialogTriggerSoundUrl={npcKnightLaughSoundUrl}
+      dialogTriggerSoundVolume={17.5}
     />
   );
 });

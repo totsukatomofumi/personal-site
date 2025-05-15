@@ -44,7 +44,7 @@ function GlobalSound({ playerRef }) {
     audioLoader.load(ambienceSoundUrl, (buffer) => {
       sound.setBuffer(buffer);
       sound.setLoop(true);
-      sound.setVolume(0.03);
+      sound.setVolume(0.0175);
       sound.play();
     });
 
@@ -65,7 +65,7 @@ function GlobalSound({ playerRef }) {
     audioLoader.load(backgroundSoundUrl, (buffer) => {
       sound.setBuffer(buffer);
       sound.setLoop(true);
-      sound.setVolume(0.04);
+      sound.setVolume(0.02);
       sound.play();
     });
 

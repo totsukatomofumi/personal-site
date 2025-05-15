@@ -262,7 +262,7 @@ const Player = forwardRef(function Player(
         <PositionalAudio
           ref={footstepSound}
           url={footstepSoundUrl}
-          distance={2}
+          distance={1.75}
           autoplay
           loop
         />
