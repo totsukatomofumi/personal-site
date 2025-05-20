@@ -1,5 +1,8 @@
 import NpcDialogIcon from "./NpcDialogIcon";
 import NpcDialogBubble from "./NpcDialogBubble";
+import { PositionalAudio } from "@react-three/drei";
+import clickSoundUrl from "../sounds/click.mp3";
+import { useRef } from "react";
 
 function NpcDialog({
   dialogArr,
@@ -14,6 +17,8 @@ function NpcDialog({
   onTutorial,
   npcName,
 }) {
+  const clickSound = useRef();
+
   return (
     <>
       <group position={position}>
@@ -27,12 +32,20 @@ function NpcDialog({
             dialogArr={dialogArr}
             onTutorial={onTutorial}
             npcName={npcName}
+            clickSound={clickSound}
           />
         )}
         <NpcDialogIcon
           position={[0, 0, 0]}
           scale={(0.8, 0.8)}
           visible={!isDialogTriggered}
+        />
+        <PositionalAudio
+          url={clickSoundUrl}
+          ref={clickSound}
+          distance={10}
+          loop={false}
+          autoplay={false}
         />
       </group>
       {/* Dialog trigger mesh */}

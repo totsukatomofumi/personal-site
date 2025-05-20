@@ -24,7 +24,7 @@ function App() {
   const movementVector = useRef([0, 0]); // x, z, [-1, 1]
   const [isDialogActive, setIsDialogActive] = useState(false);
   const [toggleDialog, setToggleDialog] = useState(null); // null before use
-  const [isMenu, setIsMenu] = useState(false);
+  const [isMenu, setIsMenu] = useState(null);
   const [toggleTutorialAnim, setToggleTutorialAnim] = useState(null);
   const [dpr, setDpr] = useState(window.devicePixelRatio);
 

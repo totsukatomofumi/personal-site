@@ -1,4 +1,5 @@
 import gsap from "gsap";
+import clickSoundUrl from "./sounds/click.mp3";
 
 export function animateUiButton(buttonRef, toggle, scale = 0.9) {
   if (buttonRef.current === null || buttonRef.current === undefined) return;
@@ -7,6 +8,11 @@ export function animateUiButton(buttonRef, toggle, scale = 0.9) {
   if (toggle === null) return;
 
   const tl = gsap.timeline();
+
+  const clickSound = new Audio(clickSoundUrl);
+  clickSound.currentTime = 0;
+  clickSound.volume = 0.16;
+  clickSound.play();
 
   tl.fromTo(
     buttonRef.current,

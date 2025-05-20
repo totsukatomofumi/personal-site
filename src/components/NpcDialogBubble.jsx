@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Html } from "@react-three/drei";
+import { Html, PositionalAudio } from "@react-three/drei";
 import gsap from "gsap";
 import { TextPlugin } from "gsap/TextPlugin";
 import { useGSAP } from "@gsap/react";
@@ -29,6 +29,7 @@ function NpcDialogBubble({
   bubbleOffsetY = 0,
   onTutorial = () => {},
   npcName,
+  clickSound,
 }) {
   const selfRef = useRef();
   const textRef = useRef();
@@ -72,6 +73,7 @@ function NpcDialogBubble({
     if (!isDialogBubbleAnimationFinished) return;
 
     if (isDialogTextAnimationFinished) {
+      clickSound.current.play();
       if (dialogIndex === dialogArr.length - 1) {
         handleDialogEnd();
       } else {

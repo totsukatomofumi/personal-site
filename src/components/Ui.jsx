@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import MenuBase from "./MenuBase";
@@ -7,10 +7,16 @@ import uiStatus from "../sprites/ui-status.png";
 import uiButton from "../sprites/ui-button.png";
 import ControlsOverlay from "./ControlsOverlay";
 import { isMobile } from "react-device-detect";
+import menuOpenSoundUrl from "../sounds/menu-open.mp3";
+import menuCloseSoundUrl from "../sounds/menu-close.mp3";
 
 function Ui({ isMenu, setIsMenu, toggleTutorialAnim, isDialogActive }) {
   const [toggleButtonAnim, setToggleButtonAnim] = useState(null);
   const uiButtonRef = useRef();
+  const menuOpenSound = new Audio(menuOpenSoundUrl);
+  const menuCloseSound = new Audio(menuCloseSoundUrl);
+  menuOpenSound.volume = 0.1;
+  menuCloseSound.volume = 0.1;
 
   function handleOnClick() {
     setToggleButtonAnim((prev) => (prev === null ? false : !prev));
@@ -46,6 +52,19 @@ function Ui({ isMenu, setIsMenu, toggleTutorialAnim, isDialogActive }) {
       dependencies: [toggleTutorialAnim],
     }
   );
+
+  // menu open/close sound
+  useEffect(() => {
+    if (isMenu === null) return;
+
+    if (isMenu) {
+      menuOpenSound.currentTime = 0;
+      menuOpenSound.play();
+    } else {
+      menuCloseSound.currentTime = 0;
+      menuCloseSound.play();
+    }
+  }, [isMenu]);
 
   return (
     <>
