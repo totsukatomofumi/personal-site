@@ -1,3 +1,5 @@
+import { createContext } from "react";
+
 function parseCardBlockContent(content) {
   const titleRegex = /title:\s*(.*?)(\s+\S*:|\s*$)/;
   const subtitleRegex = /subtitle:\s*(.*?)(\s+\S*:|\s*$)/;
@@ -334,3 +336,7 @@ libraries, and deployed with Vercel.
 :::`;
 
 export const DOCUMENT_JSON = parseDocument(DOCUMENT);
+
+export const NUM_SECTIONS = DOCUMENT_JSON.content.length;
+
+export const APP_CONTEXT = createContext();
