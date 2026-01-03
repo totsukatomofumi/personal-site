@@ -1,11 +1,11 @@
 import { createContext } from "react";
 
 function parseCardBlock(block) {
-  const titleRegex = /title:\s*(.*?)(\s+\S*:|\s*$)/;
-  const subtitleRegex = /subtitle:\s*(.*?)(\s+\S*:|\s*$)/;
-  const coverRegex = /cover:\s*(.*?)(\s+\S*:|\s*$)/;
-  const bodyRegex = /body:\s*(.*?)(\s+\S*:|\s*$)/;
-  const extrasRegex = /extras:\s*(.*?)(\s+\S*:|\s*$)/;
+  const titleRegex = /title: (.*?)(\s+\S*:|\s*$)/;
+  const subtitleRegex = /subtitle: (.*?)(\s+\S*:|\s*$)/;
+  const coverRegex = /cover: (.*?)(\s+\S*:|\s*$)/;
+  const bodyRegex = /body: (.*?)(\s+\S*:|\s*$)/;
+  const extrasRegex = /extras: (.*?)(\s+\S*:|\s*$)/;
 
   const cardVars = {};
 
@@ -56,52 +56,14 @@ function parseCardBlock(block) {
 }
 
 function parseLinksBlock(block) {
-  const linkedinRegex = /linkedin:\s*(.*?)(\s+\S*:|\s*$)/;
-  const githubRegex = /github:\s*(.*?)(\s+\S*:|\s*$)/;
-  const kaggleRegex = /kaggle:\s*(.*?)(\s+\S*:|\s*$)/;
-  const emailRegex = /email:\s*(.*?)(\s+\S*:|\s*$)/;
-  const resumeRegex = /resume:\s*(.*?)(\s+\S*:|\s*$)/;
-  const linksChildren = [];
+  const linkRegex = /(\S*): (.*?)(?=\s+\S*:|\s*$)/g;
 
-  const linkedinMatch = block.text.match(linkedinRegex);
-  if (linkedinMatch) {
-    linksChildren.push({
-      type: "linkedin",
-      url: linkedinMatch[1].trim(),
-    });
-  }
+  const matches = [...block.text.matchAll(linkRegex)];
 
-  const githubMatch = block.text.match(githubRegex);
-  if (githubMatch) {
-    linksChildren.push({
-      type: "github",
-      url: githubMatch[1].trim(),
-    });
-  }
-
-  const kaggleMatch = block.text.match(kaggleRegex);
-  if (kaggleMatch) {
-    linksChildren.push({
-      type: "kaggle",
-      url: kaggleMatch[1].trim(),
-    });
-  }
-
-  const emailMatch = block.text.match(emailRegex);
-  if (emailMatch) {
-    linksChildren.push({
-      type: "email",
-      url: emailMatch[1].trim(),
-    });
-  }
-
-  const resumeMatch = block.text.match(resumeRegex);
-  if (resumeMatch) {
-    linksChildren.push({
-      type: "resume",
-      url: resumeMatch[1].trim(),
-    });
-  }
+  const linksChildren = matches.map((match) => ({
+    type: match[1].trim(),
+    url: match[2].trim(),
+  }));
 
   return {
     type: "links",
@@ -282,7 +244,7 @@ Git, GitLab
 :::card
 title: VisualPython
 subtitle: NUS BComp Dissertation (FYP)
-cover: /images/visualpython.png
+cover: /fff.png
 body: Extended a brownfield drag-and-drop Python learning platform with 
 real-time collaborative coding sessions for peer-to-peer and instructor 
 interaction.
@@ -295,6 +257,7 @@ Git, GitHub
 :::card
 title: Battleship
 subtitle: CU Netcentric Architecture (2190472)
+cover: /fff.png
 body: Co-developed the backend of a real-time, online multiplayer, 
 "Battleship" web clone.
 extras: JavaScript, Express, Socket.IO, Redis, Mongoose, Git, GitHub
@@ -305,6 +268,7 @@ extras: JavaScript, Express, Socket.IO, Redis, Mongoose, Git, GitHub
 :::card
 title: Smart Trash Can
 subtitle: CU Internet of Things (2147336)
+cover: /fff.png
 body: Co-implemented software for a IoT-based waste-sorting system using 
 servos and sensors.
 extras: C, Python, STM32, Raspberry Pi
@@ -315,6 +279,7 @@ extras: C, Python, STM32, Raspberry Pi
 :::card
 title: myStudent
 subtitle: NUS Software Engineering (CS2103T)
+cover: /fff.png
 body: Co-developed a Java-based tuition centre management application.
 extras: Java, JavaFX, JUnit, Git, GitHub, Codecov
 :::
@@ -328,6 +293,7 @@ I look forward to connecting with you!
 :::spacing:::
 
 :::links
+resume: /Resume.pdf
 linkedin: https://www.linkedin.com/in/totsukatomofumi
 github: https://github.com/totsukatomofumi
 kaggle: https://www.kaggle.com/totsukatomofumi
