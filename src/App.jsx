@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { NUM_SECTIONS, APP_CONTEXT as AppContext } from "../constants";
-import { SectionTrigger } from "./components/";
+import { SectionTrigger, Text } from "./components/";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -66,7 +66,9 @@ function App() {
     <div>
       {/* ====================== Main ====================== */}
       <div className="fixed top-0 left-0 w-screen h-screen">
-        <AppContext value={contextValue}></AppContext>
+        <AppContext value={contextValue}>
+          <Text className="absolute top-0 left-0 z-40 w-full h-full" />
+        </AppContext>
       </div>
 
       {/* ================= ScrollTriggers ================= */}
