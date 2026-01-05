@@ -1,5 +1,5 @@
 function Caption({ text }) {
-  return <small className="block py-1">{text}</small>;
+  return <small className="no-split text-sm">{text}</small>;
 }
 
 export default Caption;

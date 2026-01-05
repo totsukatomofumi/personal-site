@@ -20,7 +20,7 @@ function Links({ children }) {
   };
 
   return (
-    <nav className="flex gap-3">
+    <nav className="no-split flex gap-3">
       {children.map((child, index) => (
         <a
           key={index}

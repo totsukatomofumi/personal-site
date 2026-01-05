@@ -4,43 +4,40 @@ function Card({ cover, title, subtitle, body, extras }) {
     <>
       {/* ============== Cover, Title, Subtitle ============== */}
       {(title || subtitle) && (
-        <div className="grid grid-cols-4 gap-3 py-2.5">
+        <header className="no-split grid grid-cols-4 gap-3 py-2.5">
           <div className="relative col-span-1">
-            {cover && (
-              <header>
-                {(() => {
-                  switch (cover.type) {
-                    case "image":
-                      return (
-                        <div className="absolute w-full h-full">
-                          <img
-                            src={cover.url}
-                            alt={title || subtitle}
-                            className="mx-auto max-w-full max-h-full"
-                          />
-                        </div>
-                      );
-                    case "date":
-                      return (
-                        <time className="text-sm">{`${cover.start} — ${cover.end}`}</time>
-                      );
-                    default:
-                      return null;
-                  }
-                })()}
-              </header>
-            )}
+            {cover &&
+              (() => {
+                switch (cover.type) {
+                  case "image":
+                    return (
+                      <div className="absolute w-full h-full">
+                        <img
+                          src={cover.url}
+                          alt={title || subtitle}
+                          className="mx-auto max-w-full max-h-full"
+                        />
+                      </div>
+                    );
+                  case "date":
+                    return (
+                      <time className="text-sm">{`${cover.start} — ${cover.end}`}</time>
+                    );
+                  default:
+                    return null;
+                }
+              })()}
           </div>
           <div className="col-span-3 flex flex-col gap-5">
             {title && <h2 className="text-xl font-bold">{title}</h2>}
             {subtitle && <h3 className="text-xl">{subtitle}</h3>}
           </div>
-        </div>
+        </header>
       )}
 
       {/* ======================= Body ======================= */}
       {body && (
-        <div className="grid grid-cols-4 gap-3 py-2.5">
+        <div className="no-split grid grid-cols-4 gap-3 py-2.5">
           <div className="col-span-1"></div>
           <div className="col-span-3">
             <p className="text-sm">{body}</p>
@@ -50,7 +47,7 @@ function Card({ cover, title, subtitle, body, extras }) {
 
       {/* ====================== Extras ====================== */}
       {extras && (
-        <div className="grid grid-cols-4 gap-3 py-2.5">
+        <div className="no-split grid grid-cols-4 gap-3 py-2.5">
           <div className="col-span-1"></div>
           <div className="col-span-3 flex flex-wrap gap-x-1.5 gap-y-2">
             {extras.map((extra, index) => (
