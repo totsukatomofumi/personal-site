@@ -26,9 +26,13 @@ function Text({ className, ...props }) {
     );
 
     const document = (
-      <div ref={documentRef}>
+      <div ref={documentRef} className="transform-3d">
         {DOCUMENT_JSON.children.map((section, index) => (
-          <Section key={index} ref={sectionRefs[index]}>
+          <Section
+            key={index}
+            ref={sectionRefs[index]}
+            className="transform-3d"
+          >
             {section.children.map((child, childIndex) => {
               switch (child.type) {
                 case "heading":
@@ -54,10 +58,11 @@ function Text({ className, ...props }) {
 
     return [document, documentRef, sectionRefs];
   }, []);
+  const [lines, setLines] = useState(
+    Array.from({ length: DOCUMENT_JSON.children.length }, () => [])
+  );
 
   // ===================== Parallax Scroll ======================
-  const [parallaxRevision, setParallaxRevision] = useState(0);
-
   useGSAP(
     () => {
       let cumulativeY = 0;
@@ -86,51 +91,173 @@ function Text({ className, ...props }) {
       };
     },
     {
-      dependencies: [parallaxRevision],
+      dependencies: [lines],
       revertOnUpdate: true,
     }
   );
 
   // ==================== Perspective Scroll ====================
-  useGSAP(() => {
-    const splits = [];
+  useGSAP(
+    () => {
+      const tweens = [];
+      const rotationXDelta = 5;
+      const ease = "none";
 
-    sectionRefs.forEach((sectionRef) => {
-      if (sectionRef.current) {
-        const split = new SplitText(sectionRef.current, {
-          type: "lines",
-          ignore: ".no-split",
-          autoSplit: true,
-          onSplit: (self) => {
-            setParallaxRevision((prev) => prev + 1);
+      sectionRefs.forEach((sectionRef, sectionIndex) => {
+        let cumulativeRotationX = -rotationXDelta;
+        let cumulativeY = 0;
+        let cumulativeZ = 0;
 
-            gsap.fromTo(
-              self.lines,
-              { border: "2px solid transparent" },
-              {
-                border: "2px solid #000",
-                duration: 1,
-                ease: "power1.inOut",
-                repeat: -1,
-                yoyo: true,
-              }
-            );
-          },
+        // ============== Line Rotate Enter (Bottom) ==============
+        if (sectionIndex > 0) {
+          const sectionLines = lines[sectionIndex];
+
+          sectionLines.forEach((line) => {
+            const rotationX = cumulativeRotationX;
+            const rotationXRad = (rotationX * Math.PI) / 180;
+            const y = cumulativeY;
+            const z = cumulativeZ;
+
+            cumulativeRotationX -= rotationXDelta;
+            cumulativeY -= line.offsetHeight * (1 - Math.cos(rotationXRad));
+            cumulativeZ += line.offsetHeight * Math.sin(rotationXRad);
+
+            const tween = gsap.from(line, {
+              transformOrigin: "top center",
+              rotationX: rotationX,
+              y: y,
+              z: z,
+              ease: ease,
+            });
+
+            tweens.push(tween);
+            appContext.registerScrollAnim(tween, sectionIndex - 1);
+          });
+        }
+
+        // ============ Section Rotate Enter (Bottom) =============
+        if (sectionIndex > 0 && sectionIndex + 1 < sectionRefs.length) {
+          const currSection = sectionRef.current;
+          const nextSection = sectionRefs[sectionIndex + 1].current;
+
+          // We take bottom padding of section as an extra "line"
+          const paddingBottom = parseFloat(
+            getComputedStyle(currSection).paddingBottom
+          );
+          const rotationX = cumulativeRotationX;
+          const rotationXRad = (rotationX * Math.PI) / 180;
+
+          cumulativeY -= paddingBottom * (1 - Math.cos(rotationXRad));
+          cumulativeZ += paddingBottom * Math.sin(rotationXRad);
+
+          const y = cumulativeY;
+          const z = cumulativeZ;
+
+          const tween = gsap.from(nextSection, {
+            transformOrigin: "top center",
+            rotationX: rotationX,
+            y: y,
+            z: z,
+            ease: ease,
+          });
+
+          tweens.push(tween);
+          appContext.registerScrollAnim(tween, sectionIndex - 1);
+        }
+
+        cumulativeRotationX = rotationXDelta;
+        cumulativeY = 0;
+        cumulativeZ = 0;
+
+        // =============== Line Rotate Exit (Top) =================
+        if (sectionIndex < sectionRefs.length - 1) {
+          const sectionLines = lines[sectionIndex];
+
+          sectionLines.toReversed().forEach((line) => {
+            const rotationX = cumulativeRotationX;
+            const rotationXRad = (rotationX * Math.PI) / 180;
+            const y = cumulativeY;
+            const z = cumulativeZ;
+
+            cumulativeRotationX += rotationXDelta;
+            cumulativeY += line.offsetHeight * (1 - Math.cos(rotationXRad));
+            cumulativeZ -= line.offsetHeight * Math.sin(rotationXRad);
+
+            const tween = gsap.to(line, {
+              transformOrigin: "bottom center",
+              rotationX: rotationX,
+              y: y,
+              z: z,
+              ease: ease,
+              immediateRender: false,
+            });
+
+            tweens.push(tween);
+            appContext.registerScrollAnim(tween, sectionIndex);
+          });
+        }
+
+        // ============== Section Rotate Exit (Top) ===============
+        if (sectionIndex < sectionRefs.length - 1 && sectionIndex - 1 >= 0) {
+          const prevSection = sectionRefs[sectionIndex - 1].current;
+
+          // Similarly, we take bottom padding of previous section as an extra "line"
+          // However, we do not need to do any calculation.
+          const rotationX = cumulativeRotationX;
+          const y = cumulativeY;
+          const z = cumulativeZ;
+
+          const tween = gsap.to(prevSection, {
+            transformOrigin: "bottom center",
+            rotationX: rotationX,
+            y: y,
+            z: z,
+            ease: ease,
+            immediateRender: false,
+          });
+
+          tweens.push(tween);
+          appContext.registerScrollAnim(tween, sectionIndex);
+        }
+      });
+
+      return () => {
+        tweens.forEach((tween) => {
+          appContext.removeScrollAnim(tween);
         });
-        splits.push(split);
-      }
-    });
+      };
+    },
+    {
+      dependencies: [lines],
+      revertOnUpdate: true,
+    }
+  );
 
-    return () => {
-      splits.forEach((split) => split.revert());
-    };
+  // ======================== Split Text ========================
+  useGSAP(() => {
+    sectionRefs.forEach((sectionRef, index) => {
+      new SplitText(sectionRef.current, {
+        type: "lines",
+        ignore: ".no-split",
+        autoSplit: true,
+        onSplit: (self) => {
+          setLines((prevLines) => {
+            const newLines = [...prevLines];
+            newLines[index] = self.lines;
+            return newLines;
+          });
+        },
+      });
+    });
   });
 
   // ========================== Render ==========================
   return (
     <div className={`flex ${className || ""}`} {...props}>
       <div className="m-auto w-6xl max-w-screen h-4/10 px-6">
-        <div className="w-full max-w-138">{document}</div>
+        <div className="w-full max-w-138 h-full perspective-normal">
+          {document}
+        </div>
       </div>
     </div>
   );
