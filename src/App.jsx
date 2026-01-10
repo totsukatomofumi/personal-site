@@ -12,37 +12,39 @@ function App() {
   const sectionTriggerRefs = Array.from({ length: NUM_SECTIONS }, () =>
     createRef()
   );
-  const [scrollAnims, setScrollAnims] = useState([]);
+  const [scrollAnimations, setScrollAnimations] = useState([]);
 
   // ====================== Context Setup =======================
-  const registerScrollAnim = (tween, index) => {
-    setScrollAnims((prev) => [
+  const registerScrollAnimation = (animation, index) => {
+    setScrollAnimations((prev) => [
       ...prev,
       {
-        tween: tween,
+        animation: animation,
         index: index,
       },
     ]);
   };
 
-  const removeScrollAnim = (tween) => {
-    setScrollAnims((prev) => prev.filter((anim) => anim.tween !== tween));
+  const removeScrollAnimation = (animation) => {
+    setScrollAnimations((prev) =>
+      prev.filter((p) => p.animation !== animation)
+    );
   };
 
   const contextValue = {
-    registerScrollAnim,
-    removeScrollAnim,
+    registerScrollAnimation,
+    removeScrollAnimation,
   };
 
   // =================== ScrollTriggers Setup ===================
   useGSAP(
     () => {
-      scrollAnims.forEach(({ tween, index }) => {
+      scrollAnimations.forEach(({ animation, index }) => {
         const trigger = sectionTriggerRefs[index].current;
 
         ScrollTrigger.create({
           trigger: trigger,
-          animation: tween,
+          animation: animation,
           start: "top top",
           end: "bottom top",
           scrub: true,
@@ -56,7 +58,7 @@ function App() {
       });
     },
     {
-      dependencies: [scrollAnims],
+      dependencies: [scrollAnimations],
       revertOnUpdate: true,
     }
   );
