@@ -3,12 +3,8 @@ import {
   faKaggle,
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
-import {
-  faArrowUpRightFromSquare,
-  faEnvelope,
-  faFile,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope, faFile } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "../";
 
 function Links({ children }) {
   const icons = {
@@ -30,19 +26,12 @@ function Links({ children }) {
   return (
     <nav className="no-split flex gap-3">
       {children.map((child, index) => (
-        <a
+        <Link
           key={index}
           href={child.url}
-          target="_blank"
-          rel="noopener noreferrer me"
-          className="text-lg py-2 border-y-2 border-transparent hover:border-b-inherit transition-[border]"
           title={titles[child.type]}
-        >
-          <FontAwesomeIcon
-            icon={icons[child.type] || faArrowUpRightFromSquare}
-            size="lg"
-          />
-        </a>
+          icon={icons[child.type]}
+        />
       ))}
     </nav>
   );
