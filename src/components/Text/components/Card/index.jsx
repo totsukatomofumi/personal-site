@@ -4,7 +4,7 @@ function Card({ cover, title, subtitle, body, extras }) {
     <>
       {/* ============== Cover, Title, Subtitle ============== */}
       {(title || subtitle) && (
-        <header className="no-split grid grid-cols-4 gap-3 py-2.5">
+        <header className="no-split grid grid-cols-4 gap-1.5 sm:gap-2.5 py-1.5 sm:py-2.5">
           <div className="relative col-span-1">
             {cover &&
               (() => {
@@ -21,39 +21,39 @@ function Card({ cover, title, subtitle, body, extras }) {
                     );
                   case "date":
                     return (
-                      <time className="text-sm">{`${cover.start} — ${cover.end}`}</time>
+                      <time className="text-xs sm:text-sm">{`${cover.start} — ${cover.end}`}</time>
                     );
                   default:
                     return null;
                 }
               })()}
           </div>
-          <div className="col-span-3 flex flex-col gap-5">
-            {title && <h2 className="text-xl font-bold">{title}</h2>}
-            {subtitle && <h3 className="text-xl">{subtitle}</h3>}
+          <div className="col-span-3 flex flex-col gap-3 sm:gap-5">
+            {title && <h2 className="text-sm sm:text-xl font-bold">{title}</h2>}
+            {subtitle && <h3 className="text-sm sm:text-xl">{subtitle}</h3>}
           </div>
         </header>
       )}
 
       {/* ======================= Body ======================= */}
       {body && (
-        <div className="no-split grid grid-cols-4 gap-3 py-2.5">
+        <div className="no-split grid grid-cols-4 gap-1.5 sm:gap-2.5 py-1.5 sm:py-2.5">
           <div className="col-span-1"></div>
           <div className="col-span-3">
-            <p className="text-sm">{body}</p>
+            <p className="text-xs sm:text-sm">{body}</p>
           </div>
         </div>
       )}
 
       {/* ====================== Extras ====================== */}
       {extras && (
-        <div className="no-split grid grid-cols-4 gap-3 py-2.5">
+        <div className="no-split grid grid-cols-4 gap-1.5 sm:gap-2.5 py-1.5 sm:py-2.5">
           <div className="col-span-1"></div>
-          <div className="col-span-3 flex flex-wrap gap-x-1.5 gap-y-2">
+          <div className="col-span-3 flex flex-wrap gap-x-1.5 gap-y-2 py-2">
             {extras.map((extra, index) => (
               <span
                 key={index}
-                className="inline-block bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm"
+                className="inline-block bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-xs sm:text-sm"
               >
                 {extra}
               </span>

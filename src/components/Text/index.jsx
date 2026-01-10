@@ -290,7 +290,7 @@ function Text({ className, ...props }) {
   // ========================== Render ==========================
   return (
     <div className={`flex ${className || ""}`} {...props}>
-      <div className="m-auto w-6xl max-w-screen h-4/10 px-6">
+      <div className="m-auto w-6xl max-w-screen h-6/10 sm:h-4/10 px-6">
         <div className="w-full max-w-138 h-full perspective-normal">
           {document}
         </div>
