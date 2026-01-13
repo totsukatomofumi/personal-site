@@ -6,7 +6,7 @@ function Link({ target, rel, className, icon, ...props }) {
     <a
       target={`_blank ${target || ""}`}
       rel={`noopener noreferrer me ${rel || ""}`}
-      className={`h-12 text-lg flex hover:border-b-2 transition-[border] ${
+      className={`h-12 text-lg flex hover:border-b-2 active:border-b-6 transition-[border] ${
         className || ""
       }`}
       {...props}
