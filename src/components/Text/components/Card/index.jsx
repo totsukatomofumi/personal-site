@@ -15,7 +15,8 @@ function Card({ cover, title, subtitle, body, extras }) {
                         <img
                           src={cover.url}
                           alt={title || subtitle}
-                          className="mx-auto max-w-full max-h-full"
+                          className="mx-auto max-w-full max-h-full hover:border-b-2 active:border-b-6 transition-[border] cursor-pointer"
+                          data-action="image-preview" // For delegated click handler
                         />
                       </div>
                     );

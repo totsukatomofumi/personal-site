@@ -25,8 +25,19 @@ function Text({ className, ...props }) {
       () => createRef()
     );
 
+    // Delegated click handler (as mouse events are not preserved by GSAP SplitText)
+    const onClick = (e) => {
+      switch (e.target.dataset.action) {
+        case "image-preview":
+          appContext.openImagePreview(e.target.src, e.target.alt);
+          break;
+        default:
+          break;
+      }
+    };
+
     const document = (
-      <div ref={documentRef} className="transform-3d">
+      <div ref={documentRef} className="transform-3d" onClick={onClick}>
         {DOCUMENT_JSON.children.map((section, index) => (
           <Section
             key={index}
@@ -57,7 +68,7 @@ function Text({ className, ...props }) {
     );
 
     return [document, documentRef, sectionRefs];
-  }, []);
+  }, [appContext]);
   const [lines, setLines] = useState(
     Array.from({ length: DOCUMENT_JSON.children.length }, () => [])
   );

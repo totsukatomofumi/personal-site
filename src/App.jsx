@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { NUM_SECTIONS, APP_CONTEXT as AppContext } from "../constants";
-import { SectionTrigger, Text } from "./components/";
+import { SectionTrigger, Text, ImagePreview } from "./components/";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,6 +13,7 @@ function App() {
     createRef()
   );
   const [scrollAnimations, setScrollAnimations] = useState([]);
+  const [imagePreview, setImagePreview] = useState(null);
 
   // ====================== Context Setup =======================
   const registerScrollAnimation = (animation, index) => {
@@ -31,9 +32,22 @@ function App() {
     );
   };
 
+  const openImagePreview = (src, alt) => {
+    setImagePreview({
+      src: src,
+      alt: alt,
+    });
+  };
+
+  const closeImagePreview = () => {
+    setImagePreview(null);
+  };
+
   const contextValue = {
     registerScrollAnimation,
     removeScrollAnimation,
+    openImagePreview,
+    closeImagePreview,
   };
 
   // =================== ScrollTriggers Setup ===================
@@ -70,6 +84,9 @@ function App() {
       <div className="fixed top-0 left-0 w-screen h-screen">
         <AppContext value={contextValue}>
           <Text className="absolute top-0 left-0 z-40 w-full h-full" />
+          {imagePreview && (
+            <ImagePreview src={imagePreview.src} alt={imagePreview.alt} />
+          )}
         </AppContext>
       </div>
 
