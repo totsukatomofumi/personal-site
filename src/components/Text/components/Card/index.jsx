@@ -1,10 +1,12 @@
-function Card({ cover, title, subtitle, body, extras }) {
+import { Link } from "../";
+
+function Card({ cover, title, subtitle, link, body, extras }) {
   // ========================== Render ==========================
   return (
     <>
       {/* ============== Cover, Title, Subtitle ============== */}
-      {(title || subtitle) && (
-        <header className="no-split grid grid-cols-4 gap-1.5 sm:gap-2.5 py-1.5 sm:py-2.5">
+      {(title || subtitle || link) && (
+        <header className="no-split grid grid-cols-4 gap-3 sm:gap-5 py-1.5 sm:py-2.5">
           <div className="relative col-span-1">
             {cover &&
               (() => {
@@ -30,7 +32,16 @@ function Card({ cover, title, subtitle, body, extras }) {
               })()}
           </div>
           <div className="col-span-3 flex flex-col gap-3 sm:gap-5">
-            {title && <h2 className="text-sm sm:text-xl font-bold">{title}</h2>}
+            {(title || link) && (
+              <h2 className="text-sm sm:text-xl font-bold flex">
+                {title}
+                {link && (
+                  <span className="ml-2 my-auto w-fit h-5 sm:h-7 inline-flex items-center">
+                    <Link href={link} size="1x" />
+                  </span>
+                )}
+              </h2>
+            )}
             {subtitle && <h3 className="text-sm sm:text-xl">{subtitle}</h3>}
           </div>
         </header>

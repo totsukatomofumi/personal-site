@@ -1,53 +1,37 @@
 import { createContext } from "react";
 
 function parseCardBlock(block) {
-  const titleRegex = /title: (.*?)(\s+\S*:|\s*$)/;
-  const subtitleRegex = /subtitle: (.*?)(\s+\S*:|\s*$)/;
-  const coverRegex = /cover: (.*?)(\s+\S*:|\s*$)/;
-  const bodyRegex = /body: (.*?)(\s+\S*:|\s*$)/;
-  const extrasRegex = /extras: (.*?)(\s+\S*:|\s*$)/;
+  const varRegex = /(\S*): (.*?)(?=\s+\S*:|\s*$)/g;
 
-  const cardVars = {};
+  const matches = [...block.text.matchAll(varRegex)];
 
-  const titleMatch = block.text.match(titleRegex);
-  if (titleMatch) {
-    cardVars.title = titleMatch[1].trim();
-  }
+  let cardVars = {};
 
-  const subtitleMatch = block.text.match(subtitleRegex);
-  if (subtitleMatch) {
-    cardVars.subtitle = subtitleMatch[1].trim();
-  }
+  matches.forEach((match) => {
+    const key = match[1].trim();
+    const value = match[2].trim();
 
-  const coverMatch = block.text.match(coverRegex);
-  if (coverMatch) {
-    const coverValue = coverMatch[1].trim();
-
-    if (coverValue.includes(".")) {
-      cardVars.cover = {
-        type: "image",
-        url: coverValue,
-      };
+    if (key === "cover") {
+      if (value.includes(".")) {
+        cardVars.cover = {
+          type: "image",
+          url: value,
+        };
+      } else {
+        const dateParts = value.split("-").map((part) => part.trim());
+        cardVars.cover = {
+          type: "date",
+          start: dateParts[0],
+          end: dateParts[1],
+        };
+      }
+    } else if (key === "extras") {
+      const extrasList = value.split(",").map((extra) => extra.trim());
+      cardVars.extras = extrasList;
     } else {
-      const dateParts = coverValue.split("-").map((part) => part.trim());
-      cardVars.cover = {
-        type: "date",
-        start: dateParts[0],
-        end: dateParts[1],
-      };
+      cardVars[key] = value;
     }
-  }
-
-  const bodyMatch = block.text.match(bodyRegex);
-  if (bodyMatch) {
-    cardVars.body = bodyMatch[1].trim();
-  }
-
-  const extrasMatch = block.text.match(extrasRegex);
-  if (extrasMatch) {
-    const extrasList = extrasMatch[1].split(",").map((extra) => extra.trim());
-    cardVars.extras = extrasList;
-  }
+  });
 
   return {
     type: "card",
@@ -245,6 +229,7 @@ Git, GitLab
 title: VisualPython
 subtitle: NUS BComp Dissertation (FYP)
 cover: /fff.png
+link: https://visualpython.ddns.comp.nus.edu.sg
 body: Extended a brownfield drag-and-drop Python learning platform with 
 real-time collaborative coding sessions for peer-to-peer and instructor 
 interaction.
@@ -258,6 +243,7 @@ Git, GitHub
 title: Battleship
 subtitle: CU Netcentric Architecture (2190472)
 cover: /fff.png
+link: https://github.com/battleship-web/battleship
 body: Co-developed the backend of a real-time, online multiplayer, 
 "Battleship" web clone.
 extras: JavaScript, Express, Socket.IO, Redis, Mongoose, Git, GitHub
@@ -280,6 +266,7 @@ extras: C, Python, STM32, Raspberry Pi
 title: myStudent
 subtitle: NUS Software Engineering (CS2103T)
 cover: /fff.png
+link: https://ay2223s1-cs2103t-f12-4.github.io/tp/
 body: Co-developed a Java-based tuition centre management application.
 extras: Java, JavaFX, JUnit, Git, GitHub, Codecov
 :::
