@@ -76,31 +76,34 @@ function Text({ className, ...props }) {
   // ===================== Parallax Scroll ======================
   useGSAP(
     () => {
-      const ease = "none";
+      // Setup animation config and variables
+      const ease = "power1.inOut";
       let cumulativeY = 0;
 
-      const animations = sectionRefs.map((sectionRef) =>
-        gsap.fromTo(
-          documentRef.current,
-          {
-            y: cumulativeY,
-          },
-          {
-            y: (cumulativeY -= sectionRef.current.offsetHeight),
-            ease: ease,
-            immediateRender: false,
-          }
-        )
-      );
-
-      animations.forEach((animation, index) => {
-        appContext.registerScrollAnimation(animation, index);
+      // Create animations
+      const animations = sectionRefs.map((sectionRef) => {
+        return gsap.to(documentRef.current, {
+          y: (cumulativeY -= sectionRef.current.offsetHeight),
+          ease: ease,
+          immediateRender: false,
+          paused: true,
+        });
       });
 
+      // Register animations
+      animations.forEach((animation, index) => {
+        appContext.registerSectionAnimation(animation, index);
+      });
+
+      // Cleanup
       return () => {
+        // Remove animations
         animations.forEach((animation) => {
-          appContext.removeScrollAnimation(animation);
+          appContext.removeSectionAnimation(animation);
         });
+
+        // Reset target element to clean state
+        gsap.set(documentRef.current, { clearProps: true });
       };
     },
     {
@@ -112,18 +115,20 @@ function Text({ className, ...props }) {
   // ==================== Perspective Scroll ====================
   useGSAP(
     () => {
+      // Setup animation config and variables
       const animations = [];
       const rotationXDelta = 5;
       const alphaFactor = 0.2;
-      const ease = "none";
+      const ease = "power2.inOut";
 
+      // Create animations
       sectionRefs.forEach((sectionRef, sectionIndex) => {
         let cumulativeRotationX = -rotationXDelta;
         let cumulativeY = 0;
         let cumulativeZ = 0;
         let cumulativeAlpha = alphaFactor;
 
-        // ============== Line Rotate Enter (Bottom) ==============
+        // Line Rotate Enter (Bottom)
         if (sectionIndex > 0) {
           const sectionLines = lines[sectionIndex];
 
@@ -146,14 +151,15 @@ function Text({ className, ...props }) {
               z: z,
               autoAlpha: alpha,
               ease: ease,
+              paused: true,
             });
 
             animations.push(animation);
-            appContext.registerScrollAnimation(animation, sectionIndex - 1);
+            appContext.registerSectionAnimation(animation, sectionIndex - 1);
           });
         }
 
-        // ============ Section Rotate Enter (Bottom) =============
+        // Section Rotate Enter (Bottom)
         if (sectionIndex > 0 && sectionIndex + 1 < sectionRefs.length) {
           const currSection = sectionRef.current;
           const nextSection = sectionRefs[sectionIndex + 1].current;
@@ -178,21 +184,23 @@ function Text({ className, ...props }) {
             y: y,
             z: z,
             ease: ease,
+            paused: true,
           });
 
           animations.push(animation);
-          appContext.registerScrollAnimation(animation, sectionIndex - 1);
+          appContext.registerSectionAnimation(animation, sectionIndex - 1);
 
           animation = gsap.from(
             nextSectionLines.flatMap((line) => line.children), // We target child elements of lines to avoid conflict
             {
               autoAlpha: 0,
               ease: ease,
+              paused: true,
             }
           );
 
           animations.push(animation);
-          appContext.registerScrollAnimation(animation, sectionIndex - 1);
+          appContext.registerSectionAnimation(animation, sectionIndex - 1);
         }
 
         cumulativeRotationX = rotationXDelta;
@@ -200,7 +208,7 @@ function Text({ className, ...props }) {
         cumulativeZ = 0;
         cumulativeAlpha = alphaFactor;
 
-        // =============== Line Rotate Exit (Top) =================
+        // Line Rotate Exit (Top)
         if (sectionIndex < sectionRefs.length - 1) {
           const sectionLines = lines[sectionIndex];
 
@@ -224,14 +232,15 @@ function Text({ className, ...props }) {
               autoAlpha: alpha,
               ease: ease,
               immediateRender: false,
+              paused: true,
             });
 
             animations.push(animation);
-            appContext.registerScrollAnimation(animation, sectionIndex);
+            appContext.registerSectionAnimation(animation, sectionIndex);
           });
         }
 
-        // ============== Section Rotate Exit (Top) ===============
+        // Section Rotate Exit (Top)
         if (sectionIndex < sectionRefs.length - 1 && sectionIndex - 1 >= 0) {
           const prevSection = sectionRefs[sectionIndex - 1].current;
           const prevSectionLines = lines[sectionIndex - 1];
@@ -249,10 +258,11 @@ function Text({ className, ...props }) {
             z: z,
             ease: ease,
             immediateRender: false,
+            paused: true,
           });
 
           animations.push(animation);
-          appContext.registerScrollAnimation(animation, sectionIndex);
+          appContext.registerSectionAnimation(animation, sectionIndex);
 
           animation = gsap.to(
             prevSectionLines.flatMap((line) => line.children), // We target child elements of lines to avoid conflict
@@ -260,18 +270,32 @@ function Text({ className, ...props }) {
               autoAlpha: 0,
               ease: ease,
               immediateRender: false,
+              paused: true,
             }
           );
 
           animations.push(animation);
-          appContext.registerScrollAnimation(animation, sectionIndex);
+          appContext.registerSectionAnimation(animation, sectionIndex);
         }
       });
 
+      // Cleanup
       return () => {
+        // Remove animations
         animations.forEach((animation) => {
-          appContext.removeScrollAnimation(animation);
+          appContext.removeSectionAnimation(animation);
         });
+
+        // Reset target elements to clean state
+        gsap.set(
+          [
+            ...sectionRefs.map((sectionRef) => sectionRef.current),
+            ...lines.flatMap((sectionLines) => sectionLines),
+          ],
+          {
+            clearProps: true,
+          }
+        );
       };
     },
     {

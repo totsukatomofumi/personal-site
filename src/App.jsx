@@ -1,35 +1,43 @@
-import { createRef, useState } from "react";
+import { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Observer } from "gsap/Observer";
+import { Text, ImagePreview } from "./components/";
 import { NUM_SECTIONS, APP_CONTEXT as AppContext } from "../constants";
-import { SectionTrigger, Text, ImagePreview } from "./components/";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(Observer);
 
 function App() {
   // ========================== Setup ===========================
-  const sectionTriggerRefs = Array.from({ length: NUM_SECTIONS }, () =>
-    createRef()
+  // Section animations states
+  const currentSectionIndexRef = useRef(0);
+  const sectionAnimationsRef = useRef(
+    Array.from({ length: NUM_SECTIONS }, () => [])
   );
-  const [scrollAnimations, setScrollAnimations] = useState([]);
+  const isAnimatingRef = useRef(false);
+
+  // Image preview state
   const [imagePreview, setImagePreview] = useState(null);
 
   // ====================== Context Setup =======================
-  const registerScrollAnimation = (animation, index) => {
-    setScrollAnimations((prev) => [
-      ...prev,
-      {
-        animation: animation,
-        index: index,
-      },
-    ]);
+  const registerSectionAnimation = (animation, index) => {
+    // At the current section, we set all previous section animations to completed state
+    if (index < currentSectionIndexRef.current) {
+      animation.progress(1);
+    }
+
+    // Register the animation
+    sectionAnimationsRef.current[index].push(animation);
   };
 
-  const removeScrollAnimation = (animation) => {
-    setScrollAnimations((prev) =>
-      prev.filter((p) => p.animation !== animation)
-    );
+  const removeSectionAnimation = (animation) => {
+    // Remove the animation
+    sectionAnimationsRef.current.forEach((animations) => {
+      const animationIndex = animations.indexOf(animation);
+      if (animationIndex !== -1) {
+        animations.splice(animationIndex, 1);
+      }
+    });
   };
 
   const openImagePreview = (src, alt) => {
@@ -44,57 +52,88 @@ function App() {
   };
 
   const contextValue = {
-    registerScrollAnimation,
-    removeScrollAnimation,
+    registerSectionAnimation,
+    removeSectionAnimation,
     openImagePreview,
     closeImagePreview,
   };
 
-  // =================== ScrollTriggers Setup ===================
-  useGSAP(
-    () => {
-      scrollAnimations.forEach(({ animation, index }) => {
-        const trigger = sectionTriggerRefs[index].current;
+  // ====================== Observer Setup ======================
+  useGSAP(() => {
+    const onUp = () => {
+      const currentIndex = currentSectionIndexRef.current;
+      const previousIndex = currentIndex - 1;
 
-        ScrollTrigger.create({
-          trigger: trigger,
-          animation: animation,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-          snap: {
-            snapTo: 1,
-            duration: { max: 1 },
-            delay: 0,
-            inertia: false,
-          },
-        });
+      if (currentIndex <= 0) return; // Already at first section
+
+      if (isAnimatingRef.current) return; // Still animating
+      isAnimatingRef.current = true;
+
+      currentSectionIndexRef.current = previousIndex; // Update section index
+
+      const previousAnimations = sectionAnimationsRef.current[previousIndex];
+
+      const timeoutDelay =
+        Math.max(
+          ...previousAnimations.map((animation) => animation.duration() * 1000)
+        ) + 1000; // Add 1 second buffer
+
+      Promise.race([
+        Promise.all(
+          previousAnimations.map((animation) => animation.reverse().then())
+        ),
+        new Promise(
+          (resolve) => setTimeout(() => resolve(), timeoutDelay) // Fallback timeout in case animations are killed/reverted from removeSectionAnimation
+        ),
+      ]).then(() => {
+        isAnimatingRef.current = false;
       });
-    },
-    {
-      dependencies: [scrollAnimations],
-      revertOnUpdate: true,
-    }
-  );
+    };
+
+    const onDown = () => {
+      const currentIndex = currentSectionIndexRef.current;
+      const nextIndex = currentIndex + 1;
+
+      if (currentIndex >= NUM_SECTIONS - 1) return; // Already at last section
+
+      if (isAnimatingRef.current) return; // Still animating
+      isAnimatingRef.current = true;
+
+      currentSectionIndexRef.current = nextIndex; // Update section index
+
+      const currentAnimations = sectionAnimationsRef.current[currentIndex];
+
+      const timeoutDelay =
+        Math.max(
+          ...currentAnimations.map((animation) => animation.duration() * 1000)
+        ) + 1000; // Add 1 second buffer
+
+      Promise.race([
+        Promise.all(
+          currentAnimations.map((animation) => animation.play().then())
+        ),
+        new Promise(
+          (resolve) => setTimeout(() => resolve(), timeoutDelay) // Fallback timeout in case animations are killed/reverted from removeSectionAnimation
+        ),
+      ]).then(() => {
+        isAnimatingRef.current = false;
+      });
+    };
+
+    Observer.create({
+      onUp,
+      onDown,
+    });
+  });
 
   // ========================== Render ==========================
   return (
-    <div>
-      {/* ====================== Main ====================== */}
-      <div className="fixed top-0 left-0 w-screen h-screen">
-        <AppContext value={contextValue}>
-          <Text className="absolute top-0 left-0 z-40 w-full h-full" />
-          {imagePreview && (
-            <ImagePreview src={imagePreview.src} alt={imagePreview.alt} />
-          )}
-        </AppContext>
-      </div>
-
-      {/* ================= ScrollTriggers ================= */}
-      {sectionTriggerRefs.map((ref, index) => (
-        <SectionTrigger key={index} ref={ref} />
-      ))}
-    </div>
+    <AppContext value={contextValue}>
+      <Text className="fixed top-0 left-0 z-40 w-screen h-screen" />
+      {imagePreview && (
+        <ImagePreview src={imagePreview.src} alt={imagePreview.alt} />
+      )}
+    </AppContext>
   );
 }
 
