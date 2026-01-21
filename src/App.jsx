@@ -134,9 +134,9 @@ function App() {
   // ========================== Render ==========================
   return (
     <AppContext value={contextValue}>
-      <Text className="fixed top-0 left-0 z-40 w-screen h-screen" />
+      <Text className="fixed top-0 left-0 z-40 w-dvw h-dvh" />
       <ImagePreview
-        className="deadzone"
+        className="deadzone fixed top-0 left-0 z-50 w-dvw h-dvh"
         open={!!imagePreview}
         src={imagePreview?.src}
         alt={imagePreview?.alt}

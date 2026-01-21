@@ -228,7 +228,7 @@ Git, GitLab
 :::card
 title: VisualPython
 subtitle: NUS BComp Dissertation (FYP)
-cover: /fff.png
+cover: /visualpython.png
 link: https://visualpython.ddns.comp.nus.edu.sg
 body: Extended a brownfield drag-and-drop Python learning platform with 
 real-time collaborative coding sessions for peer-to-peer and instructor 
@@ -242,7 +242,7 @@ Git, GitHub
 :::card
 title: Battleship
 subtitle: CU Netcentric Architecture (2190472)
-cover: /fff.png
+cover: /battleship.png
 link: https://github.com/battleship-web/battleship
 body: Co-developed the backend of a real-time, online multiplayer, 
 "Battleship" web clone.
@@ -254,7 +254,7 @@ extras: JavaScript, Express, Socket.IO, Redis, Mongoose, Git, GitHub
 :::card
 title: Smart Trash Can
 subtitle: CU Internet of Things (2147336)
-cover: /fff.png
+cover: /smart-trash-can.png
 body: Co-implemented software for a IoT-based waste-sorting system using 
 servos and sensors.
 extras: C, Python, STM32, Raspberry Pi
@@ -265,7 +265,7 @@ extras: C, Python, STM32, Raspberry Pi
 :::card
 title: myStudent
 subtitle: NUS Software Engineering (CS2103T)
-cover: /fff.png
+cover: /mystudent.png
 link: https://ay2223s1-cs2103t-f12-4.github.io/tp/
 body: Co-developed a Java-based tuition centre management application.
 extras: Java, JavaFX, JUnit, Git, GitHub, Codecov
@@ -280,7 +280,7 @@ I look forward to connecting with you!
 :::spacing:::
 
 :::links
-resume: /Resume.pdf
+resume: /resume.pdf
 linkedin: https://www.linkedin.com/in/totsukatomofumi
 github: https://github.com/totsukatomofumi
 kaggle: https://www.kaggle.com/totsukatomofumi

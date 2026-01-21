@@ -11,8 +11,6 @@ function ImagePreview({ open, onClose, src, alt, className }) {
     () => {
       const duration = 0.15; // TailwindCSS transition duration
 
-      console.log("ImagePreview open:", open);
-
       switch (open) {
         case true:
           gsap.to(selfRef.current, {
@@ -39,12 +37,16 @@ function ImagePreview({ open, onClose, src, alt, className }) {
     <dialog
       ref={selfRef}
       open={open}
-      className={`invisible fixed top-0 left-0 z-50 w-screen h-screen bg-transparent backdrop-blur-xs backdrop-brightness-75 flex justify-center items-center p-6 ${
+      className={`invisible bg-transparent backdrop-blur-xs backdrop-brightness-75 flex justify-center items-center p-6 ${
         className || ""
       }`}
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <img src={src} alt={alt} />
+      <img
+        className="max-w-full max-h-full sm:max-w-1/2 sm:max-h-1/2"
+        src={src}
+        alt={alt}
+      />
       <div className="absolute top-3 right-3 z-50">
         <button
           className="w-12 h-12 flex hover:border-b-2 active:border-b-6 transition-[border] cursor-pointer"
