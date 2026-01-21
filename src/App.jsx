@@ -62,36 +62,6 @@ function App() {
   useGSAP(() => {
     const onUp = () => {
       const currentIndex = currentSectionIndexRef.current;
-      const previousIndex = currentIndex - 1;
-
-      if (currentIndex <= 0) return; // Already at first section
-
-      if (isAnimatingRef.current) return; // Still animating
-      isAnimatingRef.current = true;
-
-      currentSectionIndexRef.current = previousIndex; // Update section index
-
-      const previousAnimations = sectionAnimationsRef.current[previousIndex];
-
-      const timeoutDelay =
-        Math.max(
-          ...previousAnimations.map((animation) => animation.duration() * 1000)
-        ) + 1000; // Add 1 second buffer
-
-      Promise.race([
-        Promise.all(
-          previousAnimations.map((animation) => animation.reverse().then())
-        ),
-        new Promise(
-          (resolve) => setTimeout(() => resolve(), timeoutDelay) // Fallback timeout in case animations are killed/reverted from removeSectionAnimation
-        ),
-      ]).then(() => {
-        isAnimatingRef.current = false;
-      });
-    };
-
-    const onDown = () => {
-      const currentIndex = currentSectionIndexRef.current;
       const nextIndex = currentIndex + 1;
 
       if (currentIndex >= NUM_SECTIONS - 1) return; // Already at last section
@@ -120,9 +90,43 @@ function App() {
       });
     };
 
+    const onDown = () => {
+      const currentIndex = currentSectionIndexRef.current;
+      const previousIndex = currentIndex - 1;
+
+      if (currentIndex <= 0) return; // Already at first section
+
+      if (isAnimatingRef.current) return; // Still animating
+      isAnimatingRef.current = true;
+
+      currentSectionIndexRef.current = previousIndex; // Update section index
+
+      const previousAnimations = sectionAnimationsRef.current[previousIndex];
+
+      const timeoutDelay =
+        Math.max(
+          ...previousAnimations.map((animation) => animation.duration() * 1000)
+        ) + 1000; // Add 1 second buffer
+
+      Promise.race([
+        Promise.all(
+          previousAnimations.map((animation) => animation.reverse().then())
+        ),
+        new Promise(
+          (resolve) => setTimeout(() => resolve(), timeoutDelay) // Fallback timeout in case animations are killed/reverted from removeSectionAnimation
+        ),
+      ]).then(() => {
+        isAnimatingRef.current = false;
+      });
+    };
+
     Observer.create({
+      type: "wheel,touch",
       onUp,
       onDown,
+      wheelSpeed: -1,
+      tolerance: 10,
+      preventDefault: true,
     });
   });
 
