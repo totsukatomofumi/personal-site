@@ -127,6 +127,7 @@ function App() {
       wheelSpeed: -1,
       tolerance: 10,
       preventDefault: true,
+      ignore: ".deadzone",
     });
   });
 
@@ -134,9 +135,13 @@ function App() {
   return (
     <AppContext value={contextValue}>
       <Text className="fixed top-0 left-0 z-40 w-screen h-screen" />
-      {imagePreview && (
-        <ImagePreview src={imagePreview.src} alt={imagePreview.alt} />
-      )}
+      <ImagePreview
+        className="deadzone"
+        open={!!imagePreview}
+        src={imagePreview?.src}
+        alt={imagePreview?.alt}
+        onClose={closeImagePreview}
+      />
     </AppContext>
   );
 }
