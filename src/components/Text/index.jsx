@@ -2,7 +2,11 @@ import { createRef, useContext, useMemo, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { SplitText } from "gsap/SplitText";
-import { DOCUMENT_JSON, APP_CONTEXT as AppContext } from "../../../constants";
+import {
+  DOCUMENT_JSON,
+  APP_CONTEXT as AppContext,
+  NUM_SECTIONS,
+} from "../../../constants";
 import {
   Section,
   Heading,
@@ -12,6 +16,7 @@ import {
   Links,
   Caption,
 } from "./components/";
+import { useMediaQuery } from "@uidotdev/usehooks";
 
 gsap.registerPlugin(SplitText);
 
@@ -20,24 +25,10 @@ function Text({ className, ...props }) {
   const appContext = useContext(AppContext);
   const [document, documentRef, sectionRefs] = useMemo(() => {
     const documentRef = createRef();
-    const sectionRefs = Array.from(
-      { length: DOCUMENT_JSON.children.length },
-      () => createRef()
-    );
-
-    // Delegated click handler (as mouse events are not preserved by GSAP SplitText)
-    const onClick = (e) => {
-      switch (e.target.dataset.action) {
-        case "image-preview":
-          appContext.openImagePreview(e.target.src, e.target.alt);
-          break;
-        default:
-          break;
-      }
-    };
+    const sectionRefs = Array.from({ length: NUM_SECTIONS }, () => createRef());
 
     const document = (
-      <div ref={documentRef} className="transform-3d" onClick={onClick}>
+      <div ref={documentRef} className="transform-3d">
         {DOCUMENT_JSON.children.map((section, index) => (
           <Section
             key={index}
@@ -68,9 +59,9 @@ function Text({ className, ...props }) {
     );
 
     return [document, documentRef, sectionRefs];
-  }, [appContext]);
+  }, []);
   const [lines, setLines] = useState(
-    Array.from({ length: DOCUMENT_JSON.children.length }, () => [])
+    Array.from({ length: NUM_SECTIONS }, () => [])
   );
 
   // ===================== Parallax Scroll ======================
@@ -305,28 +296,51 @@ function Text({ className, ...props }) {
   );
 
   // ======================== Split Text ========================
-  useGSAP(() => {
-    sectionRefs.forEach((sectionRef, index) => {
-      new SplitText(sectionRef.current, {
-        type: "lines",
-        ignore: ".no-split",
-        autoSplit: true,
-        onSplit: (self) => {
-          setLines((prevLines) => {
-            const newLines = [...prevLines];
-            newLines[index] = self.lines;
-            return newLines;
-          });
-        },
+  const isSmallDevice = useMediaQuery("(min-width : 640px)"); // TailwindCSS sm breakpoint, used to force re-split when style changes on tailwind breakpoint (e.g. font-size), as GSAP SplitText does not auto-update on style changes
+
+  useGSAP(
+    () => {
+      sectionRefs.forEach((sectionRef, index) => {
+        new SplitText(sectionRef.current, {
+          type: "lines",
+          ignore: ".no-split",
+          autoSplit: true,
+          onSplit: (self) => {
+            setLines((prevLines) => {
+              const newLines = [...prevLines];
+              newLines[index] = self.lines;
+              return newLines;
+            });
+          },
+        });
       });
-    });
-  });
+    },
+    {
+      dependencies: [isSmallDevice],
+      revertOnUpdate: true,
+    }
+  );
+
+  // ==================== Delegated Handling ====================
+  // Delegated click handler (as mouse events are not preserved by GSAP SplitText)
+  const onClick = (e) => {
+    switch (e.target.dataset.action) {
+      case "image-preview":
+        appContext.openImagePreview(e.target.src, e.target.alt);
+        break;
+      default:
+        break;
+    }
+  };
 
   // ========================== Render ==========================
   return (
     <div className={`flex ${className || ""}`} {...props}>
       <div className="m-auto w-6xl max-w-screen h-6/10 sm:h-4/10 px-6">
-        <div className="w-full max-w-138 h-full perspective-normal">
+        <div
+          className="w-full max-w-138 h-full perspective-normal"
+          onClick={onClick}
+        >
           {document}
         </div>
       </div>
