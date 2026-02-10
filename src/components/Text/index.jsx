@@ -33,7 +33,7 @@ function Text({ className, ...props }) {
           <Section
             key={index}
             ref={sectionRefs[index]}
-            className="transform-3d"
+            className="transform-3d translate-z-[0.01px]" // We set a very small translateZ to ensure preserve-3d is respected on iOS, iPadOS Safari, etc.
           >
             {section.children.map((child, childIndex) => {
               switch (child.type) {
@@ -61,7 +61,7 @@ function Text({ className, ...props }) {
     return [document, documentRef, sectionRefs];
   }, []);
   const [lines, setLines] = useState(
-    Array.from({ length: NUM_SECTIONS }, () => [])
+    Array.from({ length: NUM_SECTIONS }, () => []),
   );
 
   // ===================== Parallax Scroll ======================
@@ -100,7 +100,7 @@ function Text({ className, ...props }) {
     {
       dependencies: [lines],
       revertOnUpdate: true,
-    }
+    },
   );
 
   // ==================== Perspective Scroll ====================
@@ -158,7 +158,7 @@ function Text({ className, ...props }) {
 
           // We take bottom padding of section as an extra "line"
           const paddingBottom = parseFloat(
-            getComputedStyle(currSection).paddingBottom
+            getComputedStyle(currSection).paddingBottom,
           );
           const rotationX = cumulativeRotationX;
           const rotationXRad = (rotationX * Math.PI) / 180;
@@ -187,7 +187,7 @@ function Text({ className, ...props }) {
               autoAlpha: 0,
               ease: ease,
               paused: true,
-            }
+            },
           );
 
           animations.push(animation);
@@ -262,7 +262,7 @@ function Text({ className, ...props }) {
               ease: ease,
               immediateRender: false,
               paused: true,
-            }
+            },
           );
 
           animations.push(animation);
@@ -285,14 +285,14 @@ function Text({ className, ...props }) {
           ],
           {
             clearProps: true,
-          }
+          },
         );
       };
     },
     {
       dependencies: [lines],
       revertOnUpdate: true,
-    }
+    },
   );
 
   // ======================== Split Text ========================
@@ -312,13 +312,14 @@ function Text({ className, ...props }) {
               return newLines;
             });
           },
+          linesClass: "translate-z-[0.01px]", // We set a very small translateZ to ensure preserve-3d is respected on iOS, iPadOS Safari, etc.
         });
       });
     },
     {
       dependencies: [isSmallDevice],
       revertOnUpdate: true,
-    }
+    },
   );
 
   // ==================== Delegated Handling ====================
