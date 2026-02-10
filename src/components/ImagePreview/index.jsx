@@ -30,14 +30,14 @@ function ImagePreview({ open, onClose, src, alt, className }) {
     },
     {
       dependencies: [open],
-    }
+    },
   );
 
   return (
     <dialog
       ref={selfRef}
       open={open}
-      className={`invisible bg-transparent backdrop-blur-xs backdrop-brightness-75 flex justify-center items-center p-6 ${
+      className={`invisible opacity-0 bg-transparent backdrop-blur-xs backdrop-brightness-75 flex justify-center items-center p-6 ${
         className || ""
       }`}
       onClick={(e) => e.target === e.currentTarget && onClose()}
