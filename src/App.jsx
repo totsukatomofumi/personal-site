@@ -2,8 +2,9 @@ import { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Observer } from "gsap/Observer";
-import { Text, ImagePreview } from "./components/";
+import { Text, ImagePreview, Backdrop } from "./components/";
 import { NUM_SECTIONS, APP_CONTEXT as AppContext } from "../constants";
+import { Canvas } from "@react-three/fiber";
 
 gsap.registerPlugin(Observer);
 
@@ -12,7 +13,7 @@ function App() {
   // Section animations states
   const currentSectionIndexRef = useRef(0);
   const sectionAnimationsRef = useRef(
-    Array.from({ length: NUM_SECTIONS }, () => [])
+    Array.from({ length: NUM_SECTIONS }, () => []),
   );
   const isAnimatingRef = useRef(false);
 
@@ -75,15 +76,15 @@ function App() {
 
       const timeoutDelay =
         Math.max(
-          ...currentAnimations.map((animation) => animation.duration() * 1000)
+          ...currentAnimations.map((animation) => animation.duration() * 1000),
         ) + 1000; // Add 1 second buffer
 
       Promise.race([
         Promise.all(
-          currentAnimations.map((animation) => animation.play().then())
+          currentAnimations.map((animation) => animation.play().then()),
         ),
         new Promise(
-          (resolve) => setTimeout(() => resolve(), timeoutDelay) // Fallback timeout in case animations are killed/reverted from removeSectionAnimation
+          (resolve) => setTimeout(() => resolve(), timeoutDelay), // Fallback timeout in case animations are killed/reverted from removeSectionAnimation
         ),
       ]).then(() => {
         isAnimatingRef.current = false;
@@ -105,15 +106,15 @@ function App() {
 
       const timeoutDelay =
         Math.max(
-          ...previousAnimations.map((animation) => animation.duration() * 1000)
+          ...previousAnimations.map((animation) => animation.duration() * 1000),
         ) + 1000; // Add 1 second buffer
 
       Promise.race([
         Promise.all(
-          previousAnimations.map((animation) => animation.reverse().then())
+          previousAnimations.map((animation) => animation.reverse().then()),
         ),
         new Promise(
-          (resolve) => setTimeout(() => resolve(), timeoutDelay) // Fallback timeout in case animations are killed/reverted from removeSectionAnimation
+          (resolve) => setTimeout(() => resolve(), timeoutDelay), // Fallback timeout in case animations are killed/reverted from removeSectionAnimation
         ),
       ]).then(() => {
         isAnimatingRef.current = false;
@@ -142,6 +143,7 @@ function App() {
         alt={imagePreview?.alt}
         onClose={closeImagePreview}
       />
+      <Backdrop className="fixed top-0 left-0 -z-50 w-dvw h-dvh" />
     </AppContext>
   );
 }
