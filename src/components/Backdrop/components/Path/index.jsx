@@ -8,7 +8,8 @@ const CHILD_GAP = 1.5; // Gap between each child
 function Path({ path, speed, children }) {
   // ======================= Repeat Setup =======================
   const targetRepeat = useMemo(() => {
-    return Math.floor(path.getLength() / (CHILD_GAP * (children.length ?? 1))); // Auto-calculate repeat based on path length and gap
+    const pathLength = Math.round(path.getLength() * 100) / 100; // Round to 2 d.p. to avoid too high precision
+    return Math.floor(pathLength / (CHILD_GAP * (children.length ?? 1))); // Auto-calculate repeat based on path length and gap
   }, [path, children]);
   const [renderRepeat, setRenderRepeat] = useState(targetRepeat);
 

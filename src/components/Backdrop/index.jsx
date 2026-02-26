@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { AnimatedText, Path } from "./components";
+import { AnimatedText, Path, PathControls } from "./components";
 import * as THREE from "three";
 
 function Backdrop(props) {
@@ -10,20 +10,11 @@ function Backdrop(props) {
           toneMapping: THREE.NoToneMapping,
         }}
       >
-        <Path
-          path={
-            new THREE.CatmullRomCurve3([
-              new THREE.Vector3(-5, -5, 0),
-              new THREE.Vector3(5, 5, 0),
-            ])
-          }
-          speed={0.04}
-        >
+        <PathControls>
           <AnimatedText>と</AnimatedText>
-          <AnimatedText>う</AnimatedText>
-          <AnimatedText>こ</AnimatedText>
-          <AnimatedText>ろ</AnimatedText>
-        </Path>
+          <AnimatedText>つ</AnimatedText>
+          <AnimatedText>か</AnimatedText>
+        </PathControls>
       </Canvas>
     </div>
   );
