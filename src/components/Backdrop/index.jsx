@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { AnimatedText, Path, PathControls } from "./components";
+import { AnimatedText, PathControls } from "./components";
 import * as THREE from "three";
 
 function Backdrop(props) {

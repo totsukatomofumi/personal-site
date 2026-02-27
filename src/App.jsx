@@ -4,7 +4,6 @@ import { useGSAP } from "@gsap/react";
 import { Observer } from "gsap/Observer";
 import { Text, ImagePreview, Backdrop } from "./components/";
 import { NUM_SECTIONS, APP_CONTEXT as AppContext } from "../constants";
-import { Canvas } from "@react-three/fiber";
 
 gsap.registerPlugin(Observer);
 
