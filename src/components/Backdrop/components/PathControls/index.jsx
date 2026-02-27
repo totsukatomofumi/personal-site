@@ -65,6 +65,40 @@ function PathControls({ children }) {
   const [targetHandle, setTargetHandle] = useState(null);
   const [speed, setSpeed] = useState(0.04);
 
+  // ====================== Utilities Setup =====================
+  // Expand function to zoom in by moving camera forward, and zoom out by moving camera backward
+  const [isExpand, setExpand] = useState(false);
+  const cameraZ = useMemo(() => camera.position.z, [camera]);
+  const expandCameraZ = useMemo(() => cameraZ + 1, [cameraZ]); // Define how much to zoom in/out
+  const onExpandToggle = () => {
+    if (isExpand) {
+      camera.position.copy(
+        new THREE.Vector3(camera.position.x, camera.position.y, cameraZ),
+      );
+    } else {
+      camera.position.copy(
+        new THREE.Vector3(camera.position.x, camera.position.y, expandCameraZ),
+      );
+    }
+
+    setExpand((prev) => !prev);
+  };
+
+  // Copy to clipboard function to copy current path points
+  const onPathCopyToClipboard = () => {
+    const points = handleRefs.map((ref) => ref.current.position);
+    const pointsString =
+      "[" +
+      points
+        .map(
+          (point) =>
+            `new THREE.Vector3(${point.x.toFixed(2)}, ${point.y.toFixed(2)}, ${point.z.toFixed(2)})`,
+        )
+        .join(",\n") +
+      "]";
+    navigator.clipboard.writeText(pointsString);
+  };
+
   // ======================= Overlay Setup ======================
   const overlayPosition = useMemo(() => {
     const z = camera.position.z - camera.near; // Place overlay just in front of the camera
@@ -78,7 +112,7 @@ function PathControls({ children }) {
     const y = maxTarget.y;
 
     return new THREE.Vector3(x, y, z);
-  }, [camera, windowSize]); // Recalculate on camera or window size change
+  }, [camera, windowSize, isExpand]); // Recalculate on camera or window size change or zoom toggle
   const repeat = Math.floor(
     path.getLength() / (Path.childGap * (children.length ?? 1)),
   );
@@ -135,6 +169,9 @@ function PathControls({ children }) {
         setNumPoints={setNumPoints}
         speed={speed}
         setSpeed={setSpeed}
+        isExpand={isExpand}
+        onExpandToggle={onExpandToggle}
+        onPathCopyToClipboard={onPathCopyToClipboard}
       />
     </>
   );

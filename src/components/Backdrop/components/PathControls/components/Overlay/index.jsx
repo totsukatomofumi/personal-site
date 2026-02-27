@@ -9,6 +9,9 @@ function Overlay({
   setNumPoints,
   speed,
   setSpeed,
+  isExpand,
+  onExpandToggle,
+  onPathCopyToClipboard,
   ...props
 }) {
   return (
@@ -70,6 +73,23 @@ function Overlay({
               onChange={(e) => setSpeed(parseFloat(e.target.value))}
             />
           </div>
+        </div>
+        {/* ===================== Utility ==================== */}
+        <div>
+          <button
+            className="cursor-pointer bg-gray-500 rounded px-2 mt-2"
+            onClick={onExpandToggle}
+          >
+            {isExpand ? "Revert View" : "Expand View"}
+          </button>
+        </div>
+        <div>
+          <button
+            className="cursor-pointer bg-gray-500 rounded px-2 mt-2"
+            onClick={onPathCopyToClipboard}
+          >
+            Copy Path to Clipboard
+          </button>
         </div>
       </div>
     </Html>
