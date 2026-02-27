@@ -28,7 +28,10 @@ function Text({ className, ...props }) {
     const sectionRefs = Array.from({ length: NUM_SECTIONS }, () => createRef());
 
     const document = (
-      <div ref={documentRef} className="transform-3d">
+      <div
+        ref={documentRef}
+        className="transform-3d text-shadow-[-1px_-1px_0_Canvas,1px_-1px_0_Canvas,-1px_1px_0_Canvas,1px_1px_0_Canvas]"
+      >
         {DOCUMENT_JSON.children.map((section, index) => (
           <Section
             key={index}

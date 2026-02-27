@@ -17,7 +17,7 @@ function Card({ cover, title, subtitle, link, body, extras }) {
                         <img
                           src={cover.url}
                           alt={title || subtitle}
-                          className="mx-auto max-w-full max-h-full hover:border-b-2 active:border-b-6 transition-[border] cursor-pointer"
+                          className="mx-auto max-w-full max-h-full hover:border-b-2 active:border-b-6 transition-[border] cursor-pointer drop-shadow-[1px_0_0_Canvas,-1px_0_0_Canvas,0_1px_0_Canvas,0_-1px_0_Canvas]"
                           data-action="image-preview" // For delegated click handler
                         />
                       </div>
@@ -65,7 +65,7 @@ function Card({ cover, title, subtitle, link, body, extras }) {
             {extras.map((extra, index) => (
               <span
                 key={index}
-                className="inline-block bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-xs sm:text-sm"
+                className="inline-block bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-xs sm:text-sm text-shadow-none border border-[Canvas]"
               >
                 {extra}
               </span>
