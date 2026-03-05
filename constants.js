@@ -1,153 +1,31 @@
 import { createContext } from "react";
+import * as THREE from "three";
 
-function parseCardBlock(block) {
-  const varRegex = /(\S*): (.*?)(?=\s+\S*:|\s*$)/g;
+export const PATHS = {
+  testPath: new THREE.CatmullRomCurve3([
+    new THREE.Vector3(-2.25, 0.0, 2.9),
+    new THREE.Vector3(-0.75, 0.0, 2.9),
+    new THREE.Vector3(0.75, 0.0, 2.9),
+    new THREE.Vector3(2.25, 0.0, 2.9),
+  ]),
+  introPath: new THREE.CatmullRomCurve3([
+    new THREE.Vector3(-0.74, -1.58, 3.25),
+    new THREE.Vector3(-0.23, -0.84, 3.0),
+    new THREE.Vector3(1.97, -0.77, 3.0),
+    new THREE.Vector3(3.3, -0.8, 3.0),
+  ]),
+  educationPath: new THREE.CatmullRomCurve3([
+    new THREE.Vector3(0.2, -1.32, 3.0),
+    new THREE.Vector3(1.22, 0.07, 1.56),
+    new THREE.Vector3(2.31, 0.92, 1.41),
+    new THREE.Vector3(5.13, 5.96, -0.63),
+  ]),
+};
 
-  const matches = [...block.text.matchAll(varRegex)];
+export const DOCUMENT = `
+@path introPath
 
-  let cardVars = {};
-
-  matches.forEach((match) => {
-    const key = match[1].trim();
-    const value = match[2].trim();
-
-    if (key === "cover") {
-      if (value.includes(".")) {
-        cardVars.cover = {
-          type: "image",
-          url: value,
-        };
-      } else {
-        const dateParts = value.split("-").map((part) => part.trim());
-        cardVars.cover = {
-          type: "date",
-          start: dateParts[0],
-          end: dateParts[1],
-        };
-      }
-    } else if (key === "extras") {
-      const extrasList = value.split(",").map((extra) => extra.trim());
-      cardVars.extras = extrasList;
-    } else {
-      cardVars[key] = value;
-    }
-  });
-
-  return {
-    type: "card",
-    ...cardVars,
-  };
-}
-
-function parseLinksBlock(block) {
-  const linkRegex = /(\S*): (.*?)(?=\s+\S*:|\s*$)/g;
-
-  const matches = [...block.text.matchAll(linkRegex)];
-
-  const linksChildren = matches.map((match) => ({
-    type: match[1].trim(),
-    url: match[2].trim(),
-  }));
-
-  return {
-    type: "links",
-    children: linksChildren,
-  };
-}
-
-function parseDocument(document) {
-  const headingRegex = /^# /;
-  const cardBlockStartRegex = /^:::card$/;
-  const linksBlockStartRegex = /^:::links$/;
-  const captionBlockStartRegex = /^:::caption$/;
-  const blockEndRegex = /^:::$/;
-  const spacingBlockRegex = /^:::spacing:::$/;
-
-  let sections = document.split("---");
-
-  sections = sections.map((section) => {
-    const sectionChildren = [];
-
-    const lines = section
-      .split("\n")
-      .map((line) => line.trim())
-      .filter((line) => line.length > 0);
-
-    let currBlock = null;
-
-    lines.forEach((line) => {
-      if (headingRegex.test(line)) {
-        if (currBlock) {
-          sectionChildren.push(currBlock);
-          currBlock = null;
-        }
-
-        sectionChildren.push({
-          type: "heading",
-          text: line.replace(headingRegex, "").trim(),
-        });
-      } else if (cardBlockStartRegex.test(line)) {
-        currBlock = {
-          type: "card",
-          text: "",
-        };
-      } else if (linksBlockStartRegex.test(line)) {
-        currBlock = {
-          type: "links",
-          text: "",
-        };
-      } else if (captionBlockStartRegex.test(line)) {
-        currBlock = {
-          type: "caption",
-          text: "",
-        };
-      } else if (spacingBlockRegex.test(line)) {
-        if (currBlock) {
-          sectionChildren.push(currBlock);
-          currBlock = null;
-        }
-
-        sectionChildren.push({
-          type: "spacing",
-        });
-      } else if (blockEndRegex.test(line)) {
-        if (currBlock.type === "card") {
-          currBlock = parseCardBlock(currBlock);
-        } else if (currBlock.type === "links") {
-          currBlock = parseLinksBlock(currBlock);
-        }
-
-        sectionChildren.push(currBlock);
-        currBlock = null;
-      } else {
-        if (currBlock) {
-          currBlock.text += currBlock.text ? " " + line : line;
-        } else {
-          currBlock = {
-            type: "paragraph",
-            text: line,
-          };
-        }
-      }
-    });
-
-    if (currBlock) {
-      sectionChildren.push(currBlock);
-    }
-
-    return {
-      type: "section",
-      children: sectionChildren,
-    };
-  });
-
-  return {
-    type: "document",
-    children: sections,
-  };
-}
-
-export const DOCUMENT = `# Hello, I'm Totsuka.
+# Hello, I'm Totsuka.
 
 I build user-facing applications, and am interested in how integrating AI 
 can unlock powerful, meaningful experiences for users.
@@ -165,6 +43,8 @@ When I'm not building apps, I love watching sitcoms, taking night drives,
 and exploring new places abroad.
 
 ---
+
+@path educationPath
 
 # Education
 
@@ -292,10 +172,169 @@ email: mailto:totsukatomofumi@gmail.com
 :::caption
 Built with React, Tailwind CSS, Font Awesome, GSAP, and Three.js with R3F 
 libraries, and deployed with Vercel.
-:::`;
+:::
+`;
 
 export const DOCUMENT_JSON = parseDocument(DOCUMENT);
 
 export const NUM_SECTIONS = DOCUMENT_JSON.children.length;
 
 export const APP_CONTEXT = createContext();
+
+function parseCardBlock(block) {
+  const varRegex = /(\S*): (.*?)(?=\s+\S*:|\s*$)/g;
+
+  const matches = [...block.text.matchAll(varRegex)];
+
+  let cardVars = {};
+
+  matches.forEach((match) => {
+    const key = match[1].trim();
+    const value = match[2].trim();
+
+    if (key === "cover") {
+      if (value.includes(".")) {
+        cardVars.cover = {
+          type: "image",
+          url: value,
+        };
+      } else {
+        const dateParts = value.split("-").map((part) => part.trim());
+        cardVars.cover = {
+          type: "date",
+          start: dateParts[0],
+          end: dateParts[1],
+        };
+      }
+    } else if (key === "extras") {
+      const extrasList = value.split(",").map((extra) => extra.trim());
+      cardVars.extras = extrasList;
+    } else {
+      cardVars[key] = value;
+    }
+  });
+
+  return {
+    type: "card",
+    ...cardVars,
+  };
+}
+
+function parseLinksBlock(block) {
+  const linkRegex = /(\S*): (.*?)(?=\s+\S*:|\s*$)/g;
+
+  const matches = [...block.text.matchAll(linkRegex)];
+
+  const linksChildren = matches.map((match) => ({
+    type: match[1].trim(),
+    url: match[2].trim(),
+  }));
+
+  return {
+    type: "links",
+    children: linksChildren,
+  };
+}
+
+function parseDocument(document) {
+  const headingRegex = /^# /;
+  const cardBlockStartRegex = /^:::card$/;
+  const linksBlockStartRegex = /^:::links$/;
+  const captionBlockStartRegex = /^:::caption$/;
+  const blockEndRegex = /^:::$/;
+  const spacingBlockRegex = /^:::spacing:::$/;
+  const pathRegex = /^@path /;
+
+  let sections = document.split("---");
+
+  sections = sections.map((section) => {
+    const sectionChildren = [];
+
+    const lines = section
+      .split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0);
+
+    let currBlock = null;
+
+    lines.forEach((line) => {
+      if (headingRegex.test(line)) {
+        if (currBlock) {
+          sectionChildren.push(currBlock);
+          currBlock = null;
+        }
+
+        sectionChildren.push({
+          type: "heading",
+          text: line.replace(headingRegex, "").trim(),
+        });
+      } else if (pathRegex.test(line)) {
+        if (currBlock) {
+          sectionChildren.push(currBlock);
+          currBlock = null;
+        }
+
+        sectionChildren.push({
+          type: "path",
+          path: PATHS[line.replace(pathRegex, "").trim()],
+        });
+      } else if (cardBlockStartRegex.test(line)) {
+        currBlock = {
+          type: "card",
+          text: "",
+        };
+      } else if (linksBlockStartRegex.test(line)) {
+        currBlock = {
+          type: "links",
+          text: "",
+        };
+      } else if (captionBlockStartRegex.test(line)) {
+        currBlock = {
+          type: "caption",
+          text: "",
+        };
+      } else if (spacingBlockRegex.test(line)) {
+        if (currBlock) {
+          sectionChildren.push(currBlock);
+          currBlock = null;
+        }
+
+        sectionChildren.push({
+          type: "spacing",
+        });
+      } else if (blockEndRegex.test(line)) {
+        if (currBlock.type === "card") {
+          currBlock = parseCardBlock(currBlock);
+        } else if (currBlock.type === "links") {
+          currBlock = parseLinksBlock(currBlock);
+        }
+
+        sectionChildren.push(currBlock);
+        currBlock = null;
+      } else {
+        if (currBlock) {
+          currBlock.text += currBlock.text ? " " + line : line;
+        } else {
+          currBlock = {
+            type: "paragraph",
+            text: line,
+          };
+        }
+      }
+    });
+
+    if (currBlock) {
+      sectionChildren.push(currBlock);
+    }
+
+    return {
+      type: "section",
+      children: sectionChildren,
+    };
+  });
+
+  return {
+    type: "document",
+    children: sections,
+  };
+}

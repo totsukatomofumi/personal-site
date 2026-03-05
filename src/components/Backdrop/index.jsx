@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { AnimatedText, PathControls } from "./components";
+import { AnimatedText, PathControls, PathManager } from "./components";
 import * as THREE from "three";
 
 function Backdrop(props) {
@@ -10,11 +10,17 @@ function Backdrop(props) {
           toneMapping: THREE.NoToneMapping,
         }}
       >
-        <PathControls>
+        {/* <PathManager>
           <AnimatedText>と</AnimatedText>
           <AnimatedText>つ</AnimatedText>
           <AnimatedText>か</AnimatedText>
-        </PathControls>
+        </PathManager> */}
+
+        {/* <PathControls>
+          <AnimatedText>と</AnimatedText>
+          <AnimatedText>つ</AnimatedText>
+          <AnimatedText>か</AnimatedText>
+        </PathControls> */}
       </Canvas>
     </div>
   );
