@@ -1,5 +1,11 @@
+import { Text } from "./components";
+
 function App() {
-  return <></>;
+  return (
+    <>
+      <Text />
+    </>
+  );
 }
 
 export default App;
