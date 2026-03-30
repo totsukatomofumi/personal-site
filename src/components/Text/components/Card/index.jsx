@@ -1,8 +1,6 @@
 import { Link } from "../";
 
 function Card({ cover, title, subtitle, link, body, extras }) {
-  // ========================== Render ==========================
-  // Split into unwrapped pseudo-lines grouped by semantic meaning (e.g. Cover + Title + Subtitle) for individual perspective scroll per-line animation, preserving grid layout for alignment.
   return (
     <>
       {/* ============== Cover, Title, Subtitle ============== */}
@@ -25,7 +23,7 @@ function Card({ cover, title, subtitle, link, body, extras }) {
                     );
                   case "date":
                     return (
-                      <time className="text-xs sm:text-sm">{`${cover.start} — ${cover.end}`}</time>
+                      <time className="block py-0.5 text-xs sm:py-1 sm:text-sm">{`${cover.start} — ${cover.end}`}</time>
                     );
                   default:
                     return null;
@@ -37,7 +35,7 @@ function Card({ cover, title, subtitle, link, body, extras }) {
           <div className="col-span-3 flex flex-col gap-3 sm:gap-5">
             {(title || link) && (
               <h2 className="flex text-sm font-bold sm:text-xl">
-                <span className="mr-2">{title}</span>
+                <span className={`${link ? "mr-2" : ""}`}>{title}</span>
                 {link && (
                   <span className="my-auto inline-flex h-5 w-fit items-center sm:h-7">
                     <Link href={link} size="1x" />
@@ -45,6 +43,7 @@ function Card({ cover, title, subtitle, link, body, extras }) {
                 )}
               </h2>
             )}
+
             {subtitle && <h3 className="text-sm sm:text-xl">{subtitle}</h3>}
           </div>
         </header>
@@ -52,7 +51,7 @@ function Card({ cover, title, subtitle, link, body, extras }) {
 
       {/* ======================= Body ======================= */}
       {body && (
-        <div className="grid grid-cols-4 gap-1.5 py-1.5 sm:gap-2.5 sm:py-2.5">
+        <div className="grid grid-cols-4 gap-3 py-1.5 sm:gap-5 sm:py-2.5">
           {/* =============== Left Column =============== */}
           <div className="col-span-1"></div>
 
@@ -65,12 +64,12 @@ function Card({ cover, title, subtitle, link, body, extras }) {
 
       {/* ====================== Extras ====================== */}
       {extras && (
-        <div className="grid grid-cols-4 gap-1.5 py-1.5 sm:gap-2.5 sm:py-2.5">
+        <div className="grid grid-cols-4 gap-3 py-1.5 sm:gap-5 sm:py-2.5">
           {/* =============== Left Column =============== */}
           <div className="col-span-1"></div>
 
           {/* =============== Right Column ============== */}
-          <div className="col-span-3 flex flex-wrap gap-x-1.5 gap-y-2 py-2">
+          <div className="col-span-3 flex flex-wrap gap-x-1.5 gap-y-2">
             {extras.map((extra, index) => (
               <span
                 key={index}
