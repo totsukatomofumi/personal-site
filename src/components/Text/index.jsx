@@ -1,39 +1,79 @@
-import { createRef, useRef } from "react";
+import { createRef, useRef, useState } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { SplitText } from "gsap/SplitText";
+import { useMediaQuery } from "@uidotdev/usehooks";
 import { DOCUMENT_AST, NUM_SECTIONS } from "../../../constants";
 import {
   Section,
-  Heading,
+  Header,
   Paragraph,
   Card,
   Spacing,
   Links,
-  Caption,
+  Footer,
 } from "./components";
+
+gsap.registerPlugin(SplitText);
 
 function Text() {
   const documentRef = useRef(null);
   const sectionRefs = Array.from({ length: NUM_SECTIONS }, () =>
     createRef(null),
   );
+  const [lines, setLines] = useState(
+    Array.from({ length: NUM_SECTIONS }, () => []),
+  );
 
-  console.log(DOCUMENT_AST);
+  // ======================== Split Text ========================
+  const isSmallDevice = useMediaQuery("(width >= 40rem)"); // Tailwind's 'sm' breakpoint
+
+  // Split each section into lines or pseudo-lines grouped by semantic meaning (e.g. Cover + Title + Subtitle in Card) for perspective scroll animations
+  useGSAP(
+    () => {
+      sectionRefs.forEach((sectionRef, index) => {
+        SplitText.create(sectionRef.current.children, {
+          type: "lines",
+          autoSplit: true, // Auto re-splits on width changes (e.g. resize), but not on internal property changes (e.g. text font size)
+          ignore: ".no-split", // Terminate deepSlice (i.e. nested splitting) at elements with this class
+          onSplit: (self) => {
+            Header.onSplit(self);
+            Footer.onSplit(self);
+            Card.onSplit(self);
+
+            setLines((prevLines) => {
+              const newLines = [...prevLines];
+              newLines[index] = self.lines;
+              return newLines;
+            });
+          },
+        });
+      });
+    },
+    {
+      dependencies: [isSmallDevice], // Re-run for internal property changes caused by breakpoint changes (e.g. text font size) not handled by autoSplit
+      revertOnUpdate: true, // Kill and revert all SplitText instances to prevent accumulation
+    },
+  );
+
   // ========================== Render ==========================
   return (
     // ======================== Layout ========================
     <div className="fixed top-0 left-0 flex h-dvh w-dvw">
       <div className="mx-auto h-full w-6xl max-w-dvw px-6">
-        <div className="h-full w-full max-w-138">
+        <div className="h-full w-full max-w-138 overflow-y-auto">
           {/* ============== Document ============== */}
           <div
             ref={documentRef}
             className="relative top-[30dvh] text-shadow-[-1px_-1px_0_Canvas,1px_-1px_0_Canvas,-1px_1px_0_Canvas,1px_1px_0_Canvas]"
           >
+            {/* Render document AST tree as layout components */}
             {DOCUMENT_AST.children.map((section, sectionIndex) => (
               <Section key={sectionIndex} ref={sectionRefs[sectionIndex]}>
                 {section.children.map((child, childIndex) => {
                   switch (child.type) {
-                    case "heading":
-                      return <Heading key={childIndex} {...child} />;
+                    case "header":
+                      return <Header key={childIndex} {...child} />;
                     case "paragraph":
                       return <Paragraph key={childIndex} {...child} />;
                     case "card":
@@ -42,8 +82,8 @@ function Text() {
                       return <Spacing key={childIndex} />;
                     case "links":
                       return <Links key={childIndex} {...child} />;
-                    case "caption":
-                      return <Caption key={childIndex} {...child} />;
+                    case "footer":
+                      return <Footer key={childIndex} {...child} />;
                     default:
                       return null;
                   }

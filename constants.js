@@ -67,11 +67,11 @@ function parseLinksBlock(block) {
 
 function parseDocument(document) {
   // Define line-matching regex patterns
-  const headingRegex = /^# /;
+  const headerRegex = /^# /;
   const spacingBlockRegex = /^:::spacing:::$/;
   const cardBlockStartRegex = /^:::card$/;
   const linksBlockStartRegex = /^:::links$/;
-  const captionBlockStartRegex = /^:::caption$/;
+  const footerBlockStartRegex = /^:::footer$/;
   const blockEndRegex = /^:::$/;
 
   // Split document into sections, then split each section into non-empty lines
@@ -105,17 +105,17 @@ function parseDocument(document) {
           currBlock.text += currBlock.text ? " " + line : line; // Add space between lines
         }
       } else {
-        if (headingRegex.test(line)) {
+        if (headerRegex.test(line)) {
           // Push any active block before starting
           if (currBlock) {
             sectionChildren.push(currBlock);
             currBlock = null;
           }
 
-          // Push heading directly to section children
+          // Push header directly to section children
           sectionChildren.push({
-            type: "heading",
-            text: line.replace(headingRegex, ""),
+            type: "header",
+            text: line.replace(headerRegex, ""),
           });
         } else if (spacingBlockRegex.test(line)) {
           // Push any active block before starting
@@ -152,16 +152,16 @@ function parseDocument(document) {
             type: "links",
             text: "",
           };
-        } else if (captionBlockStartRegex.test(line)) {
+        } else if (footerBlockStartRegex.test(line)) {
           // Push any active block before starting
           if (currBlock) {
             sectionChildren.push(currBlock);
             currBlock = null;
           }
 
-          // Start a new caption block
+          // Start a new footer block
           currBlock = {
-            type: "caption",
+            type: "footer",
             text: "",
           };
         }
@@ -343,7 +343,7 @@ email:: mailto:totsukatomofumi@gmail.com
 
 :::spacing:::
 
-:::caption
+:::footer
 Built with React, Tailwind CSS, Font Awesome, GSAP, and Three.js with R3F 
 libraries, and deployed with Vercel.
 :::
