@@ -2,7 +2,7 @@ import { Link } from "../";
 
 function Card({ cover, title, subtitle, link, body, extras }) {
   return (
-    <>
+    <article>
       {/* ============== Cover, Title, Subtitle ============== */}
       {(cover || title || subtitle || link) && (
         <header className="grid grid-cols-4 gap-3 py-1.5 sm:gap-5 sm:py-2.5">
@@ -34,12 +34,16 @@ function Card({ cover, title, subtitle, link, body, extras }) {
           {/* =============== Right Column ============== */}
           <div className="col-span-3 flex flex-col gap-3 sm:gap-5">
             {(title || link) && (
-              <h2 className="flex text-sm font-bold sm:text-xl">
-                <span className={`${link ? "mr-2" : ""}`}>{title}</span>
+              <h2 className="text-sm font-bold sm:text-xl">
+                <span className={`${link ? "me-2" : ""}`}>{title}</span>
                 {link && (
-                  <span className="my-auto inline-flex h-5 w-fit items-center sm:h-7">
-                    <Link href={link} size="1x" />
-                  </span>
+                  <div className="relative inline-block h-5 align-top sm:h-7">
+                    <Link
+                      href={link}
+                      size="1x"
+                      className="relative top-[50%] translate-y-[-50%]"
+                    />
+                  </div>
                 )}
               </h2>
             )}
@@ -81,7 +85,7 @@ function Card({ cover, title, subtitle, link, body, extras }) {
           </div>
         </div>
       )}
-    </>
+    </article>
   );
 }
 

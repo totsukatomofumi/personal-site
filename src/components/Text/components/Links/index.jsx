@@ -24,13 +24,14 @@ function Links({ children }) {
   };
 
   return (
-    <nav className="flex gap-3 text-lg">
+    <nav className="text-lg leading-0">
       {children.map((child, index) => (
         <Link
           key={index}
           href={child.url}
           title={titles[child.type]}
           icon={icons[child.type]}
+          className="mr-3 align-top"
         />
       ))}
     </nav>
