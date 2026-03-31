@@ -18,7 +18,7 @@ function Card({ cover, title, subtitle, link, body, extras }) {
                           <img
                             src={cover.src}
                             alt={title || ""}
-                            className="mx-auto max-h-full max-w-full cursor-pointer drop-shadow-[1px_0_0_Canvas,-1px_0_0_Canvas,0_1px_0_Canvas,0_-1px_0_Canvas] transition-[border] hover:border-b-2 active:border-b-6"
+                            className="mx-auto max-h-full max-w-full cursor-pointer drop-shadow-[0.0625rem_0_0_Canvas,-0.0625rem_0_0_Canvas,0_0.0625rem_0_Canvas,0_-0.0625rem_0_Canvas] transition-[border] hover:border-b-2 active:border-b-6"
                             data-event="image-preview" // For delegated click event handling to highest non-split ancestor since GSAP SplitText does not preserve mouse events on the split elements
                           />
                         </div>

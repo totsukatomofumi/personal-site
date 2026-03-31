@@ -82,7 +82,7 @@ function Text() {
           {/* ============== Document ============== */}
           <div
             ref={documentRef}
-            className="relative top-[30dvh] text-shadow-[-1px_-1px_0_Canvas,1px_-1px_0_Canvas,-1px_1px_0_Canvas,1px_1px_0_Canvas]"
+            className="relative top-[30dvh] text-shadow-[-0.0625rem_-0.0625rem_0_Canvas,0.0625rem_-0.0625rem_0_Canvas,-0.0625rem_0.0625rem_0_Canvas,0.0625rem_0.0625rem_0_Canvas]"
             onClick={onClick} // Delegate click events of child elements (e.g. image preview in Card) since GSAP SplitText does not preserve mouse events on the split elements
           >
             {/* Render document AST tree as layout components */}
