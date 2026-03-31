@@ -31,35 +31,27 @@ function Text() {
   );
 
   // ======================== Split Text ========================
-  const isSmallDevice = useMediaQuery("(width >= 40rem)"); // Tailwind's 'sm' breakpoint
-
   // Split each section into lines or pseudo-lines grouped by semantic meaning (e.g. Cover + Title + Subtitle in Card) for perspective scroll animations
-  useGSAP(
-    () => {
-      sectionRefs.forEach((sectionRef, index) => {
-        SplitText.create(sectionRef.current.children, {
-          type: "lines",
-          autoSplit: true, // Auto re-splits on width changes (e.g. resize), but not on internal property changes (e.g. text font size)
-          ignore: ".no-split", // Terminate deepSlice (i.e. nested splitting) at elements with this class
-          onSplit: (self) => {
-            Header.onSplit(self);
-            Footer.onSplit(self);
-            Card.onSplit(self);
+  useGSAP(() => {
+    sectionRefs.forEach((sectionRef, index) => {
+      SplitText.create(sectionRef.current.children, {
+        type: "lines",
+        autoSplit: true, // Auto re-splits on width changes (e.g. resize), but not on internal property changes (e.g. text font size)
+        ignore: ".no-split", // Terminate deepSlice (i.e. nested splitting) at elements with this class
+        onSplit: (self) => {
+          Header.onSplit(self);
+          Footer.onSplit(self);
+          Card.onSplit(self);
 
-            setLines((prevLines) => {
-              const newLines = [...prevLines];
-              newLines[index] = self.lines;
-              return newLines;
-            });
-          },
-        });
+          setLines((prevLines) => {
+            const newLines = [...prevLines];
+            newLines[index] = self.lines;
+            return newLines;
+          });
+        },
       });
-    },
-    {
-      dependencies: [isSmallDevice], // Re-run for internal property changes caused by breakpoint changes (e.g. text font size) not handled by autoSplit
-      revertOnUpdate: true, // Kill and revert all SplitText instances to prevent accumulation
-    },
-  );
+    });
+  });
 
   // ================= Delegated Event Handlers =================
   // Delegate click events of child elements (e.g. image preview in Card) to highest non-split ancestor since GSAP SplitText does not preserve mouse events on the split elements

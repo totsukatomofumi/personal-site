@@ -1,6 +1,12 @@
 @import "tailwindcss";
 
 :root {
+  font-size: clamp(
+    0rem,
+    calc(16 / 600 * 100vw),
+    1rem
+  ); /* 16px at 600px viewport width: which is Text document parent width */
+
   color-scheme: light dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;

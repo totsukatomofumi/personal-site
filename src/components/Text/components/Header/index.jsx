@@ -1,7 +1,7 @@
 function Header({ text }) {
   return (
     <header>
-      <h1 className="text-4xl font-bold sm:text-5xl" data-type="header">
+      <h1 className="text-5xl font-bold" data-type="header">
         {text}
       </h1>
     </header>
@@ -22,7 +22,7 @@ Header.onSplit = (self) => {
     const next = lines[index + 1];
 
     // Add margin-bottom to the last line containing header element
-    if (!next) line.classList.add("mb-3.5", "sm:mb-5");
+    if (!next) line.classList.add("mb-5");
   });
 };
 

@@ -1,7 +1,7 @@
 function Footer({ text }) {
   return (
     <footer>
-      <small className="block text-xs sm:text-sm" data-type="footer">
+      <small className="block text-sm" data-type="footer">
         {text}
       </small>
     </footer>
@@ -23,10 +23,10 @@ Footer.onSplit = (self) => {
     const next = lines[index + 1];
 
     // Add margin-top to the first line containing footer element
-    if (!prev) line.classList.add("mt-1.5", "sm:mt-2.5");
+    if (!prev) line.classList.add("mt-2.5");
 
     // Add margin-bottom to the last line containing footer element
-    if (!next) line.classList.add("mb-1.5", "sm:mb-2.5");
+    if (!next) line.classList.add("mb-2.5");
   });
 };
 
