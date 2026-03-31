@@ -1,3 +1,5 @@
+import { createContext } from "react";
+
 function parseCardBlock(block) {
   // Define regex patterns for card block vars
   const varRegex = /(\S*):: (.*?)(?=\s\S*::|$)/g;
@@ -352,3 +354,5 @@ libraries, and deployed with Vercel.
 export const DOCUMENT_AST = parseDocument(DOCUMENT);
 
 export const NUM_SECTIONS = DOCUMENT_AST.children.length;
+
+export const APP_CONTEXT = createContext();

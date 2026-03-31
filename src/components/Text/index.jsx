@@ -1,9 +1,13 @@
-import { createRef, useRef, useState } from "react";
+import { createRef, useContext, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { SplitText } from "gsap/SplitText";
 import { useMediaQuery } from "@uidotdev/usehooks";
-import { DOCUMENT_AST, NUM_SECTIONS } from "../../../constants";
+import {
+  APP_CONTEXT as AppContext,
+  DOCUMENT_AST,
+  NUM_SECTIONS,
+} from "../../../constants";
 import {
   Section,
   Header,
@@ -17,6 +21,7 @@ import {
 gsap.registerPlugin(SplitText);
 
 function Text() {
+  const appContext = useContext(AppContext);
   const documentRef = useRef(null);
   const sectionRefs = Array.from({ length: NUM_SECTIONS }, () =>
     createRef(null),
@@ -56,6 +61,18 @@ function Text() {
     },
   );
 
+  // ================= Delegated Event Handlers =================
+  // Delegate click events of child elements (e.g. image preview in Card) to highest non-split ancestor since GSAP SplitText does not preserve mouse events on the split elements
+  const onClick = (e) => {
+    switch (e.target.dataset.event) {
+      case "image-preview":
+        appContext.openImagePreview(e.target.src, e.target.alt);
+        break;
+      default:
+        break;
+    }
+  };
+
   // ========================== Render ==========================
   return (
     // ======================== Layout ========================
@@ -66,6 +83,7 @@ function Text() {
           <div
             ref={documentRef}
             className="relative top-[30dvh] text-shadow-[-1px_-1px_0_Canvas,1px_-1px_0_Canvas,-1px_1px_0_Canvas,1px_1px_0_Canvas]"
+            onClick={onClick} // Delegate click events of child elements (e.g. image preview in Card) since GSAP SplitText does not preserve mouse events on the split elements
           >
             {/* Render document AST tree as layout components */}
             {DOCUMENT_AST.children.map((section, sectionIndex) => (

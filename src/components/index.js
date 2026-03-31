@@ -1,3 +1,4 @@
+import ImagePreview from "./ImagePreview";
 import Text from "./Text";
 
-export { Text };
+export { ImagePreview, Text };
