@@ -32,7 +32,7 @@ function ScrollControls({ animationsBySection }) {
 
         // Aggregate all animations for the section into the timeline
         for (const animation of animations) {
-          timeline.add(animation);
+          timeline.add(animation, 0);
         }
       });
     },
