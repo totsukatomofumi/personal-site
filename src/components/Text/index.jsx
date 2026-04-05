@@ -2,7 +2,6 @@ import { createRef, useContext, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { SplitText } from "gsap/SplitText";
-import { useMediaQuery } from "@uidotdev/usehooks";
 import {
   APP_CONTEXT as AppContext,
   DOCUMENT_AST,
@@ -65,12 +64,45 @@ function Text() {
     }
   };
 
+  // ===================== Parallax Scroll ======================
+  // Translate document vertically during scroll for parallax effect
+  useGSAP(
+    () => {
+      let cumulativeY = 0;
+
+      // Create animations
+      const animations = sectionRefs.map((sectionRef) => {
+        return gsap.to(documentRef.current, {
+          y: (cumulativeY -= sectionRef.current.offsetHeight),
+          ease: "none",
+        });
+      });
+
+      // Register animations
+      animations.forEach((animation, sectionIndex) => {
+        appContext.registerSectionAnimation(animation, sectionIndex);
+      });
+
+      // Cleanup
+      return () => {
+        // Remove animations
+        animations.forEach((animation) => {
+          appContext.removeSectionAnimation(animation);
+        });
+      };
+    },
+    {
+      dependencies: [lines],
+      revertOnUpdate: true,
+    },
+  );
+
   // ========================== Render ==========================
   return (
     // ======================== Layout ========================
     <div className="fixed top-0 left-0 flex h-dvh w-dvw">
       <div className="mx-auto h-full w-6xl max-w-dvw px-6">
-        <div className="h-full w-full max-w-138 overflow-y-auto">
+        <div className="h-full w-full max-w-138">
           {/* ============== Document ============== */}
           <div
             ref={documentRef}
