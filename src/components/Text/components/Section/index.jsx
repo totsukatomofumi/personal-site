@@ -1,6 +1,6 @@
-function Section({ children, className, ...props }) {
+function Section({ ref, children }) {
   return (
-    <section className={`pb-12 ${className || ""}`} {...props}>
+    <section ref={ref} className="pb-12 transform-3d">
       {children}
     </section>
   );

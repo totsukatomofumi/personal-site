@@ -1,6 +1,6 @@
 function Footer({ text }) {
   return (
-    <footer>
+    <footer className="transform-3d">
       <small className="block text-sm" data-type="footer">
         {text}
       </small>

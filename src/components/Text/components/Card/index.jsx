@@ -5,7 +5,7 @@ function Card({ cover, title, subtitle, link, body, extras }) {
     <>
       {/* ============== Cover, Title, Subtitle ============== */}
       {(cover || title || subtitle || link) && (
-        <header>
+        <header className="transform-3d">
           <div className="no-split grid grid-cols-4 gap-5 py-2.5">
             {/* =============== Left Column =============== */}
             <div className="relative col-span-1">
@@ -58,8 +58,8 @@ function Card({ cover, title, subtitle, link, body, extras }) {
 
       {/* ======================= Body ======================= */}
       {body && (
-        <div className="pl-[calc(25%+0.3125rem)]">
-          <p className="block text-sm" data-type="card-body">
+        <div className="pl-[calc(25%+0.3125rem)] transform-3d">
+          <p className="text-sm" data-type="card-body">
             {body}
           </p>
         </div>
@@ -67,7 +67,7 @@ function Card({ cover, title, subtitle, link, body, extras }) {
 
       {/* ====================== Extras ====================== */}
       {extras && (
-        <footer className="pl-[calc(25%+0.3125rem)]">
+        <footer className="pl-[calc(25%+0.3125rem)] transform-3d">
           {extras.map((extra, index) => (
             <span
               key={index}

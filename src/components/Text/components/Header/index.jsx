@@ -1,6 +1,6 @@
 function Header({ text }) {
   return (
-    <header>
+    <header className="transform-3d">
       <h1 className="text-5xl font-bold" data-type="header">
         {text}
       </h1>

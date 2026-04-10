@@ -1,6 +1,6 @@
 function Spacing() {
   return (
-    <div className="w-full">
+    <div className="transform-3d">
       <div className="h-12" />
     </div>
   );

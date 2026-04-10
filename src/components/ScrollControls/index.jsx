@@ -34,6 +34,9 @@ function ScrollControls({ animationsBySection }) {
         for (const animation of animations) {
           timeline.add(animation, 0);
         }
+
+        // Sync all child playheads and render the initial state of the timeline after adding all section animations (important for preventing potential rendering issues on initial load due to race conditions)
+        timeline.progress(0);
       });
     },
     {
