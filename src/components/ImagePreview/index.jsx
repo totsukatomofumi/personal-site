@@ -34,7 +34,7 @@ function ImagePreview({ open, onClose, src, alt }) {
     <dialog
       ref={selfRef}
       open={open}
-      className="invisible fixed top-0 left-0 z-50 flex h-dvh w-dvw items-center justify-center bg-transparent p-6 opacity-0 backdrop-blur-xs backdrop-brightness-50"
+      className="invisible fixed top-0 left-0 z-50 flex h-dvh w-full items-center justify-center bg-transparent p-6 opacity-0 backdrop-blur-xs backdrop-brightness-50"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       {/* ======================== Close Button ====================== */}

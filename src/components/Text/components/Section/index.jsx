@@ -1,6 +1,9 @@
 function Section({ ref, children }) {
   return (
-    <section ref={ref} className="pb-12 transform-3d">
+    <section
+      ref={ref}
+      className="translate-z-[0.01px] pb-12 will-change-transform transform-3d"
+    >
       {children}
     </section>
   );

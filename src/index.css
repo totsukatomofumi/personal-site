@@ -9,10 +9,9 @@
 
   font-size: clamp(
     0rem,
-    calc(16 / 600 * 100vw),
+    calc(1 / 37.5 * 100vw),
     1rem
-  ); /* 16px at 600px viewport width: which is Text document parent width */
+  ); /* 1rem (16px) at 37.5rem (600px) viewport width: which is Text document parent width */
 
-  overscroll-behavior-y: none;
   scroll-snap-type: y mandatory;
 }

@@ -6,6 +6,10 @@ import { NUM_SECTIONS } from "../../../constants";
 
 gsap.registerPlugin(ScrollTrigger);
 
+ScrollTrigger.config({
+  ignoreMobileResize: true, // Disable automatic refresh on mobile resize to prevent potential performance issues and layout thrashing during orientation changes or dynamic viewport adjustments (e.g. iOS Safari address bar show/hide)
+});
+
 function ScrollControls({ animationsBySection }) {
   // ==================== ScrollTrigger Setup ====================
   const scrollTriggerRefs = useMemo(
@@ -26,7 +30,8 @@ function ScrollControls({ animationsBySection }) {
             trigger,
             start: "top top",
             end: "bottom top",
-            scrub: true,
+            scrub: 0.15, // Reduce choppiness with smoothing (150ms, TailwindCSS default transition duration)
+            snap: 1, // Fallback snapping if CSS scroll snapping fails for any reason (e.g. iOS Safari snapping issues)
           },
         });
 
@@ -45,8 +50,9 @@ function ScrollControls({ animationsBySection }) {
     },
   );
 
+  // ========================== Render ===========================
   return scrollTriggerRefs.map((ref, i) => (
-    <div key={i} ref={ref} className="h-dvh snap-start snap-always" />
+    <div key={i} ref={ref} className="h-lvh snap-start snap-always" />
   ));
 }
 

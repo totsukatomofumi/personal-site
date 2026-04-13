@@ -1,4 +1,11 @@
-import { createRef, useContext, useMemo, useRef, useState } from "react";
+import {
+  createRef,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { SplitText } from "gsap/SplitText";
@@ -36,12 +43,15 @@ function Text() {
     sectionRefs.forEach((sectionRef, index) => {
       SplitText.create(sectionRef.current.children, {
         type: "lines",
-        autoSplit: true, // Auto re-splits on width changes (e.g. resize), but not on internal property changes (e.g. text font size)
-        ignore: ".no-split", // Terminate deepSlice (i.e. nested splitting) at elements with this class
         mask: "lines",
+        linesClass:
+          "translate-z-[0.01px] will-change-transform will-change-opacity _", // _ absorbs the -mask suffix to prevent breaking Tailwind utilities
+        ignore: ".no-split", // Terminate deepSlice (i.e. nested splitting) at elements with this class
+        autoSplit: true, // Auto re-splits on width changes (e.g. resize), but not on internal property changes (e.g. text font size)
         onRevert: () => {
-          // Reset GSAP styles on section element to ensure correct re-splitting
-          gsap.set(sectionRef.current, { clearProps: true });
+          // Reset GSAP styles on section element (if exist) to ensure correct re-splitting
+          sectionRef.current &&
+            gsap.set(sectionRef.current, { clearProps: true });
         },
         onSplit: (self) => {
           // Call onSplit of child components to perform any necessary pre-processing (e.g. setting paddings on Header for correct spacing between lines)
@@ -291,16 +301,59 @@ function Text() {
     },
   );
 
+  // ==================== Responsive Scaling ====================
+  const [scale, setScale] = useState(1);
+
+  // Create hidden divs with font sizes of 1rem and medium to calculate scale ratio for responsive scaling of styles that were unable to be scaled by root em through CSS
+  useEffect(() => {
+    const mediumDiv = document.createElement("div");
+    mediumDiv.style.fontSize = "medium";
+    mediumDiv.style.position = "absolute";
+    mediumDiv.style.visibility = "hidden";
+
+    document.body.appendChild(mediumDiv);
+
+    const rootEmDiv = document.createElement("div");
+    rootEmDiv.style.fontSize = "1rem";
+    rootEmDiv.style.position = "absolute";
+    rootEmDiv.style.visibility = "hidden";
+
+    document.body.appendChild(rootEmDiv);
+
+    let requestId;
+
+    const callback = () => {
+      const mediumFontSize = parseFloat(getComputedStyle(mediumDiv).fontSize);
+      const rootEmFontSize = parseFloat(getComputedStyle(rootEmDiv).fontSize);
+      const newScale = rootEmFontSize / mediumFontSize;
+
+      setScale(newScale);
+
+      requestId = requestAnimationFrame(callback);
+    };
+
+    requestId = requestAnimationFrame(callback);
+
+    return () => {
+      cancelAnimationFrame(requestId);
+      document.body.removeChild(mediumDiv);
+      document.body.removeChild(rootEmDiv);
+    };
+  }, []);
+
   // ========================== Render ==========================
   return (
     // ======================== Layout ========================
-    <div className="fixed top-0 left-0 flex h-dvh w-dvw">
-      <div className="mx-auto h-full w-6xl max-w-dvw px-6">
+    <div className="fixed top-0 left-0 flex h-lvh w-full">
+      <div className="mx-auto h-full w-6xl max-w-full px-6">
         <div className="h-full w-full max-w-138 perspective-normal">
           {/* ============== Document ============== */}
           <div
             ref={documentRef}
-            className="relative top-[30dvh] text-shadow-[-0.0625rem_-0.0625rem_0_Canvas,0.0625rem_-0.0625rem_0_Canvas,-0.0625rem_0.0625rem_0_Canvas,0.0625rem_0.0625rem_0_Canvas] transform-3d"
+            className="relative will-change-transform text-shadow-[-0.0625rem_-0.0625rem_0_Canvas,0.0625rem_-0.0625rem_0_Canvas,-0.0625rem_0.0625rem_0_Canvas,0.0625rem_0.0625rem_0_Canvas] transform-3d"
+            style={{
+              top: `calc(${scale} * 30lvh)`, // Initial position of document before parallax scroll animation, scaled repsponsively with viewport height and calculated scale ratio
+            }}
             onClick={onClick} // Delegate click events of child elements (e.g. image preview in Card) since GSAP SplitText does not preserve mouse events on the split elements
           >
             {/* Render document AST tree as layout components */}
