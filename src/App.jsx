@@ -60,7 +60,10 @@ function App() {
     <AppContext value={contextValue}>
       <ImagePreview {...imagePreview} onClose={closeImagePreview} />
       <Text />
-      <ScrollControls animationsBySection={animationsBySection} />
+      <ScrollControls
+        animationsBySection={animationsBySection}
+        isImagePreviewOpen={imagePreview.open}
+      />
     </AppContext>
   );
 }

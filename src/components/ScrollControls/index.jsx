@@ -1,4 +1,4 @@
-import { createRef, useMemo } from "react";
+import { createRef, useEffect, useMemo } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -10,7 +10,7 @@ ScrollTrigger.config({
   ignoreMobileResize: true, // Disable automatic refresh on mobile resize to prevent potential performance issues and layout thrashing during orientation changes or dynamic viewport adjustments (e.g. iOS Safari address bar show/hide)
 });
 
-function ScrollControls({ animationsBySection }) {
+function ScrollControls({ animationsBySection, isImagePreviewOpen }) {
   // ==================== ScrollTrigger Setup ====================
   const scrollTriggerRefs = useMemo(
     () => Array.from({ length: NUM_SECTIONS }, () => createRef()),
@@ -50,6 +50,19 @@ function ScrollControls({ animationsBySection }) {
       revertOnUpdate: true,
     },
   );
+
+  // ===================== Disabling Scroll ======================
+  // Disable scrolling when image preview is open by targetting the scroller (i.e. root) element
+  useEffect(() => {
+    if (isImagePreviewOpen) {
+      document.documentElement.style.overflowY = "hidden";
+      document.documentElement.style.scrollSnapType = "none"; // Disable CSS scroll snapping to prevent potential scroll jank when closing image preview
+    }
+    return () => {
+      document.documentElement.style.overflowY = "";
+      document.documentElement.style.scrollSnapType = "";
+    };
+  }, [isImagePreviewOpen]);
 
   // ========================== Render ===========================
   return scrollTriggerRefs.map((ref, i) => (
