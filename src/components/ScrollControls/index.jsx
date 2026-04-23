@@ -32,6 +32,7 @@ function ScrollControls({ animationsBySection }) {
             end: "bottom top",
             scrub: 0.15, // Reduce choppiness with smoothing (150ms, TailwindCSS default transition duration)
             snap: 1, // Fallback snapping if CSS scroll snapping fails for any reason (e.g. iOS Safari snapping issues)
+            preventOverlaps: true, // Prevent choppy animations after native scroll position restoration on page refresh
           },
         });
 
@@ -39,10 +40,10 @@ function ScrollControls({ animationsBySection }) {
         for (const animation of animations) {
           timeline.add(animation, 0);
         }
-
-        // Sync all child playheads and render the initial state of the timeline after adding all section animations (important for preventing potential rendering issues on initial load due to race conditions)
-        timeline.progress(0);
       });
+
+      // Refresh ScrollTrigger instances after adding all section animations (important for preventing potential rendering issues on initial load)
+      ScrollTrigger.refresh(true);
     },
     {
       dependencies: [animationsBySection],
