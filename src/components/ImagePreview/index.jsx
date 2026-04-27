@@ -1,8 +1,9 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 function ImagePreview({ open, onClose, src, alt }) {
   const selfRef = useRef();
@@ -29,12 +30,51 @@ function ImagePreview({ open, onClose, src, alt }) {
     },
   );
 
+  // ======================= Responsive Image Sizing ======================
+  const [rootEm, setRootEm] = useState(16);
+  const { width } = useWindowSize();
+
+  useEffect(() => {
+    const rootEmDiv = document.createElement("div");
+    rootEmDiv.style.fontSize = "1rem";
+    rootEmDiv.style.position = "absolute";
+    rootEmDiv.style.visibility = "hidden";
+
+    document.body.appendChild(rootEmDiv);
+
+    let requestId;
+
+    const callback = () => {
+      const rootEmFontSize = parseFloat(getComputedStyle(rootEmDiv).fontSize);
+
+      setRootEm(rootEmFontSize);
+
+      requestId = requestAnimationFrame(callback);
+    };
+
+    requestId = requestAnimationFrame(callback);
+
+    return () => {
+      cancelAnimationFrame(requestId);
+      document.body.removeChild(rootEmDiv);
+    };
+  }, []);
+
+  const scale = Math.min(
+    Math.max((width - 37.5 * rootEm) / (96 * rootEm - 37.5 * rootEm), 0),
+    1,
+  );
+
   // =============================== Render ===============================
   return (
     <dialog
       ref={selfRef}
       open={open}
-      className="invisible fixed top-0 left-0 z-50 flex h-dvh w-full items-center justify-center bg-transparent p-6 opacity-0 backdrop-blur-xs backdrop-brightness-50"
+      className="invisible fixed top-0 left-0 z-50 flex h-dvh w-full items-center justify-center bg-transparent opacity-0 backdrop-blur-xs backdrop-brightness-50"
+      style={{
+        paddingInline: `calc(${scale} * (15vw - 1.5rem) + 1.5rem)`,
+        paddingBlock: `calc(${scale} * (15vh - 1.5rem) + 1.5rem)`,
+      }}
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       {/* ======================== Close Button ====================== */}
@@ -48,11 +88,7 @@ function ImagePreview({ open, onClose, src, alt }) {
       </div>
 
       {/* =========================== Image =========================== */}
-      <img
-        className="max-h-full max-w-full lg:max-h-[70%] lg:max-w-[70%]"
-        src={src}
-        alt={alt}
-      />
+      <img className="max-h-full max-w-full" src={src} alt={alt} />
     </dialog>
   );
 }
