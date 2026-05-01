@@ -58,12 +58,15 @@ function App() {
   // ========================== Render ==========================
   return (
     <AppContext value={contextValue}>
-      <ImagePreview {...imagePreview} onClose={closeImagePreview} />
-      <Text />
+      {/* ==================== App Core ==================== */}
       <ScrollControls
         animationsBySection={animationsBySection}
         isImagePreviewOpen={imagePreview.open}
       />
+      <ImagePreview {...imagePreview} onClose={closeImagePreview} />
+
+      {/* =================== App Content ================== */}
+      <Text />
     </AppContext>
   );
 }

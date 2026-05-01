@@ -350,7 +350,7 @@ function Text() {
           {/* ============== Document ============== */}
           <div
             ref={documentRef}
-            className="relative will-change-transform text-shadow-[-0.0625rem_-0.0625rem_0_Canvas,0.0625rem_-0.0625rem_0_Canvas,-0.0625rem_0.0625rem_0_Canvas,0.0625rem_0.0625rem_0_Canvas] transform-3d"
+            className="relative transform-gpu will-change-transform text-shadow-[-0.0625rem_-0.0625rem_0_Canvas,0.0625rem_-0.0625rem_0_Canvas,-0.0625rem_0.0625rem_0_Canvas,0.0625rem_0.0625rem_0_Canvas] transform-3d"
             style={{
               top: `calc(${scale} * 30lvh)`, // Initial position of document before parallax scroll animation, scaled repsponsively with viewport height and calculated scale ratio
             }}

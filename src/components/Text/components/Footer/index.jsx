@@ -1,6 +1,6 @@
 function Footer({ text }) {
   return (
-    <footer className="transform-3d">
+    <footer className="transform-gpu transform-3d">
       <small className="block text-sm" data-type="footer">
         {text}
       </small>

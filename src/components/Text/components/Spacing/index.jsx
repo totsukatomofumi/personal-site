@@ -1,6 +1,6 @@
 function Spacing() {
   return (
-    <div className="transform-3d">
+    <div className="transform-gpu transform-3d">
       <div className="h-12" />
     </div>
   );

@@ -24,7 +24,7 @@ function Links({ children }) {
   };
 
   return (
-    <nav className="text-lg leading-0 transform-3d">
+    <nav className="transform-gpu text-lg leading-0 transform-3d">
       {children.map((child, index) => (
         <Link
           key={index}
