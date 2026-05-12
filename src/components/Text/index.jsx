@@ -24,8 +24,6 @@ import {
   Footer,
 } from "./components";
 
-gsap.registerPlugin(SplitText);
-
 function Text() {
   const appContext = useContext(AppContext);
   const documentRef = useRef(null);
@@ -40,7 +38,7 @@ function Text() {
   // ======================== Split Text ========================
   // Split each section into lines or pseudo-lines grouped by semantic meaning (e.g. Cover + Title + Subtitle in Card) for perspective scroll animations
   useGSAP(() => {
-    sectionRefs.forEach((sectionRef, index) => {
+    sectionRefs.forEach((sectionRef, sectionIndex) => {
       SplitText.create(sectionRef.current.children, {
         type: "lines",
         mask: "lines",
@@ -49,9 +47,8 @@ function Text() {
         ignore: ".no-split", // Terminate deepSlice (i.e. nested splitting) at elements with this class
         autoSplit: true, // Auto re-splits on width changes (e.g. resize), but not on internal property changes (e.g. text font size)
         onRevert: () => {
-          // Reset GSAP styles on section element (if exist) to ensure correct re-splitting
-          sectionRef.current &&
-            gsap.set(sectionRef.current, { clearProps: true });
+          // Reset GSAP styles on section element to ensure correct re-splitting, else layout components do not split into lines occasionally on subsequent splits on resize
+          gsap.set(sectionRef.current, { clearProps: true });
         },
         onSplit: (self) => {
           // Call onSplit of child components to perform any necessary pre-processing (e.g. setting paddings on Header for correct spacing between lines)
@@ -65,9 +62,9 @@ function Text() {
           setLinesBySection((prevLinesBySection) => {
             const newLinesBySection = [...prevLinesBySection];
 
-            newLinesBySection[index] = lines.map((line, i) => ({
+            newLinesBySection[sectionIndex] = lines.map((line, lineIndex) => ({
               inner: line,
-              outer: masks[i],
+              outer: masks[lineIndex],
             }));
 
             return newLinesBySection;
