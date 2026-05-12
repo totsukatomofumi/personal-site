@@ -31,7 +31,7 @@ function Links({ children }) {
           href={child.url}
           title={titles[child.type]}
           icon={icons[child.type]}
-          className="mr-3 align-top"
+          className="mr-3.5 align-top"
         />
       ))}
     </nav>

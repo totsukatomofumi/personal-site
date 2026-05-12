@@ -37,7 +37,10 @@ function Card({ cover, title, subtitle, link, body, extras }) {
             <div className="col-span-3 flex flex-col gap-5">
               {(title || link) && (
                 <h2 className="text-xl font-bold">
-                  <span className={`${link ? "me-2" : ""}`}>{title}</span>
+                  <span>
+                    {title}
+                    {link && " "}
+                  </span>
                   {link && (
                     <div className="relative inline-block h-7 align-top">
                       <Link

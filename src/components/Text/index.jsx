@@ -36,7 +36,7 @@ function Text() {
         type: "lines",
         mask: "lines",
         linesClass:
-          "translate-z-[0.01px] will-change-transform will-change-opacity _", // _ absorbs the -mask suffix to prevent breaking Tailwind utilities
+          "will-change-opacity flow-root! translate-z-[0.01px] will-change-transform _", // flow-root! creates BFC to account for child margins in height calculation (!important to override inline styles set by SplitText); _ absorbs the -mask suffix to prevent breaking Tailwind utilities
         ignore: ".no-split", // Terminate deepSlice (i.e. nested splitting) at elements with this class
         autoSplit: true, // Auto re-splits on width changes (e.g. resize), but not on internal property changes (e.g. text font size)
         onRevert: () => {
