@@ -1,12 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { useWindowSize } from "@uidotdev/usehooks";
+import { APP_CONTEXT as AppContext } from "../../../constants";
 
 function ImagePreview({ open, onClose, src, alt }) {
   const selfRef = useRef();
+  const appContext = useContext(AppContext);
 
   // ======================== Open/Close Animation ========================
   useGSAP(
@@ -30,40 +31,16 @@ function ImagePreview({ open, onClose, src, alt }) {
     },
   );
 
-  // ======================= Responsive Image Sizing ======================
-  const [rootEm, setRootEm] = useState(16);
-  const { width } = useWindowSize();
-
-  useEffect(() => {
-    const rootEmDiv = document.createElement("div");
-    rootEmDiv.style.fontSize = "1rem";
-    rootEmDiv.style.position = "absolute";
-    rootEmDiv.style.visibility = "hidden";
-
-    document.body.appendChild(rootEmDiv);
-
-    let requestId;
-
-    const callback = () => {
-      const rootEmFontSize = parseFloat(getComputedStyle(rootEmDiv).fontSize);
-
-      setRootEm(rootEmFontSize);
-
-      requestId = requestAnimationFrame(callback);
-    };
-
-    requestId = requestAnimationFrame(callback);
-
-    return () => {
-      cancelAnimationFrame(requestId);
-      document.body.removeChild(rootEmDiv);
-    };
-  }, []);
-
+  // ======================= Responsive Scaling ======================
+  const { windowWidthPx, rootEmFontSizePx } = appContext;
   const scale = Math.min(
-    Math.max((width - 37.5 * rootEm) / (96 * rootEm - 37.5 * rootEm), 0),
+    Math.max(
+      (windowWidthPx - 37.5 * rootEmFontSizePx) /
+        (96 * rootEmFontSizePx - 37.5 * rootEmFontSizePx),
+      0,
+    ),
     1,
-  );
+  ); // Scale from 0 to 1 as window width increases from the Text document's maximum width including parent padding (36rem / 576px) to the 2xl breakpoint (96rem / 1536px)
 
   // =============================== Render ===============================
   return (

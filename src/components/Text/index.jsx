@@ -1,11 +1,4 @@
-import {
-  createRef,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { createRef, useContext, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { SplitText } from "gsap/SplitText";
@@ -299,44 +292,8 @@ function Text() {
   );
 
   // ==================== Responsive Scaling ====================
-  const [scale, setScale] = useState(1);
-
-  // Create hidden divs with font sizes of 1rem and medium to calculate scale ratio for responsive scaling of styles that were unable to be scaled by root em through CSS
-  useEffect(() => {
-    const mediumDiv = document.createElement("div");
-    mediumDiv.style.fontSize = "medium";
-    mediumDiv.style.position = "absolute";
-    mediumDiv.style.visibility = "hidden";
-
-    document.body.appendChild(mediumDiv);
-
-    const rootEmDiv = document.createElement("div");
-    rootEmDiv.style.fontSize = "1rem";
-    rootEmDiv.style.position = "absolute";
-    rootEmDiv.style.visibility = "hidden";
-
-    document.body.appendChild(rootEmDiv);
-
-    let requestId;
-
-    const callback = () => {
-      const mediumFontSize = parseFloat(getComputedStyle(mediumDiv).fontSize);
-      const rootEmFontSize = parseFloat(getComputedStyle(rootEmDiv).fontSize);
-      const newScale = rootEmFontSize / mediumFontSize;
-
-      setScale(newScale);
-
-      requestId = requestAnimationFrame(callback);
-    };
-
-    requestId = requestAnimationFrame(callback);
-
-    return () => {
-      cancelAnimationFrame(requestId);
-      document.body.removeChild(mediumDiv);
-      document.body.removeChild(rootEmDiv);
-    };
-  }, []);
+  const { mediumFontSizePx, rootEmFontSizePx } = appContext;
+  const scale = rootEmFontSizePx / mediumFontSizePx; // Calculate scale ratio for responsive scaling of styles that were unable to be scaled by root em through CSS
 
   // ========================== Render ==========================
   return (

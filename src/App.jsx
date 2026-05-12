@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { ImagePreview, ScrollControls, Text } from "./components";
-import { APP_CONTEXT as AppContext, NUM_SECTIONS } from "../constants";
+import { useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
+import { useWindowSize } from "@uidotdev/usehooks";
+import { APP_CONTEXT as AppContext, NUM_SECTIONS } from "../constants";
+import { ImagePreview, ScrollControls, Text } from "./components";
 
 // ===================== Global GSAP Setup =====================
 gsap.defaults({
@@ -21,6 +22,72 @@ gsap.registerPlugin(SplitText);
 // ======================= App Component =======================
 function App() {
   const contextValue = {};
+
+  // ===================== Responsive Setup =====================
+  const { width: windowWidthPx, height: windowHeightPx } = useWindowSize();
+  const [mediumFontSizePx, setMediumFontSizePx] = useState(
+    parseFloat(getComputedStyle(document.documentElement).fontSize),
+  );
+  const [rootEmFontSizePx, setRootEmFontSizePx] = useState(
+    parseFloat(getComputedStyle(document.documentElement).fontSize),
+  );
+
+  useEffect(() => {
+    const mediumFontSizeDiv = document.createElement("div");
+    mediumFontSizeDiv.style.fontSize = "medium";
+    mediumFontSizeDiv.style.position = "absolute";
+    mediumFontSizeDiv.style.visibility = "hidden";
+    mediumFontSizeDiv.textContent = "M";
+    document.body.appendChild(mediumFontSizeDiv);
+
+    const mediumFontSizeDivResizeObserverCallback = () => {
+      const mediumFontSizePx = parseFloat(
+        getComputedStyle(mediumFontSizeDiv).fontSize,
+      );
+
+      setMediumFontSizePx(mediumFontSizePx);
+    };
+
+    const mediumFontSizeDivResizeObserver = new ResizeObserver(
+      mediumFontSizeDivResizeObserverCallback,
+    );
+    mediumFontSizeDivResizeObserver.observe(mediumFontSizeDiv);
+    mediumFontSizeDivResizeObserverCallback();
+
+    const rootEmFontSizeDiv = document.createElement("div");
+    rootEmFontSizeDiv.style.fontSize = "1rem";
+    rootEmFontSizeDiv.style.position = "absolute";
+    rootEmFontSizeDiv.style.visibility = "hidden";
+    rootEmFontSizeDiv.textContent = "M";
+    document.body.appendChild(rootEmFontSizeDiv);
+
+    const rootEmFontSizeDivResizeObserverCallback = () => {
+      const rootEmFontSizePx = parseFloat(
+        getComputedStyle(rootEmFontSizeDiv).fontSize,
+      );
+
+      setRootEmFontSizePx(rootEmFontSizePx);
+    };
+
+    const rootEmFontSizeDivResizeObserver = new ResizeObserver(
+      rootEmFontSizeDivResizeObserverCallback,
+    );
+    rootEmFontSizeDivResizeObserver.observe(rootEmFontSizeDiv);
+    rootEmFontSizeDivResizeObserverCallback();
+
+    return () => {
+      mediumFontSizeDivResizeObserver.disconnect();
+      document.body.removeChild(mediumFontSizeDiv);
+
+      rootEmFontSizeDivResizeObserver.disconnect();
+      document.body.removeChild(rootEmFontSizeDiv);
+    };
+  }, []);
+
+  contextValue.windowWidthPx = windowWidthPx;
+  contextValue.windowHeightPx = windowHeightPx;
+  contextValue.mediumFontSizePx = mediumFontSizePx;
+  contextValue.rootEmFontSizePx = rootEmFontSizePx;
 
   // ====================== Image Preview =======================
   const [imagePreview, setImagePreview] = useState({
