@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { APP_CONTEXT as AppContext, NUM_SECTIONS } from "../constants";
-import { ImagePreview, ScrollControls, Text } from "./components";
+import { Background, ImagePreview, ScrollControls, Text } from "./components";
 
 // ===================== Global GSAP Setup =====================
 gsap.defaults({
@@ -157,6 +157,7 @@ function App() {
 
       {/* =================== App Content ================== */}
       <Text />
+      <Background />
     </AppContext>
   );
 }
