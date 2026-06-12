@@ -12,19 +12,10 @@ function ImagePreview({ open, onClose, src, alt }) {
   // ======================== Open/Close Animation ========================
   useGSAP(
     () => {
-      const duration = 0.15; // TailwindCSS default transition duration
-
-      if (open) {
-        gsap.to(selfRef.current, {
-          autoAlpha: 1,
-          duration: duration,
-        });
-      } else {
-        gsap.to(selfRef.current, {
-          autoAlpha: 0,
-          duration: duration,
-        });
-      }
+      gsap.to(selfRef.current, {
+        autoAlpha: open ? 1 : 0,
+        duration: 0.15, // TailwindCSS default transition duration
+      });
     },
     {
       dependencies: [open],
@@ -33,6 +24,7 @@ function ImagePreview({ open, onClose, src, alt }) {
 
   // ======================= Responsive Scaling ======================
   const { windowWidthPx, rootEmFontSizePx } = appContext;
+
   const scale = Math.min(
     Math.max(
       (windowWidthPx - 37.5 * rootEmFontSizePx) /

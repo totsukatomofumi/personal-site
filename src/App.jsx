@@ -7,17 +7,12 @@ import { APP_CONTEXT as AppContext, NUM_SECTIONS } from "../constants";
 import { Background, ImagePreview, ScrollControls, Text } from "./components";
 
 // ===================== Global GSAP Setup =====================
-gsap.defaults({
-  lazy: false, // Disable tween lazy render to avoid lazy-queue + revert race (React useGSAP lifecycle timing)
-});
-
+gsap.registerPlugin(SplitText);
 gsap.registerPlugin(ScrollTrigger);
 
 ScrollTrigger.config({
   ignoreMobileResize: true, // Disable automatic refresh on mobile resize to prevent potential performance issues and layout thrashing during orientation changes or dynamic viewport adjustments (e.g. iOS Safari address bar show/hide)
 });
-
-gsap.registerPlugin(SplitText);
 
 // ======================= App Component =======================
 function App() {
@@ -114,43 +109,42 @@ function App() {
   contextValue.openImagePreview = openImagePreview;
   contextValue.closeImagePreview = closeImagePreview;
 
-  // ==================== Section Animations ====================
-  const [animationsBySection, setAnimationsBySection] = useState(
+  // ===================== Scroll Animations ====================
+  const [thunksBySection, setThunksBySection] = useState(
     Array.from({ length: NUM_SECTIONS }, () => []),
-  );
+  ); // Thunks are delayed calls to create animations that are to be executed in ScrollControls when added to its respective timeline
 
-  const registerSectionAnimation = (animation, sectionIndex) => {
-    setAnimationsBySection((prevAnimationsBySection) => {
-      const newAnimationsBySection = [...prevAnimationsBySection];
-      newAnimationsBySection[sectionIndex] = [
-        ...newAnimationsBySection[sectionIndex],
-        animation,
+  const registerSectionThunk = (thunk, sectionIndex) => {
+    setThunksBySection((prevThunksBySection) => {
+      const newThunksBySection = [...prevThunksBySection];
+      newThunksBySection[sectionIndex] = [
+        ...newThunksBySection[sectionIndex],
+        thunk,
       ];
-      return newAnimationsBySection;
+
+      return newThunksBySection;
     });
   };
 
-  const removeSectionAnimation = (animation) => {
-    setAnimationsBySection((prevAnimationsBySection) => {
-      const newAnimationsBySection = prevAnimationsBySection.map(
-        (sectionAnimations) =>
-          sectionAnimations.filter(
-            (sectionAnimation) => sectionAnimation !== animation,
-          ),
+  const removeSectionThunk = (thunk) => {
+    setThunksBySection((prevThunksBySection) => {
+      const newThunksBySection = prevThunksBySection.map((sectionThunks) =>
+        sectionThunks.filter((sectionThunk) => sectionThunk !== thunk),
       );
-      return newAnimationsBySection;
+
+      return newThunksBySection;
     });
   };
 
-  contextValue.registerSectionAnimation = registerSectionAnimation;
-  contextValue.removeSectionAnimation = removeSectionAnimation;
+  contextValue.registerSectionThunk = registerSectionThunk;
+  contextValue.removeSectionThunk = removeSectionThunk;
 
   // ========================== Render ==========================
   return (
     <AppContext value={contextValue}>
       {/* ==================== App Core ==================== */}
       <ScrollControls
-        animationsBySection={animationsBySection}
+        thunksBySection={thunksBySection}
         isImagePreviewOpen={imagePreview.open}
       />
       <ImagePreview {...imagePreview} onClose={closeImagePreview} />

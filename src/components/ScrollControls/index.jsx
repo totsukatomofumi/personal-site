@@ -3,9 +3,9 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { NUM_SECTIONS } from "../../../constants";
 
-function ScrollControls({ animationsBySection, isImagePreviewOpen }) {
+function ScrollControls({ thunksBySection, isImagePreviewOpen }) {
   // ==================== ScrollTrigger Setup ====================
-  const scrollTriggerRefs = useMemo(
+  const sectionTriggerRefs = useMemo(
     () => Array.from({ length: NUM_SECTIONS }, () => createRef()),
     [],
   );
@@ -13,14 +13,11 @@ function ScrollControls({ animationsBySection, isImagePreviewOpen }) {
   // Create a ScrollTrigger instance for each section to scrub the corresponding section animations based on the scroll position
   useGSAP(
     () => {
-      animationsBySection.forEach((animations, index) => {
-        // Get scroll trigger element for the section
-        const trigger = scrollTriggerRefs[index].current;
-
+      sectionTriggerRefs.forEach((sectionTriggerRef, sectionIndex) => {
         // Create aggregation timeline with attached ScrollTrigger
         const timeline = gsap.timeline({
           scrollTrigger: {
-            trigger,
+            trigger: sectionTriggerRef.current, // Get scroll trigger element for the section
             start: "top top",
             end: "bottom top",
             scrub: 0.15, // Reduce choppiness with smoothing (150ms, TailwindCSS default transition duration)
@@ -29,14 +26,17 @@ function ScrollControls({ animationsBySection, isImagePreviewOpen }) {
         });
 
         // Aggregate all animations for the section into the timeline
-        for (const animation of animations) {
-          timeline.add(animation, 0);
+        for (const sectionThunk of thunksBySection[sectionIndex]) {
+          timeline.add(
+            sectionThunk(), // Create the tween by calling the thunk which is added to the timeline immediately
+            0,
+          );
         }
       });
     },
     {
-      dependencies: [animationsBySection],
-      revertOnUpdate: true,
+      dependencies: [thunksBySection],
+      revertOnUpdate: true, // Revert timelines and the child tweens created by the thunks on update
     },
   );
 
@@ -54,7 +54,7 @@ function ScrollControls({ animationsBySection, isImagePreviewOpen }) {
   }, [isImagePreviewOpen]);
 
   // ========================== Render ===========================
-  return scrollTriggerRefs.map((ref, i) => (
+  return sectionTriggerRefs.map((ref, i) => (
     <div key={i} ref={ref} className="h-lvh snap-start snap-always" />
   ));
 }
