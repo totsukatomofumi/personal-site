@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { AnimatedText } from "./components";
+import { AnimatedText, Path, PathControls, PathManager } from "./components";
 
 function Background() {
   // ========================== Render ==========================
@@ -11,7 +11,9 @@ function Background() {
         }}
         flat
       >
-        <AnimatedText>と</AnimatedText>
+        <PathManager>
+          <AnimatedText>と</AnimatedText>
+        </PathManager>
       </Canvas>
     </div>
   );

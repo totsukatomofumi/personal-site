@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import * as THREE from "three";
 
 function parseCardBlock(block) {
   // Define regex patterns for card block vars
@@ -69,6 +70,7 @@ function parseLinksBlock(block) {
 
 function parseDocument(document) {
   // Define line-matching regex patterns
+  const pathRegex = /^@path /;
   const headerRegex = /^# /;
   const spacingBlockRegex = /^:::spacing:::$/;
   const cardBlockStartRegex = /^:::card$/;
@@ -107,7 +109,19 @@ function parseDocument(document) {
           currBlock.text += currBlock.text ? " " + line : line; // Add space between lines
         }
       } else {
-        if (headerRegex.test(line)) {
+        if (pathRegex.test(line)) {
+          // Push any active block before starting
+          if (currBlock) {
+            sectionChildren.push(currBlock);
+            currBlock = null;
+          }
+
+          // Push path directly to section children
+          sectionChildren.push({
+            type: "path",
+            path: PATHS[line.replace(pathRegex, "")],
+          });
+        } else if (headerRegex.test(line)) {
           // Push any active block before starting
           if (currBlock) {
             sectionChildren.push(currBlock);
@@ -202,7 +216,30 @@ function parseDocument(document) {
   };
 }
 
-export const DOCUMENT = `
+export const PATHS = {
+  firstPath: new THREE.CatmullRomCurve3([
+    new THREE.Vector3(-2.25, 0.0, 2.9),
+    new THREE.Vector3(-0.75, 0.0, 2.9),
+    new THREE.Vector3(0.75, 0.0, 2.9),
+    new THREE.Vector3(2.25, 0.0, 2.9),
+  ]),
+  secondPath: new THREE.CatmullRomCurve3([
+    new THREE.Vector3(-0.74, -1.58, 3.25),
+    new THREE.Vector3(-0.23, -0.84, 3.0),
+    new THREE.Vector3(1.97, -0.77, 3.0),
+    new THREE.Vector3(3.3, -0.8, 3.0),
+  ]),
+  thirdPath: new THREE.CatmullRomCurve3([
+    new THREE.Vector3(0.2, -1.32, 3.0),
+    new THREE.Vector3(1.22, 0.07, 1.56),
+    new THREE.Vector3(2.31, 0.92, 1.41),
+    new THREE.Vector3(5.13, 5.96, -0.63),
+  ]),
+};
+
+const DOCUMENT = `
+@path firstPath
+
 # Hello, I'm Totsuka.
 
 I build user-facing applications, and am interested in how integrating AI 
@@ -221,6 +258,8 @@ When I'm not building apps, I love watching sitcoms, taking night drives,
 and exploring new places abroad.
 
 ---
+
+@path secondPath
 
 # Education
 
@@ -248,6 +287,8 @@ System, Netcentric Architecture
 :::
 
 ---
+
+@path thirdPath
 
 # Employment
 
