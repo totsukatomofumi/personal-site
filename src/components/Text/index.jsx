@@ -79,11 +79,13 @@ function Text() {
   });
 
   // ================= Delegated Event Handlers =================
+  const { openImagePreview } = appContext;
+
   // Delegate click events of child elements (e.g. image preview in Card) to highest non-split ancestor since GSAP SplitText does not preserve mouse events on the split elements
   const onClick = (e) => {
     switch (e.target.dataset.event) {
       case "image-preview":
-        appContext.openImagePreview(e.target.src, e.target.alt);
+        openImagePreview(e.target.src, e.target.alt);
         break;
       default:
         break;
@@ -100,13 +102,15 @@ function Text() {
       let cumulativeY = 0;
 
       // Create animation thunks to register with ScrollControls
-      const thunks = sectionRefs.map(
-        (sectionRef) => () =>
+      const thunks = sectionRefs.map((sectionRef) => {
+        const y = (cumulativeY -= sectionRef.current.offsetHeight);
+
+        return () =>
           gsap.to(documentRef.current, {
-            y: (cumulativeY -= sectionRef.current.offsetHeight),
+            y,
             ease: "none",
-          }),
-      );
+          });
+      });
 
       // Register thunks
       thunks.forEach((thunk, sectionIndex) => {
