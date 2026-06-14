@@ -1,6 +1,7 @@
 import {
   Children,
   createRef,
+  useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
@@ -35,7 +36,7 @@ function Path({ path, speed, children }) {
   // ========================== Children Render =========================
   const [renderChildren, setRenderChildren] = useState([]); // { ref, element, spawn, onDespawn }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     // Create the intermediate state of render children, despawning those that are not in the target children anymore
     const intermediateRenderChildren = renderChildren.map((props, index) => {
       const renderChild = props.element;
