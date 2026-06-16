@@ -17,7 +17,7 @@ const PATHS = DOCUMENT_AST.children.map(
 ); // [path1, null, path2, ...] where null means no path in that section
 
 const INIT_PATH = PATHS[0];
-const BASE_SPEED = 0.1;
+const BASE_SPEED = 0.15;
 
 function PathManager({ children }) {
   const appContext = useContext(AppContext);
@@ -39,7 +39,8 @@ function PathManager({ children }) {
             onUpdate: function () {
               setSpeed(
                 BASE_SPEED +
-                  (this.parent.scrollTrigger?.getVelocity() ?? 0) / // Get scroll velocity from section ScrollTrigger, default to 0 if not available (e.g. on initial render before ScrollTrigger is created)
+                  (2 * // Scale factor to increase responsiveness of speed to scroll velocity (tuned by feel)
+                    (this.parent.scrollTrigger?.getVelocity() ?? 0)) / // Get scroll velocity from section ScrollTrigger, default to 0 if not available (e.g. on initial render before ScrollTrigger is created)
                     (windowHeightPx || 1), // Normalize speed by window height, default to 1 to prevent division by zero (i.e. no normalization)
               );
             },

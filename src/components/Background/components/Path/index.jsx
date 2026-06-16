@@ -115,7 +115,7 @@ function Path({ path, speed, children }) {
 
   // ========================== Animaton Setup ==========================
   const animationRef = useRef(null); // To access the current animation instance (e.g. for timeScale changes on speed change)
-  const progressRef = useRef(0); // Progress normalized to animation cycle to restore playhead position on rerenders to avoid animation resets on rerenders
+  const progressRef = useRef(9999); // Progress normalized to animation cycle to restore playhead position on rerenders to avoid animation resets on rerenders; High starting progress well past the initial cycle where items are still entering view
 
   // Create staggered animations for translation and transition along path at base speed
   useGSAP(

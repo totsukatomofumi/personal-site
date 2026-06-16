@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
-import { useWindowSize } from "@uidotdev/usehooks";
+import { useMediaQuery, useWindowSize } from "@uidotdev/usehooks";
 import { APP_CONTEXT as AppContext, NUM_SECTIONS } from "../constants";
 import { Background, ImagePreview, ScrollControls, Text } from "./components";
 
@@ -20,9 +20,11 @@ function App() {
 
   // ===================== Responsive Setup =====================
   const { width: windowWidthPx, height: windowHeightPx } = useWindowSize();
+
   const [mediumFontSizePx, setMediumFontSizePx] = useState(
     parseFloat(getComputedStyle(document.documentElement).fontSize),
   );
+
   const [rootEmFontSizePx, setRootEmFontSizePx] = useState(
     parseFloat(getComputedStyle(document.documentElement).fontSize),
   );
@@ -83,6 +85,39 @@ function App() {
   contextValue.windowHeightPx = windowHeightPx;
   contextValue.mediumFontSizePx = mediumFontSizePx;
   contextValue.rootEmFontSizePx = rootEmFontSizePx;
+
+  const isDark = useMediaQuery("(prefers-color-scheme: dark)");
+
+  const canvasTextColor = useMemo(() => {
+    const el = document.createElement("div");
+    el.style.color = "CanvasText";
+    el.style.position = "absolute";
+    el.style.visibility = "hidden";
+
+    document.body.appendChild(el);
+
+    const canvasTextColor = getComputedStyle(el).color;
+    document.body.removeChild(el);
+
+    return canvasTextColor;
+  }, [isDark]);
+
+  const canvasColor = useMemo(() => {
+    const el = document.createElement("div");
+    el.style.color = "Canvas";
+    el.style.position = "absolute";
+    el.style.visibility = "hidden";
+
+    document.body.appendChild(el);
+
+    const canvasColor = getComputedStyle(el).color;
+    document.body.removeChild(el);
+
+    return canvasColor;
+  }, [isDark]);
+
+  contextValue.canvasTextColor = canvasTextColor;
+  contextValue.canvasColor = canvasColor;
 
   // ====================== Image Preview =======================
   const [imagePreview, setImagePreview] = useState({
