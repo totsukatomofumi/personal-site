@@ -11,7 +11,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Item } from "./components";
 
-const GAP = 1; // Use R3F drei Text default font size of 1 (local world units) as gap
+const GAP = 1.5;
 
 function Path({ path, speed, children }) {
   // ========================== Children Setup ==========================
