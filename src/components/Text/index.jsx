@@ -47,6 +47,7 @@ function Text() {
           "flow-root! " + // flow-root! creates BFC to account for child margins in height calculation (!important to override inline styles set by SplitText)
           "translate-z-[0.01px] " + // Prevent flattening of 3D transforms in WebKit browsers (e.g. Safari)
           "opacity-0 " + // Hide lines initially before animations finish setting styles to prevent FOUC when GSAP targets are lost on re-split (removed in Perspective Scroll useLayoutEffect)
+          "pointer-events-auto " + // Restore pointer events on lines (parent document has pointer-events: none) as lines contain content and are 3D-rotated during scroll, which can occlude them behind the document plane via z-ordering from transforms — without this, Safari blocks clicks on the content.
           "_", // _ absorbs the -mask suffix to prevent breaking Tailwind utilities
         ignore: ".no-split", // Terminate deepSlice (i.e. nested splitting) at elements with this class
         autoSplit: true, // Auto re-splits on width changes (e.g. resize), but not on internal property changes (e.g. text font size)
@@ -328,7 +329,7 @@ function Text() {
           {/* ============== Document ============== */}
           <div
             ref={documentRef}
-            className="relative transform-gpu will-change-transform text-shadow-[-0.0625rem_-0.0625rem_0_Canvas,0.0625rem_-0.0625rem_0_Canvas,-0.0625rem_0.0625rem_0_Canvas,0.0625rem_0.0625rem_0_Canvas] transform-3d"
+            className="pointer-events-none relative transform-gpu will-change-transform text-shadow-[-0.0625rem_-0.0625rem_0_Canvas,0.0625rem_-0.0625rem_0_Canvas,-0.0625rem_0.0625rem_0_Canvas,0.0625rem_0.0625rem_0_Canvas] transform-3d"
             style={{
               top: `calc(${scale} * 30lvh)`, // Initial position of document before parallax scroll animation, scaled repsponsively with viewport height and calculated scale ratio
             }}
