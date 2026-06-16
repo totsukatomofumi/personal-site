@@ -44,11 +44,11 @@ function ScrollControls({ thunksBySection, isImagePreviewOpen }) {
   // Disable scrolling when image preview is open by targetting the scroller (i.e. root) element
   useEffect(() => {
     if (isImagePreviewOpen) {
-      document.documentElement.style.overflowY = "hidden";
+      document.documentElement.style.overflow = "hidden";
       document.documentElement.style.scrollSnapType = "none"; // Disable CSS scroll snapping to prevent potential scroll jank when closing image preview
     }
     return () => {
-      document.documentElement.style.overflowY = "";
+      document.documentElement.style.overflow = "";
       document.documentElement.style.scrollSnapType = "";
     };
   }, [isImagePreviewOpen]);
