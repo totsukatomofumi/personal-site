@@ -141,7 +141,7 @@ function PathControls({ children }) {
     const newClipText = `new THREE.CatmullRomCurve3([\n${handleRefs
       .map((ref) => {
         const { x, y, z } = ref.current.position;
-        return `new THREE.Vector3(${x.toFixed(2)}, ${y.toFixed(2)}, ${z.toFixed(2)})`;
+        return `new THREE.Vector3(${x}, ${y}, ${z})`;
       })
       .join(",\n")}\n])`;
 

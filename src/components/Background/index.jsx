@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { AnimatedText, Path, PathControls, PathManager } from "./components";
+import { AnimatedText, PathManager } from "./components";
 
 function Background() {
   // ========================== Render ==========================
@@ -13,6 +13,8 @@ function Background() {
       >
         <PathManager>
           <AnimatedText>と</AnimatedText>
+          <AnimatedText>つ</AnimatedText>
+          <AnimatedText>か</AnimatedText>
         </PathManager>
       </Canvas>
     </div>

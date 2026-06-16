@@ -74,8 +74,8 @@ function PathManager({ children }) {
       if (sectionIndex === 0) return null; // Skip first section as it is the initial path
       if (!targetPath) return null; // Skip sections with no path
 
-      const currPathPoints = currPath.getSpacedPoints();
-      const targetPathPoints = targetPath.getSpacedPoints();
+      const currPathPoints = currPath.getSpacedPoints(100);
+      const targetPathPoints = targetPath.getSpacedPoints(100);
 
       currPath = targetPath; // Update current path to target path for next animation
 

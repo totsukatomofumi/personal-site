@@ -217,28 +217,107 @@ function parseDocument(document) {
 }
 
 export const PATHS = {
-  firstPath: new THREE.CatmullRomCurve3([
-    new THREE.Vector3(-2.25, 0.0, 2.9),
-    new THREE.Vector3(-0.75, 0.0, 2.9),
-    new THREE.Vector3(0.75, 0.0, 2.9),
-    new THREE.Vector3(2.25, 0.0, 2.9),
+  introPath: new THREE.CatmullRomCurve3([
+    new THREE.Vector3(
+      -0.7869288080194681,
+      -2.010015143681179,
+      3.25282491763842,
+    ),
+    new THREE.Vector3(
+      -0.6393009712416976,
+      -0.9753985891155899,
+      3.0840104729162148,
+    ),
+    new THREE.Vector3(
+      -0.4174085583410218,
+      -0.7666873762536841,
+      2.999879058198597,
+    ),
+    new THREE.Vector3(
+      4.182054741113608,
+      -0.7810136870873543,
+      3.0019467556273596,
+    ),
   ]),
-  secondPath: new THREE.CatmullRomCurve3([
-    new THREE.Vector3(-0.74, -1.58, 3.25),
-    new THREE.Vector3(-0.23, -0.84, 3.0),
-    new THREE.Vector3(1.97, -0.77, 3.0),
-    new THREE.Vector3(3.3, -0.8, 3.0),
+  educationPath: new THREE.CatmullRomCurve3([
+    new THREE.Vector3(
+      -0.022191464159920127,
+      -2.0236967667847785,
+      3.248613906715203,
+    ),
+    new THREE.Vector3(
+      0.8328613043989153,
+      -0.1634144542899881,
+      2.5834225442632963,
+    ),
+    new THREE.Vector3(
+      2.281636658129537,
+      1.0607953097458707,
+      1.9182311817839826,
+    ),
+    new THREE.Vector3(3.4335507193455337, 5.674093881771056, 1.253039819277217),
   ]),
-  thirdPath: new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0.2, -1.32, 3.0),
-    new THREE.Vector3(1.22, 0.07, 1.56),
-    new THREE.Vector3(2.31, 0.92, 1.41),
-    new THREE.Vector3(5.13, 5.96, -0.63),
+  employmentPath: new THREE.CatmullRomCurve3([
+    new THREE.Vector3(
+      -0.10373432049496217,
+      -6.440998456468838,
+      -2.500058841833037,
+    ),
+    new THREE.Vector3(
+      5.205060614231565,
+      -1.962310705234339,
+      -4.124627639974136,
+    ),
+    new THREE.Vector3(6.655863466503734, 2.516377046000168, -5.749196438115234),
+    new THREE.Vector3(
+      3.9150249168470967,
+      6.9950647972346625,
+      -7.37376523625633,
+    ),
+    new THREE.Vector3(
+      -3.899501364610434,
+      11.473752548469156,
+      -8.998334034397429,
+    ),
+  ]),
+  projectsPath: new THREE.CatmullRomCurve3([
+    new THREE.Vector3(
+      5.271211469831579,
+      -6.5063249698319705,
+      -2.5016564031293593,
+    ),
+    new THREE.Vector3(
+      -0.31532637019352605,
+      -3.049768252989987,
+      -4.666270353468129,
+    ),
+    new THREE.Vector3(7.480551453091528, 3.712483892965373, -6.830884303896082),
+    new THREE.Vector3(
+      -4.866143680174812,
+      11.479352111012735,
+      -8.995498254413372,
+    ),
+  ]),
+  creditsPath: new THREE.CatmullRomCurve3([
+    new THREE.Vector3(
+      1.336672398661447,
+      -1.4441883425447566,
+      4.0014196283246415,
+    ),
+    new THREE.Vector3(
+      1.0594246501404778,
+      -0.2718012081528649,
+      -1.3144197048982518,
+    ),
+    new THREE.Vector3(1.9570502631854139, 2.586903373861289, -5.8754210856909),
+    new THREE.Vector3(6.5017281464721455, 7.9855456250172, -10.436422466483556),
+    new THREE.Vector3(16.57921158125091, 16.09722106658814, -14.48742384727618),
   ]),
 };
 
 const DOCUMENT = `
-@path firstPath
+
+@path introPath
 
 # Hello, I'm Totsuka.
 
@@ -259,7 +338,7 @@ and exploring new places abroad.
 
 ---
 
-@path secondPath
+@path educationPath
 
 # Education
 
@@ -288,7 +367,7 @@ System, Netcentric Architecture
 
 ---
 
-@path thirdPath
+@path employmentPath
 
 # Employment
 
@@ -319,6 +398,8 @@ Git, GitLab
 :::
 
 ---
+
+@path projectsPath
 
 # Projects
 
@@ -369,6 +450,8 @@ extras:: Java, JavaFX, JUnit, Git, GitHub, Codecov
 :::
 
 ---
+
+@path creditsPath
 
 # Thank you.
 
