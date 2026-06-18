@@ -124,7 +124,7 @@ function PathControls({ children }) {
     // Move camera backward from the origin
     return new THREE.Vector3().addVectors(
       cameraPosition,
-      new THREE.Vector3().addScaledVector(cameraToOriginDir, -1),
+      new THREE.Vector3().addScaledVector(cameraToOriginDir, -5),
     );
   }, [cameraPosition]);
 
@@ -141,7 +141,7 @@ function PathControls({ children }) {
     const newClipText = `new THREE.CatmullRomCurve3([\n${handleRefs
       .map((ref) => {
         const { x, y, z } = ref.current.position;
-        return `new THREE.Vector3(${x}, ${y}, ${z})`;
+        return `new THREE.Vector3(${x.toFixed(2)}, ${y.toFixed(2)}, ${z.toFixed(2)})`;
       })
       .join(",\n")}\n])`;
 

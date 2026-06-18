@@ -17,7 +17,7 @@ const PATHS = DOCUMENT_AST.children.map(
 ); // [path1, null, path2, ...] where null means no path in that section
 
 const INIT_PATH = PATHS[0];
-const BASE_SPEED = 0.15;
+const BASE_SPEED = 0.2;
 
 function PathManager({ children }) {
   const appContext = useContext(AppContext);

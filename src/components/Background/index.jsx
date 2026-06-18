@@ -9,7 +9,7 @@ function Background() {
 
   // ========================== Render ==========================
   return (
-    <div className="fixed top-0 left-0 -z-50 h-lvh w-full">
+    <div className="fixed top-0 left-0 -z-50 h-lvh w-full opacity-20">
       <Canvas
         gl={{
           antialias: false,
@@ -18,7 +18,7 @@ function Background() {
       >
         {/* =================== Staging =================== */}
         <CameraShake intensity={0.5} />
-        <fogExp2 attach="fog" color={canvasColor} density={0.1} />
+        <fog attach="fog" color={canvasColor} near={0} far={25} />
 
         {/* ==================== Scene ==================== */}
         <PathManager>
