@@ -36,7 +36,7 @@ function Item({ spawn, onDespawn, children, ...props }) {
         .eventCallback("onReverseComplete", onDespawn)
         .reverse();
     }
-  }, [spawn]);
+  }, [spawn, onDespawn]);
 
   // =============================== Render ==============================
   return (

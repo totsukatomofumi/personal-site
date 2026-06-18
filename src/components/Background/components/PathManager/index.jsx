@@ -9,6 +9,7 @@ import {
   NUM_SECTIONS,
 } from "../../../../../constants";
 import { Path } from "../";
+import { useThree } from "@react-three/fiber";
 
 const PATHS = DOCUMENT_AST.children.map(
   (section) =>
@@ -21,6 +22,7 @@ const BASE_SPEED = 0.2;
 
 function PathManager({ children }) {
   const appContext = useContext(AppContext);
+  const regress = useThree((state) => state.performance.regress);
   const [path, setPath] = useState(INIT_PATH);
   const [speed, setSpeed] = useState(BASE_SPEED);
 
@@ -28,15 +30,18 @@ function PathManager({ children }) {
   const { registerSectionThunk, removeSectionThunk, windowHeightPx } =
     appContext;
 
-  // Update path travel speed based on scroll velocity
+  // Update path travel speed based on scroll velocity (+ performance regression on scroll)
   useGSAP(
     () => {
       const thunks = Array.from({ length: NUM_SECTIONS }, () => () => {
         return gsap.to(
           {},
           {
-            // Update speed based on scroll velocity when scrolling
             onUpdate: function () {
+              // Regress performance on scroll to improve performance of path animation
+              regress();
+
+              // Update speed based on scroll velocity when scrolling
               setSpeed(
                 BASE_SPEED +
                   (2 * // Scale factor to increase responsiveness of speed to scroll velocity (tuned by feel)
@@ -87,6 +92,8 @@ function PathManager({ children }) {
           alpha: 1,
           ease: "none",
           onUpdate: () => {
+            // Already regressed performance on scroll in speed animation, so no need to regress here
+
             // Lerp between current path and target path based on animated alpha value
             const lerpPathPoints = currPathPoints.map((v1, i) => {
               const v2 = targetPathPoints[i];
