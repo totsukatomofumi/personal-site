@@ -13,7 +13,7 @@ function Link({
     <a
       target={`_blank ${target || ""}`}
       rel={`noopener noreferrer me ${rel || ""}`}
-      className={`inline-flex h-12 drop-shadow-[0.0625rem_0_0_Canvas,-0.0625rem_0_0_Canvas,0_0.0625rem_0_Canvas,0_-0.0625rem_0_Canvas] transition-[border] hover:border-b-2 active:border-b-6 ${className || ""}`}
+      className={`inline-flex h-12 drop-shadow-[0.0625rem_0_0_Canvas,-0.0625rem_0_0_Canvas,0_0.0625rem_0_Canvas,0_-0.0625rem_0_Canvas] transition-[border] hover:border-b-[0.125rem] active:border-b-[0.375rem] ${className || ""}`}
       {...props}
     >
       <FontAwesomeIcon icon={icon} size={size} className="my-auto" />

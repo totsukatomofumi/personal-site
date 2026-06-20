@@ -49,7 +49,7 @@ function ImagePreview({ open, onClose, src, alt }) {
       {/* ======================== Close Button ====================== */}
       <div className="absolute top-3 right-3 z-50">
         <button
-          className="flex h-12 w-12 cursor-pointer transition-[border] hover:border-b-2 active:border-b-6"
+          className="flex h-12 w-12 cursor-pointer transition-[border] hover:border-b-[0.125rem] active:border-b-[0.375rem]"
           onClick={onClose}
         >
           <FontAwesomeIcon icon={faXmark} size="lg" className="m-auto" />

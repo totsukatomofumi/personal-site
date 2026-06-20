@@ -18,7 +18,7 @@ function Card({ cover, title, subtitle, link, body, extras }) {
                           <img
                             src={cover.src}
                             alt={title || ""}
-                            className="mx-auto max-h-full max-w-full cursor-pointer drop-shadow-[0.0625rem_0_0_Canvas,-0.0625rem_0_0_Canvas,0_0.0625rem_0_Canvas,0_-0.0625rem_0_Canvas] transition-[border] hover:border-b-2 active:border-b-6"
+                            className="mx-auto max-h-full max-w-full cursor-pointer drop-shadow-[0.0625rem_0_0_Canvas,-0.0625rem_0_0_Canvas,0_0.0625rem_0_Canvas,0_-0.0625rem_0_Canvas] transition-[border] hover:border-b-[0.125rem] active:border-b-[0.375rem]"
                             data-event="image-preview" // For delegated click event handling to highest non-split ancestor since GSAP SplitText does not preserve mouse events on the split elements
                           />
                         </div>
@@ -74,7 +74,7 @@ function Card({ cover, title, subtitle, link, body, extras }) {
           {extras.map((extra, index) => (
             <span
               key={index}
-              className="mr-1 inline-block rounded-full border border-[Canvas] bg-gray-200 px-3 py-1 text-gray-800 text-shadow-none"
+              className="mr-1 inline-block rounded-full border-[0.0625rem] border-[Canvas] bg-gray-200 px-3 py-1 text-gray-800 text-shadow-none"
               data-type="card-extras"
             >
               {extra}
