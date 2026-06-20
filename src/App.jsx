@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { useMediaQuery, useWindowSize } from "@uidotdev/usehooks";
+import { Analytics } from "@vercel/analytics/react";
 import { APP_CONTEXT as AppContext, NUM_SECTIONS } from "../constants";
 import { Background, ImagePreview, ScrollControls, Text } from "./components";
 
@@ -176,18 +177,21 @@ function App() {
 
   // ========================== Render ==========================
   return (
-    <AppContext value={contextValue}>
-      {/* ==================== App Core ==================== */}
-      <ScrollControls
-        thunksBySection={thunksBySection}
-        isImagePreviewOpen={imagePreview.open}
-      />
-      <ImagePreview {...imagePreview} onClose={closeImagePreview} />
+    <>
+      <AppContext value={contextValue}>
+        {/* ==================== App Core ==================== */}
+        <ScrollControls
+          thunksBySection={thunksBySection}
+          isImagePreviewOpen={imagePreview.open}
+        />
+        <ImagePreview {...imagePreview} onClose={closeImagePreview} />
 
-      {/* =================== App Content ================== */}
-      <Text />
-      <Background />
-    </AppContext>
+        {/* =================== App Content ================== */}
+        <Text />
+        <Background />
+      </AppContext>
+      <Analytics />
+    </>
   );
 }
 

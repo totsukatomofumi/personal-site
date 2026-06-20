@@ -22,9 +22,9 @@ function Background() {
 
         {/* ==================== Scene ==================== */}
         <PathManager>
-          <AnimatedText>と</AnimatedText>
-          <AnimatedText>つ</AnimatedText>
-          <AnimatedText>か</AnimatedText>
+          <AnimatedText>ト</AnimatedText>
+          <AnimatedText>ツ</AnimatedText>
+          <AnimatedText>カ</AnimatedText>
         </PathManager>
       </Canvas>
     </div>

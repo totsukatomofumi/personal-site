@@ -260,20 +260,19 @@ const DOCUMENT = `
 
 # Hello, I'm Totsuka.
 
-I build user-facing applications, and am interested in how integrating AI 
-can unlock powerful, meaningful experiences for users.
+I build software for today, and study machine learning for tomorrow.
 
 ---
 
-I'm a fresh graduate passionate about building high-quality user applications 
-for web and mobile platforms. My favourite work lies at the intersection of 
-app development and AI, leveraging machine learning to deliver intelligent 
-digital experiences for everyday users.
+I'm a fresh graduate focused on web development, with experience building 
+pixel-perfect, responsive applications. I also have a strong interest in 
+machine learning, having pursued a focus area in Artificial Intelligence 
+as an undergraduate.
 
 ---
 
-When I'm not building apps, I love watching sitcoms, taking night drives, 
-and exploring new places abroad.
+In my free time, I love watching sitcoms, going for late-night drives, 
+and travelling abroad.
 
 ---
 
@@ -283,7 +282,7 @@ and exploring new places abroad.
 
 :::card
 title:: National University of Singapore
-subtitle:: Bachelor of Computing in Computer Science (Honours)
+subtitle:: Bachelor of Computing (Honours) in Computer Science (Artificial Intelligence Focus Area)
 cover:: Aug 2021 - Aug 2025
 extras:: Programming Methodology, Programming Methodology II, Data Structures 
 and Algorithms, Software Engineering, Computer Organisation, Introduction to 
