@@ -27,7 +27,7 @@ function PathManager({ children }) {
   const [speed, setSpeed] = useState(BASE_SPEED);
 
   // ========================= Speed Animation Setup =========================
-  const { registerSectionThunk, removeSectionThunk, windowHeightPx } =
+  const { registerSectionThunk, removeSectionThunk, largeViewportHeightPx } =
     appContext;
 
   // Update path travel speed based on scroll velocity (+ performance regression on scroll)
@@ -46,7 +46,7 @@ function PathManager({ children }) {
                 BASE_SPEED +
                   (2 * // Scale factor to increase responsiveness of speed to scroll velocity (tuned by feel)
                     (this.parent.scrollTrigger?.getVelocity() ?? 0)) / // Get scroll velocity from section ScrollTrigger, default to 0 if not available (e.g. on initial render before ScrollTrigger is created)
-                    (windowHeightPx || 1), // Normalize speed by window height, default to 1 to prevent division by zero (i.e. no normalization)
+                    (largeViewportHeightPx || 1), // Normalize speed by window height, default to 1 to prevent division by zero (i.e. no normalization)
               );
             },
 
@@ -67,7 +67,7 @@ function PathManager({ children }) {
     },
     {
       revertOnUpdate: true,
-      dependencies: [windowHeightPx],
+      dependencies: [largeViewportHeightPx],
     },
   );
 

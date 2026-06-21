@@ -23,11 +23,11 @@ function ImagePreview({ open, onClose, src, alt }) {
   );
 
   // ======================= Responsive Scaling ======================
-  const { windowWidthPx, rootEmFontSizePx } = appContext;
+  const { dynamicViewportWidthPx, rootEmFontSizePx } = appContext;
 
   const scale = Math.min(
     Math.max(
-      (windowWidthPx - 37.5 * rootEmFontSizePx) /
+      (dynamicViewportWidthPx - 37.5 * rootEmFontSizePx) /
         (96 * rootEmFontSizePx - 37.5 * rootEmFontSizePx),
       0,
     ),
@@ -39,7 +39,7 @@ function ImagePreview({ open, onClose, src, alt }) {
     <dialog
       ref={selfRef}
       open={open}
-      className="invisible fixed top-0 left-0 z-50 flex h-dvh w-full items-center justify-center bg-transparent opacity-0 backdrop-blur-xs backdrop-brightness-50"
+      className="invisible fixed top-0 left-0 z-50 flex h-dvh w-dvw items-center justify-center bg-transparent opacity-0 backdrop-blur-xs backdrop-brightness-50"
       style={{
         paddingInline: `calc(${scale} * (15vw - 1.5rem) + 1.5rem)`,
         paddingBlock: `calc(${scale} * (15vh - 1.5rem) + 1.5rem)`,

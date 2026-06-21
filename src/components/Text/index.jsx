@@ -94,23 +94,58 @@ function Text() {
   };
 
   // ===================== Parallax Scroll ======================
-  const { registerSectionThunk, removeSectionThunk } = appContext;
+  const { largeViewportHeightPx, registerSectionThunk, removeSectionThunk } =
+    appContext;
 
   // Translate document vertically during scroll for parallax effect
   useLayoutEffect(
     // useLayoutEffect for instant feel despite frame drops instead of smooth with delay with useEffect
     () => {
-      let cumulativeY = 0;
+      const offsetFactor = 1 / (1 + 1.618); // Golden ratio margin from top of viewport to center document in initial position before scroll animations
 
       // Create animation thunks to register with ScrollControls
-      const thunks = sectionRefs.map((sectionRef) => {
-        const y = (cumulativeY -= sectionRef.current.offsetHeight);
+      let cumulativeY = 0;
+      let currentOffsetY = 0;
 
-        return () =>
-          gsap.to(documentRef.current, {
-            y,
-            ease: "none",
-          });
+      const thunks = sectionRefs.slice(0, -1).map((sectionRef, index) => {
+        const currentSection = sectionRef.current;
+        const nextSection = sectionRefs[index + 1].current;
+
+        if (index === 0) {
+          const fromY = (currentOffsetY =
+            (largeViewportHeightPx - currentSection.offsetHeight) *
+            offsetFactor); // Initial position of document before parallax scroll animation, centered in viewport 1/1.618 margin from top of viewport
+          const toY = (cumulativeY -=
+            currentSection.offsetHeight -
+            (currentOffsetY =
+              (largeViewportHeightPx - nextSection.offsetHeight) *
+              offsetFactor));
+
+          return () =>
+            gsap.fromTo(
+              documentRef.current,
+              {
+                y: fromY,
+              },
+              {
+                y: toY,
+                ease: "none",
+              },
+            );
+        } else {
+          const y = (cumulativeY -=
+            currentSection.offsetHeight +
+            currentOffsetY -
+            (currentOffsetY =
+              (largeViewportHeightPx - nextSection.offsetHeight) *
+              offsetFactor));
+
+          return () =>
+            gsap.to(documentRef.current, {
+              y,
+              ease: "none",
+            });
+        }
       });
 
       // Register thunks
@@ -126,7 +161,7 @@ function Text() {
         });
       };
     },
-    [linesBySection],
+    [linesBySection, largeViewportHeightPx],
   );
 
   // ==================== Perspective Scroll ====================
@@ -316,23 +351,16 @@ function Text() {
     [linesBySection],
   );
 
-  // ==================== Responsive Scaling ====================
-  const { mediumFontSizePx, rootEmFontSizePx } = appContext;
-  const scale = rootEmFontSizePx / mediumFontSizePx; // Calculate scale ratio for responsive scaling of styles that were unable to be scaled by root em through CSS
-
   // ========================== Render ==========================
   return (
     // ======================== Layout ========================
-    <div className="fixed top-0 left-0 flex h-lvh w-full">
+    <div className="fixed top-0 left-0 flex h-lvh w-lvw">
       <div className="mx-auto h-full w-6xl max-w-full px-6">
         <div className="h-full w-full max-w-138 perspective-normal">
           {/* ============== Document ============== */}
           <div
             ref={documentRef}
             className="pointer-events-none relative transform-gpu will-change-transform text-shadow-[-0.0625rem_-0.0625rem_0_Canvas,0.0625rem_-0.0625rem_0_Canvas,-0.0625rem_0.0625rem_0_Canvas,0.0625rem_0.0625rem_0_Canvas] transform-3d"
-            style={{
-              top: `calc(${scale} * 30lvh)`, // Initial position of document before parallax scroll animation, scaled repsponsively with viewport height and calculated scale ratio
-            }}
             onClick={onClick} // Delegate click events of child elements (e.g. image preview in Card) since GSAP SplitText does not preserve mouse events on the split elements
           >
             {/* Render document AST tree as layout components */}

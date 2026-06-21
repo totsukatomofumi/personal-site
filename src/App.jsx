@@ -20,7 +20,71 @@ function App() {
   const contextValue = {};
 
   // ===================== Responsive Setup =====================
-  const { width: windowWidthPx, height: windowHeightPx } = useWindowSize();
+  const { width: dynamicViewportWidthPx, height: dynamicViewportHeightPx } =
+    useWindowSize();
+  const [largeViewportWidthPx, setLargeViewportWidthPx] = useState(
+    dynamicViewportWidthPx,
+  );
+  const [largeViewportHeightPx, setLargeViewportHeightPx] = useState(
+    dynamicViewportHeightPx,
+  );
+
+  useEffect(() => {
+    const largeViewportWidthDiv = document.createElement("div");
+    largeViewportWidthDiv.style.position = "absolute";
+    largeViewportWidthDiv.style.visibility = "hidden";
+    largeViewportWidthDiv.style.width = "100lvw";
+    largeViewportWidthDiv.style.height = 0;
+    document.body.appendChild(largeViewportWidthDiv);
+
+    const largeViewportWidthDivResizeObserverCallback = () => {
+      const largeViewportWidthPx = parseFloat(
+        getComputedStyle(largeViewportWidthDiv).width,
+      );
+
+      setLargeViewportWidthPx(largeViewportWidthPx);
+    };
+
+    const largeViewportWidthDivResizeObserver = new ResizeObserver(
+      largeViewportWidthDivResizeObserverCallback,
+    );
+    largeViewportWidthDivResizeObserver.observe(largeViewportWidthDiv);
+    largeViewportWidthDivResizeObserverCallback();
+
+    const largeViewportHeightDiv = document.createElement("div");
+    largeViewportHeightDiv.style.position = "absolute";
+    largeViewportHeightDiv.style.visibility = "hidden";
+    largeViewportHeightDiv.style.width = 0;
+    largeViewportHeightDiv.style.height = "100lvh";
+    document.body.appendChild(largeViewportHeightDiv);
+
+    const largeViewportHeightDivResizeObserverCallback = () => {
+      const largeViewportHeightPx = parseFloat(
+        getComputedStyle(largeViewportHeightDiv).height,
+      );
+
+      setLargeViewportHeightPx(largeViewportHeightPx);
+    };
+
+    const largeViewportHeightDivResizeObserver = new ResizeObserver(
+      largeViewportHeightDivResizeObserverCallback,
+    );
+    largeViewportHeightDivResizeObserver.observe(largeViewportHeightDiv);
+    largeViewportHeightDivResizeObserverCallback();
+
+    return () => {
+      largeViewportWidthDivResizeObserver.disconnect();
+      document.body.removeChild(largeViewportWidthDiv);
+
+      largeViewportHeightDivResizeObserver.disconnect();
+      document.body.removeChild(largeViewportHeightDiv);
+    };
+  }, []);
+
+  contextValue.dynamicViewportWidthPx = dynamicViewportWidthPx;
+  contextValue.dynamicViewportHeightPx = dynamicViewportHeightPx;
+  contextValue.largeViewportWidthPx = largeViewportWidthPx;
+  contextValue.largeViewportHeightPx = largeViewportHeightPx;
 
   const [mediumFontSizePx, setMediumFontSizePx] = useState(
     parseFloat(getComputedStyle(document.documentElement).fontSize),
@@ -82,8 +146,6 @@ function App() {
     };
   }, []);
 
-  contextValue.windowWidthPx = windowWidthPx;
-  contextValue.windowHeightPx = windowHeightPx;
   contextValue.mediumFontSizePx = mediumFontSizePx;
   contextValue.rootEmFontSizePx = rootEmFontSizePx;
 

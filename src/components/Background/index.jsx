@@ -9,7 +9,7 @@ function Background() {
 
   // ========================== Render ==========================
   return (
-    <div className="fixed top-0 left-0 -z-50 h-lvh w-full opacity-20">
+    <div className="fixed top-0 left-0 -z-50 h-lvh w-lvw opacity-20">
       <Canvas
         gl={{
           antialias: false,

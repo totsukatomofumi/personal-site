@@ -8,8 +8,12 @@ function AnimatedText({ children, ...props }) {
   const textRef = useRef();
 
   // ======================= Responsive Setup =======================
-  const { windowHeightPx, canvasTextColor, canvasColor, rootEmFontSizePx } =
-    useContext(AppContext);
+  const {
+    largeViewportHeightPx,
+    canvasTextColor,
+    canvasColor,
+    rootEmFontSizePx,
+  } = useContext(AppContext);
 
   const camera = useThree((state) => state.camera);
 
@@ -20,10 +24,10 @@ function AnimatedText({ children, ...props }) {
     camera.getViewSize(distance, target);
 
     const textOutlineWidth =
-      (target.y / windowHeightPx) * 0.0625 * rootEmFontSizePx; // Set Text outlineWidth as the world units corresponding to 1px on screen at origin depth from camera
+      (target.y / largeViewportHeightPx) * 0.0625 * rootEmFontSizePx; // Set Text outlineWidth as the world units corresponding to 1px on screen at origin depth from camera
 
     return textOutlineWidth;
-  }, [camera, windowHeightPx, rootEmFontSizePx]);
+  }, [camera, largeViewportHeightPx, rootEmFontSizePx]);
 
   // ============================= Render ============================
   return (
