@@ -32,7 +32,7 @@ function ImagePreview({ open, onClose, src, alt }) {
       0,
     ),
     1,
-  ); // Scale from 0 to 1 as window width increases from the Text document's maximum width including parent padding (36rem / 576px) to the 2xl breakpoint (96rem / 1536px)
+  ); // Scale from 0 to 1 as window width increases from the Text document's maximum width including parent padding (37.5rem / 600px) to the 2xl breakpoint (96rem / 1536px)
 
   // =============================== Render ===============================
   return (

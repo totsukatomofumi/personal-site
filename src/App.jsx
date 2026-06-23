@@ -22,35 +22,11 @@ function App() {
   // ===================== Responsive Setup =====================
   const { width: dynamicViewportWidthPx, height: dynamicViewportHeightPx } =
     useWindowSize();
-  const [largeViewportWidthPx, setLargeViewportWidthPx] = useState(
-    dynamicViewportWidthPx,
-  );
   const [largeViewportHeightPx, setLargeViewportHeightPx] = useState(
     dynamicViewportHeightPx,
   );
 
   useEffect(() => {
-    const largeViewportWidthDiv = document.createElement("div");
-    largeViewportWidthDiv.style.position = "absolute";
-    largeViewportWidthDiv.style.visibility = "hidden";
-    largeViewportWidthDiv.style.width = "100lvw";
-    largeViewportWidthDiv.style.height = 0;
-    document.body.appendChild(largeViewportWidthDiv);
-
-    const largeViewportWidthDivResizeObserverCallback = () => {
-      const largeViewportWidthPx = parseFloat(
-        getComputedStyle(largeViewportWidthDiv).width,
-      );
-
-      setLargeViewportWidthPx(largeViewportWidthPx);
-    };
-
-    const largeViewportWidthDivResizeObserver = new ResizeObserver(
-      largeViewportWidthDivResizeObserverCallback,
-    );
-    largeViewportWidthDivResizeObserver.observe(largeViewportWidthDiv);
-    largeViewportWidthDivResizeObserverCallback();
-
     const largeViewportHeightDiv = document.createElement("div");
     largeViewportHeightDiv.style.position = "absolute";
     largeViewportHeightDiv.style.visibility = "hidden";
@@ -73,49 +49,19 @@ function App() {
     largeViewportHeightDivResizeObserverCallback();
 
     return () => {
-      largeViewportWidthDivResizeObserver.disconnect();
-      document.body.removeChild(largeViewportWidthDiv);
-
       largeViewportHeightDivResizeObserver.disconnect();
       document.body.removeChild(largeViewportHeightDiv);
     };
   }, []);
 
   contextValue.dynamicViewportWidthPx = dynamicViewportWidthPx;
-  contextValue.dynamicViewportHeightPx = dynamicViewportHeightPx;
-  contextValue.largeViewportWidthPx = largeViewportWidthPx;
   contextValue.largeViewportHeightPx = largeViewportHeightPx;
-
-  const [mediumFontSizePx, setMediumFontSizePx] = useState(
-    parseFloat(getComputedStyle(document.documentElement).fontSize),
-  );
 
   const [rootEmFontSizePx, setRootEmFontSizePx] = useState(
     parseFloat(getComputedStyle(document.documentElement).fontSize),
   );
 
   useEffect(() => {
-    const mediumFontSizeDiv = document.createElement("div");
-    mediumFontSizeDiv.style.fontSize = "medium";
-    mediumFontSizeDiv.style.position = "absolute";
-    mediumFontSizeDiv.style.visibility = "hidden";
-    mediumFontSizeDiv.textContent = "M";
-    document.body.appendChild(mediumFontSizeDiv);
-
-    const mediumFontSizeDivResizeObserverCallback = () => {
-      const mediumFontSizePx = parseFloat(
-        getComputedStyle(mediumFontSizeDiv).fontSize,
-      );
-
-      setMediumFontSizePx(mediumFontSizePx);
-    };
-
-    const mediumFontSizeDivResizeObserver = new ResizeObserver(
-      mediumFontSizeDivResizeObserverCallback,
-    );
-    mediumFontSizeDivResizeObserver.observe(mediumFontSizeDiv);
-    mediumFontSizeDivResizeObserverCallback();
-
     const rootEmFontSizeDiv = document.createElement("div");
     rootEmFontSizeDiv.style.fontSize = "1rem";
     rootEmFontSizeDiv.style.position = "absolute";
@@ -138,15 +84,11 @@ function App() {
     rootEmFontSizeDivResizeObserverCallback();
 
     return () => {
-      mediumFontSizeDivResizeObserver.disconnect();
-      document.body.removeChild(mediumFontSizeDiv);
-
       rootEmFontSizeDivResizeObserver.disconnect();
       document.body.removeChild(rootEmFontSizeDiv);
     };
   }, []);
 
-  contextValue.mediumFontSizePx = mediumFontSizePx;
   contextValue.rootEmFontSizePx = rootEmFontSizePx;
 
   const isDark = useMediaQuery("(prefers-color-scheme: dark)");

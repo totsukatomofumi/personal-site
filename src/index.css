@@ -9,9 +9,9 @@
 
   font-size: clamp(
     0rem,
-    calc(1 / 37.5 * 100vw),
+    min(calc(1 / 37.5 * 100vw), calc(1 / 48 * 100vh)),
     1rem
-  ); /* 1rem (16px) at 37.5rem (600px) viewport width: which is Text document parent width */
+  ); /* width: scale 1rem (16px) at 37.5rem (600px) (Text document parent width) down on narrower viewport width; height: scale 1rem (16px) at 64rem (1024px) (TailwindCSS 'lg' breakpoint as reference) down on shorter viewport height */
 
   scroll-snap-type: y mandatory;
 }

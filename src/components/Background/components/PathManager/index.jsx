@@ -1,6 +1,5 @@
-import { useContext, useState } from "react";
+import { useContext, useLayoutEffect, useState } from "react";
 import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import * as THREE from "three";
 import {
@@ -31,10 +30,11 @@ function PathManager({ children }) {
     appContext;
 
   // Update path travel speed based on scroll velocity (+ performance regression on scroll)
-  useGSAP(
-    () => {
-      const thunks = Array.from({ length: NUM_SECTIONS }, () => () => {
-        return gsap.to(
+  useLayoutEffect(() => {
+    const thunks = Array.from(
+      { length: NUM_SECTIONS },
+      () => () =>
+        gsap.to(
           {},
           {
             onUpdate: function () {
@@ -54,26 +54,21 @@ function PathManager({ children }) {
             onComplete: () => setSpeed(BASE_SPEED),
             onReverseComplete: () => setSpeed(BASE_SPEED),
           },
-        );
-      });
+        ),
+    );
 
-      // Register thunks
-      thunks.forEach((thunk, index) => registerSectionThunk(thunk, index));
+    // Register thunks
+    thunks.forEach((thunk, index) => registerSectionThunk(thunk, index));
 
-      return () => {
-        thunks.forEach((thunk) => removeSectionThunk(thunk));
-        setSpeed(BASE_SPEED); // Reset speed to base speed on unmount
-      };
-    },
-    {
-      revertOnUpdate: true,
-      dependencies: [largeViewportHeightPx],
-    },
-  );
+    return () => {
+      thunks.forEach((thunk) => removeSectionThunk(thunk));
+      setSpeed(BASE_SPEED); // Reset speed to base speed on unmount
+    };
+  }, [largeViewportHeightPx]);
 
   // ========================== Path Animation Setup =========================
   // Update path based on current section (if exists)
-  useGSAP(() => {
+  useLayoutEffect(() => {
     let currPath = INIT_PATH;
 
     const thunks = PATHS.map((targetPath, sectionIndex) => {
@@ -116,7 +111,7 @@ function PathManager({ children }) {
         thunk && removeSectionThunk(thunk);
       });
     };
-  });
+  }, []);
 
   // ================================= Render ================================
   return (
