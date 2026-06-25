@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
@@ -178,6 +178,20 @@ function App() {
 
   contextValue.registerSectionThunk = registerSectionThunk;
   contextValue.removeSectionThunk = removeSectionThunk;
+
+  // ================= Mobile Orientation Change =================
+  // BUG: mobile orientation change causes ScrollTrigger animations to update with wrong/stale progress after creation of ScrollTrigger instances and timeline aggregation
+  // Reload page on orientation change as pragmatic workaround
+  useLayoutEffect(() => {
+    const onScreenOrientationChange = () => window.location.reload(); // Reload the page to re-render the app with the new orientation
+
+    screen.orientation.addEventListener("change", onScreenOrientationChange);
+    return () =>
+      screen.orientation.removeEventListener(
+        "change",
+        onScreenOrientationChange,
+      );
+  }, []);
 
   // ========================== Render ==========================
   return (
