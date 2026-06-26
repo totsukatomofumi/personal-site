@@ -20,8 +20,7 @@ function ScrollControls({ thunksBySection, isImagePreviewOpen }) {
             trigger: sectionTriggerRef.current, // Get scroll trigger element for the section
             start: "top top",
             end: "bottom top",
-            scrub: 0.15, // Reduce choppiness with smoothing (150ms, TailwindCSS default transition duration)
-            preventOverlaps: true, // Prevent choppy animations after native scroll position restoration on page refresh
+            scrub: true,
           },
         });
 
